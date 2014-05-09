@@ -52,9 +52,12 @@ static int read_conf_file( struct settings* settings )
     char bufr[1024];
     char empty[1];
     empty[0] = 0;
-    fp = fopen("res/game.conf","r");
-
-    if ( fp == NULL ) return -1;
+#ifdef _WIN32
+    errno_t err;
+    if( (err  = fopen_s( &fp, "res/game.conf", "r" )) !=0 ) return -1;
+#else
+    if ((fp = fopen("res/game.conf", "r")) == NULL) return -1;
+#endif
     while (fgets(bufr, 1024, fp) != NULL)
     {
         if (bufr[0] == '#' || bufr[0] == '\n') continue;
