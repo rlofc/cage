@@ -26,7 +26,26 @@
 #include "utils.h"
 #include "screen.h"
 
-/* Images used for drawing, or as basis for sprites and fonts.
+/* Use images to draw on screen, or as basis for sprites and fonts.
+ * Images are read from a file and can be used to draw
+ * or to provide frames for sprites or characters for fonts.
+ *
+ * The simplest form of creating an image is by using <create_image>:
+ *
+ *     struct image* image;
+ *     image = create_image("path/to/image.png", screen );
+ *
+ * You have to associate an image with a screen. You will
+ * get a screen inside the <toolbox> argument passed to each
+ * one of the game loop functions.
+ *
+ * Images don't just disappear. You will have to explicitly
+ * get rid of any image you create using <create_image> by calling
+ * <destroy_image>:
+ *
+ *     destroy_image( image );
+ *
+ *  Otherwise, you will have a memory leak.
  */
 struct image
 {

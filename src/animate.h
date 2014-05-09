@@ -24,6 +24,18 @@
 
 #define MAX_FRAMES_PER_ANIMATION 256
 
+/* cldoc:begin-category(Constants) */
+/* Animation playback mode */
+enum animation_mode {
+    /* Loop back to <loop_from> */
+    LOOP_FRAMES,
+    /* go back in reverse and then return endlessly */
+    PINGPONG_FRAMES,
+    /* stop at the last frame */
+    FREEZE_LAST_FRAME
+};
+/* cldoc:end-category() */
+
 /* Animation frames and durations for a sprite.
  * You may use the same animation definition
  * for any number of sprites:
@@ -56,17 +68,8 @@ struct animation {
     } frames[MAX_FRAMES_PER_ANIMATION];
     /* number of frames for this animation */
     int n_frames;
-
     /* Animation playback mode */
-    enum animation_mode {
-        /* Loop back to <loop_from> */
-        LOOP_FRAMES,
-        /* go back in reverse and then return endlessly */
-        PINGPONG_FRAMES,
-        /* stop at the last frame */
-        FREEZE_LAST_FRAME
-    } mode;
-
+    enum animation_mode mode;
     /* when mode is LOOP_FRAMES, where to loop from */
     int loop_from;
     int loop_to;

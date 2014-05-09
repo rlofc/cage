@@ -2,8 +2,8 @@
 =============================================================================================
 
 Cage is an educational game development library that has a naive and simple design, in the spirit of less is 
-more (or worse is better). It favors code readability over features and (should) work well for simple, old-school 2D 
-games.
+more (or worse is better). It favors code readability over features (read: it's barely usable)
+and should work well for simple, old-school 2D games.
 
 Cage contains and constraints SDL2 so that a beginner game developer will not have to deal with SDL directly.
 

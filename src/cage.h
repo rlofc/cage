@@ -41,7 +41,7 @@
  *     int prepare_level( struct toolbox* tb )
  *     {
  *         // Put any level setup and preparation code here...
- *         return 1
+ *         return 0
  *     }
  *
  *     void update_level( struct toolbox* tb )
@@ -58,7 +58,7 @@
  *     int prepare_menu( struct toolbox* tb )
  *     {
  *         // Put any menu setup and preparation code here...
- *         return 1
+ *         return 0
  *     }
  *
  *     void update_menu( struct toolbox* tb )

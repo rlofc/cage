@@ -26,12 +26,35 @@
 #include "animate.h"
 
 
-/* An animatable game sprite
- * A sprite is an animatable game actor.
- * It is usually built from an image containing
- * a set of frames. 
- * To animate a sprite, you need to define
- * animations with frames and durations.
+/* Turns image frames into animations.
+ * Sprites use images sliced into frames to play short animations.
+ * Sprites can be used for game characters, props, tiles and titles.
+ * To create a sprite, you will need to create an image containing 
+ * a set of fixed-sized frames and then pass it to <create_sprite>:
+ *
+ *     struct sprite* wizard = NULL;
+ *     wizard = create_sprite( create_image( "res/wizard.png", screen ) , 32, 32);
+ *     
+ * Note that by creating both the sprite and the image, you are
+ * responsible to the clean-up once you're done:
+ *
+ *     destroy_image( wizard->image );
+ *     destroy_sprite( wizard );
+ * 
+ * To animate a sprite, you need to create <animation> instances,
+ * indicating the frames to play. To actually play an animation,
+ * use <play_animation>:
+ *
+ *     play_animation( wizard, walk );
+ *
+ * Finally, to update the sprite animation, call <animate_sprite>:
+ *
+ *     void *data;
+ *     data = animate_sprite( wizard, toolbox->stopwatch );
+ *
+ * Once a frame that has a user-data associated with it is played,
+ * you will get the data pointer back.
+ *
  */
 struct sprite {
     /* image used to draw sprite frames */

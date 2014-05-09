@@ -45,13 +45,13 @@ struct wizard {
  * and destroyed within the scope of a single level.
  *
  * Creating a wizard means reading the sprite image
- * and creating a sprite with the proper frame dimentions
+ * and creating a sprite with the proper frame size
  * as well as creating the set of animations required
  * to animate the wizard. 
  *
- * Animations can be re-used for any number of 
+ * Animations can be re-used by any number of 
  * sprites, however in this example the animations
- * are an integral part of the wizard data structure.
+ * are an integral part of the wizard data-structure.
  *
  * Pay attention to the way we defined the walking
  * loop cycle. First, we associated the walking speed
@@ -60,6 +60,9 @@ struct wizard {
  * the second frame ( index=1 ). This way, the 
  * first frame ( index=0 ) of the walking animation is
  * used as a transition frame from the standing pose.
+ * We also limit the loop to the fifth frame ( index=4)
+ * allowing the last frame to translate the wizard
+ * back to the standing pose.
  *
  * We finalize with setting the default pose and the
  * initial position.

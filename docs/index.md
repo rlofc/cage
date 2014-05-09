@@ -2,22 +2,18 @@
 
 Cage ( Ain't a Game Engine )
 
-![alt text](cage.png)
+![alt text](images/cage.png)
 # Cage Ain't a Game Engine
 Cage is an educational game development library. 
-It is designed and developed to help the absolute newcommer write 2D games using the C programming language.
+It is designed and developed to help me teach 2D game dev using the C programming language.
 Cage prefers readability and simplicity, in the spirit of
 **less is more**.
 
-Cage is minimalistic and has a naive design so people with no 
+Cage is minimal and has a naive design so people with almost no 
 game or graphics development experience can jump right in. Internally, 
-Cage contains and restraints SDL, the Simple Direct-media Library.
-However, apart of knowing it is in there, you will not have
+Cage contains and restraints SDL2, the Simple Direct-media Library.
+However, apart of knowing it is in there you will not have
 to deal with SDL directly.
-
-If you are a beginner, who just wants to try writing real 2D games using C, then
-Cage is for you. 
-
 
 ```c
 int prepare( struct toolbox* tb )
@@ -42,3 +38,7 @@ int main(int argc, char ** argv)
     return gameloop( &hello_world );
 }
 ```
+
+For a more complete example, take a look here:
+[http://rlofc.github.io/cage/samples/wizard/doc/src/wizard.html](http://rlofc.github.io/cage/samples/wizard/doc/src/wizard.html)
+

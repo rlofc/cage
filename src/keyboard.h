@@ -24,9 +24,33 @@
 
 #include <stdint.h>
 
-/* Keyboard constants and state
- * You can use the keyboard services by referencing
- * via the toolbox in your game state functions.
+/* Keyboard state
+ * You don't need to directly instantiate a keyboard in your code.
+ * You will get a keyboard instance in the <toolbox> argument
+ * passed to your game state functions.
+ *
+ * To check if a key is being pressed, use <key_down>:
+ *
+ *     void update_super_cool_level( struct toolbox* toolbox )
+ *     {
+ *         ...
+ *         if ( key_down( toolbox->keyboard, KB_UP ) ) {
+ *             // do something
+ *         }
+ *         ...
+ *      }
+ *
+ *  To check if a key was clicked (once), use <key_pressed>:
+ *
+ *     void update_super_cool_level( struct toolbox* toolbox )
+ *     {
+ *         ...
+ *         if ( key_pressed( toolbox->keyboard, KB_SPACE ) ) {
+ *             // do something once per key click
+ *         }
+ *         ...
+ *      }
+ *
  */
 struct keyboard {
     const uint8_t* keys;
@@ -54,7 +78,7 @@ int key_pressed( struct keyboard* keyboard, uint8_t key );
  */
 int key_down( struct keyboard* keyboard, uint8_t key );
 
-
+/* cldoc:begin-category(Constants) */
 extern uint8_t KB_SPACE;
 extern uint8_t KB_RIGHT;
 extern uint8_t KB_LEFT;
@@ -65,5 +89,6 @@ extern uint8_t KB_W;
 extern uint8_t KB_S;
 extern uint8_t KB_A;
 extern uint8_t KB_D;
+/* cldoc:end-category() */
 
 #endif /* end of include guard: KEYBOARD_H_UQ7XHW8V */

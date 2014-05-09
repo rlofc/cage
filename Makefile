@@ -62,7 +62,7 @@ clean:
 doc:
 	@echo "Generating docs.."
 	@$(CLDOC) generate -x c `sdl2-config --cflags` -- --merge docs --output docs/build src/*.h
-	@cp -f docs/cage.png docs/build/
+	@cp -rf docs/images docs/build/
 
 extra: $(LIBRARY)
 	cd samples/wizard && $(MAKE)
