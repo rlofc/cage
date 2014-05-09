@@ -1,8 +1,9 @@
-Cage, Ain't a Game Engine
-=========================
+![Cage](https://raw.githubusercontent.com/rlofc/cage/gh-pages/cage.png)
+Cage (Ain't a Game Engine)
+==========================
 
 Cage is an educational game development library that has a naive and simple design, in the spirit of less is 
-more. It favors code readability over extensive features and (should) work well for simple, old-school 2D 
+more (or worse is better). It favors code readability over features and (should) work well for simple, old-school 2D 
 games.
 
 Cage contains and constraints SDL2 so that a beginner game developer will not have to deal with SDL directly.
