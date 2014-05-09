@@ -43,12 +43,12 @@ In **Mac OS/X** or **Linux**, simply:
 ### Getting Started
 
 Review the (evolving) Wizard sample code:
-<link is TBD>
+[http://rlofc.github.io/cage/samples/wizard/doc/src/wizard.html](http://rlofc.github.io/cage/samples/wizard/doc/src/wizard.html)
 
 ### Documentation
 
 The generated docs are here:
-<link is TBD>
+[http://rlofc.github.io/cage/](http://rlofc.github.io/cage/)
 
 ### License
 
