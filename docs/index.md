@@ -40,5 +40,5 @@ int main(int argc, char ** argv)
 ```
 
 For a more complete example, take a look here:
-[http://rlofc.github.io/cage/samples/wizard/doc/src/wizard.html](http://rlofc.github.io/cage/samples/wizard/doc/src/wizard.html)
+[http://rlofc.github.io/cage/samples/wizard/doc/wizard.html](http://rlofc.github.io/cage/samples/wizard/doc/wizard.html)
 
