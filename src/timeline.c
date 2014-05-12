@@ -14,12 +14,12 @@ void destroy_timeline( struct timeline* timeline )
     free( timeline );
 }
 
-int append_event( struct timeline* timeline, uint32_t begin_after, 
+int append_event( struct timeline* timeline, uint32_t wait, 
                    uint32_t duration, void* (*callback) ( struct toolbox* t, float progress ) )
 {
     if ( timeline->next_event != -1 ) return -1;
     if ( timeline->n_events == MAX_TIMELINE_EVENTS ) return -1;
-    timeline->events[ timeline->n_events ].ms_after = begin_after;
+    timeline->events[ timeline->n_events ].ms_wait = wait;
     timeline->events[ timeline->n_events ].ms_duration = duration;
     timeline->events[ timeline->n_events ].callback = callback;
     timeline->n_events++;
@@ -34,7 +34,7 @@ void* update_timeline( struct timeline* timeline, struct toolbox* t )
     if ( timeline->next_event < timeline->n_events ) {
         timeline->timer += t->stopwatch;
         /* loop to make sure we will not miss a consecutive callback */
-        next_acc_timer = timeline->acc_timer + timeline->events[ timeline->next_event ].ms_after;
+        next_acc_timer = timeline->acc_timer + timeline->events[ timeline->next_event ].ms_wait;
         while ( timeline->timer > next_acc_timer ) {
             uint32_t elapsed  = timeline->timer - next_acc_timer;
             uint32_t duration = timeline->events[ timeline->next_event ].ms_duration;
@@ -43,11 +43,11 @@ void* update_timeline( struct timeline* timeline, struct toolbox* t )
                 ret = timeline->events[ timeline->next_event ].callback( t, progress );
                 break;
             } else {
-                timeline->acc_timer += timeline->events[ timeline->next_event ].ms_after;
+                timeline->acc_timer += timeline->events[ timeline->next_event ].ms_wait;
                 timeline->acc_timer += timeline->events[ timeline->next_event ].ms_duration;
                 timeline->next_event++;
                 if ( timeline->next_event == timeline->n_events ) break;
-                next_acc_timer = timeline->acc_timer + timeline->events[ timeline->next_event ].ms_after;
+                next_acc_timer = timeline->acc_timer + timeline->events[ timeline->next_event ].ms_wait;
             }
         }
     }
