@@ -22,6 +22,8 @@
 #ifndef UTILS_H_EZIL3YD2
 #define UTILS_H_EZIL3YD2
 
+#include <math.h>
+
 /* Just a simple rectangle shape for image operations
  */
 struct rectangle {
@@ -37,5 +39,29 @@ struct point {
     float x;
     float y;
 };
+
+static int   SECOND       = 1000; /* 1 second is 1000 milliseconds */
+static int   SECONDS      = 1000; /* n seconds are n*1000 milliseconds */
+
+static const double Pi = 3.14159265358979323846264338328;
+
+static __inline float max(float x, float y) {
+    return x > y ? x : y;
+}
+
+static __inline float min(float x, float y) {
+    return x < y ? x : y;
+}
+
+static __inline float clamp(float x, float bottom, float top) {
+    x = max(x, bottom);
+    x = min(x, top);
+    return x;
+}
+
+static __inline float cosine_interp(float p1, float p2, float amount) {
+    float m = (1-cos(amount*Pi))/2;
+    return (p1*(1-m)+p2*m);
+}
 
 #endif /* end of include guard: UTILS_H_EZIL3YD2 */
