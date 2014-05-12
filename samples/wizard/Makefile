@@ -20,8 +20,8 @@
 #    distribution.
 CC = gcc
 CFLAGS = -std=c89 `sdl2-config --cflags` -I../../src/ -c
-# CFLAGS += -O3
-CFLAGS += -g3
+CFLAGS += -O3
+# CFLAGS += -g3
 WARNINGS = -Werror -Wall -Wextra -pedantic-errors -Wformat=2 -Wno-import \
 		   -Wimplicit -Wmain -Wchar-subscripts -Wsequence-point -Wmissing-braces \
 		   -Wparentheses -Winit-self -Wswitch-enum -Wstrict-aliasing=2 -Wundef \
