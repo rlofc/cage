@@ -32,7 +32,7 @@
 #include "timeline.h"
 #include "toolbox.h"
 
-/* Interchangable game states for the implicit game loop
+/* A set of state functions (callbacks ) for the game loop
  * Games will usually have different levels, menus, high score
  * displays and the likes. These are represented as different
  * gamestate entities.
@@ -85,9 +85,6 @@
  *         return gameloop( &menu );
  *     }
  */
-
-#define xy(X,Y) X,Y
-
 struct gamestate
 {
     /* callback to setup your state before rendering */

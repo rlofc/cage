@@ -40,8 +40,13 @@ struct point {
     float y;
 };
 
-static int   SECOND       = 1000; /* 1 second is 1000 milliseconds */
-static int   SECONDS      = 1000; /* n seconds are n*1000 milliseconds */
+#define xy(X,Y) X,Y
+
+/* cldoc:begin-category(Utilities) */
+/* 1 second is 1000 milliseconds */
+static int   SECOND       = 1000; 
+/* n seconds are n*1000 milliseconds */
+static int   SECONDS      = 1000; 
 
 static const double Pi = 3.14159265358979323846264338328;
 
@@ -63,5 +68,6 @@ static __inline float cosine_interp(float p1, float p2, float amount) {
     float m = (1-cos(amount*Pi))/2;
     return (p1*(1-m)+p2*m);
 }
+/* cldoc:end-category() */
 
 #endif /* end of include guard: UTILS_H_EZIL3YD2 */

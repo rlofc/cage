@@ -7,9 +7,10 @@
 
 struct toolbox;
 
-/* A timeline holds a sequence of events
- * on a, well.. time line. Each event has a start time
- * ,a duration and a callback function.
+/* A sequence of timed events
+ * A timeline holds a sequence of events
+ * on a, well.. time line. Each event has a start time,
+ * a duration and a callback function.
  * The callback gets called each time the timeline 
  * is updated, as long as the event is active.
  *
@@ -22,18 +23,24 @@ struct toolbox;
  * you will need to create more than one timeline,
  * just like you would have separate tracks in a 
  * video editor or an animation software.
- *
- * Timelines should help you maintain a cleaner code.
  */
 struct timeline {
+    /* Events to activate */
     struct {
-        uint32_t ms_after;
+        /* Time to wait before activating the event */ 
+        uint32_t ms_wait;
+        /* Duration of the event */
         uint32_t ms_duration;
+        /* Callback to call to */
         void* (*callback) ( struct toolbox* t, float progress );
     } events[MAX_TIMELINE_EVENTS];
+    /* Number of registered events */
     int n_events;
+    /* Timer to keep track of the timeline running time */
     uint32_t timer;
+    /* Accumulated timer to keep track of the timeline running time */
     uint32_t acc_timer;
+    /* Pending event */
     int next_event;
 };
 
@@ -49,10 +56,15 @@ struct timeline* create_timeline(void);
 void destroy_timeline( struct timeline* timeline );
 
 /* Append an event to the timeline
+ * @timeline Timeline to append the event to
+ * @wait Time to wait after the last event
+ * @duration Time to actively call the callback or 0 for
+ * a single call
+ * @callback Callback function to call to
  *
  * @return -1 on error or the new event index
  */
-int append_event( struct timeline* timeline, uint32_t begin_after, 
+int append_event( struct timeline* timeline, uint32_t wait, 
                    uint32_t duration, void* (*callback) ( struct toolbox* tbox, float progress ) );
 
 /* Update the timeline timers and invoke event callbacks
