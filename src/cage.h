@@ -29,6 +29,8 @@
 #include "font.h"
 #include "sound.h"
 #include "animate.h"
+#include "timeline.h"
+#include "toolbox.h"
 
 /* Interchangable game states for the implicit game loop
  * Games will usually have different levels, menus, high score
