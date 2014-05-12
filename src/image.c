@@ -113,6 +113,9 @@ void draw_image( struct screen*  screen,
 	SDL_Rect render_quad; 
     SDL_Rect sdl_clip;
 
+    x += screen->offset_x;
+    y += screen->offset_y;
+
     render_quad.x = x;
     render_quad.y = y;
     render_quad.w = image->width;

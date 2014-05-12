@@ -126,6 +126,8 @@ static void prepare_screen( struct screen* screen, const struct settings* settin
 
     screen->impl = renderer;
     screen->window = window;
+    screen->offset_x = 0;
+    screen->offset_y = 0;
 }
 
 static void teardown_screen( struct screen* screen )

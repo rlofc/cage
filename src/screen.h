@@ -34,11 +34,15 @@
  */
 struct screen
 {
-    /* internal sdl representation */
+    /* internal SDL renderer */
     SDL_Renderer* impl;
+    /* internal SDL window */
     SDL_Window* window;
+    /* Rendering X offset, for scrolling or shaking */
+    float offset_x;
+    /* Rendering Y offset, for scrolling or shaking */
+    float offset_y;
 };
-
 
 /* Change screen background color
  */
@@ -48,5 +52,15 @@ void screen_color( struct screen* screen, struct color background );
  */
 void screen_size( struct screen* screen, int width, int height );
 
-#endif /* end of include guard: SCREEN_H_PCFZWLG4 */
+/* Shake the "camera". Works well for explosions and blows.
+ * The screen will keep shaking as long as you call <shake_screen>.
+ * To return the screen to its normal state, you should complement
+ * with calling <relax_screen>.
+ */
+void shake_screen( struct screen* screen, float stopwatch );
 
+/* Undo the screen shake effect.
+ */
+void relax_screen( struct screen* screen, float stopwatch );
+
+#endif /* end of include guard: SCREEN_H_PCFZWLG4 */

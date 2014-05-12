@@ -20,6 +20,40 @@
  *    distribution.
  */
 #include "screen.h"
+#include "utils.h"
+
+struct cam {
+    float progress;
+    float tgt;
+};
+
+static struct cam cam_x = { 0.0f, 0.0f };
+static struct cam cam_y = { 0.0f, 0.0f };
+
+static float animate_shake( struct cam* cam, float stopwatch, float rate )
+{
+    float offset;
+    offset = cam->tgt*-1+fabs(cosine_interp( cam->tgt* -1.0f, cam->tgt ,cam->progress)); 
+    cam->progress= clamp( cam->progress+( stopwatch / rate ), 0.0f, 1.0f );;
+    if (cam->progress== 1.0f) { cam->progress= 0.0f; }
+    return offset;
+}
+
+void shake_screen( struct screen* screen, float stopwatch )
+{
+    if ( cam_x.progress== 0.0f) { cam_x.tgt= (rand() % 2)+2; }
+    screen->offset_x = animate_shake( &cam_x, stopwatch, 100.0f);
+    if ( cam_y.progress== 0.0f) { cam_y.tgt= (rand() % 2)+2; }
+    screen->offset_y = animate_shake( &cam_y, stopwatch, 100.0f);
+}
+
+void relax_screen( struct screen* screen, float stopwatch )
+{
+    if ( cam_x.progress != 0.0f)
+        screen->offset_x = animate_shake( &cam_x, stopwatch, 500.0f);
+    if ( cam_y.progress != 0.0f)
+        screen->offset_y = animate_shake( &cam_y, stopwatch, 500.0f);
+}
 
 void screen_color( struct screen* screen, struct color bg )
 {
