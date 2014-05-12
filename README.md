@@ -1,15 +1,24 @@
-![Cage](https://raw.githubusercontent.com/rlofc/cage/gh-pages/cage.png) (Ain't a Game Engine)
+![Cage](https://raw.githubusercontent.com/rlofc/cage/gh-pages/cage.png) (Cage Ain't a Game Engine)
 =============================================================================================
 
-Cage is an educational game development library that has a naive and simple design, in the spirit of less is 
+Cage is an educational game development library that has a naive and simple design in the spirit of less is 
 more (or worse is better). It favors code readability over features (read: it's barely usable)
 and should work well for simple, old-school 2D games.
 
-Cage contains and constraints SDL2 so that a beginner game developer will not have to deal with SDL directly.
+Cage contains and constraints SDL2 so that a beginner game developer will not have to deal with it directly.
 
 I wrote Cage to help me teach my kids game programming using C. Avoiding native languages or keeping 
 distance from the machine level is not the proper way to teach programming, even for kids. This is why I 
 didn't choose Lua or Haxe, even though these are excellent technologies to write an actual game..
+
+### Highlights
+
+* Plain C - No abstractions, no obstructions.
+* Easy to learn, Highly-Readable interfaces
+* Sprites - Animate using a sequence of frames in images.
+* Timelines - lets you sequence events for animation, story-telling etc.
+* Game States - Promotes scalable internal design.
+* Bitmap Fonts, Sounds, the usuals..
 
 ### Install
 
@@ -53,4 +62,3 @@ The generated docs are here:
 ### License
 
 Cage is licensed under the **zlib license**.
-
