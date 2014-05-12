@@ -1,5 +1,5 @@
-./obj
-./build
-./docs/build
-./samples/**/obj
-./samples/**/build
+obj/**
+build
+docs/build
+samples/**/obj
+samples/**/build
