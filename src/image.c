@@ -38,7 +38,6 @@ int load_image( struct image* image, struct screen* screen, const char* filepath
     uint32_t transparent;
     int i;
 
-
     s = IMG_Load( filepath ) ;
     if ( s == NULL ) goto exit;
 
@@ -79,14 +78,12 @@ exit:
     return ret;
 }
 
-
 int cleanup_image( struct image* image ) 
 {
     SDL_DestroyTexture( image->impl );
     image->impl = NULL;
     return 0;
 }
-
 
 int lock_image( struct image* image, void** pixels, int* pitch )
 {
@@ -95,13 +92,11 @@ int lock_image( struct image* image, void** pixels, int* pitch )
     return 0;
 }
 
-
 int unlock_image( struct image* image )
 {
     SDL_UnlockTexture( image->impl );
     return 0;
 }
-
 
 void draw_image( struct screen*  screen,
                  struct image*   image, 
@@ -138,6 +133,66 @@ struct image* create_image( const char* filepath, struct screen* screen )
     struct image* image = malloc( sizeof (struct image) );
     load_image( image, screen, filepath );
     return image;
+}
+
+struct image* create_blank_image( struct screen* screen, int w, int h, struct color color ) 
+{
+    void * pixels;
+    int pitch;
+    SDL_Rect r;
+    struct image* image = malloc( sizeof (struct image) );
+    r.x = 0; r.y = 0; r.w = w; r.h = h;
+    image->impl = SDL_CreateTexture( screen->impl, SDL_PIXELFORMAT_RGBA8888, 
+                                      SDL_TEXTUREACCESS_TARGET, w, h );
+    SDL_SetRenderTarget( screen->impl, image->impl );
+    SDL_SetRenderDrawColor( screen->impl, color.red, color.green, color.blue, color.alpha );
+    SDL_RenderClear( screen->impl );
+    SDL_SetRenderTarget( screen->impl, NULL );
+    if ( image->impl == NULL ) {
+        free( image ); 
+        return NULL;
+    }
+    image->width = w;
+    image->height = h;
+    return image;
+}
+
+void draw_on_image( struct screen* screen, struct image* image )
+{
+    int ret = SDL_SetRenderTarget( screen->impl, image->impl );
+    if (ret !=0 ) exit(1);
+}
+
+void draw_on_screen( struct screen* screen )
+{
+    int ret = SDL_SetRenderTarget( screen->impl, NULL );
+    if (ret !=0 ) exit(1);
+}
+
+void set_blend_mode( struct image* image, enum blend_mode blend_mode )
+{
+    int sdl_mode = SDL_BLENDMODE_NONE;
+    switch ( blend_mode ) {
+        case NONE:     sdl_mode = SDL_BLENDMODE_NONE; break;
+        case ADD:      sdl_mode = SDL_BLENDMODE_ADD; break;
+        case MULTIPLY: sdl_mode = SDL_BLENDMODE_MOD; break;
+    }
+    SDL_SetTextureBlendMode( image->impl, sdl_mode );
+}
+
+void clear_image( struct image* image, struct screen* screen, struct color color )
+{
+    int ret;
+    Uint8 r,g,b,a;
+    SDL_Rect rect;
+    rect.x = 0; rect.y = 0; rect.w = image->width; rect.h = image->height;
+    SDL_GetRenderDrawColor( screen->impl, &r, &g, &b, &a );
+    SDL_SetRenderDrawColor( screen->impl, color.red, color.green, color.blue, color.alpha );
+    draw_on_image( screen, image );
+    ret = SDL_RenderFillRect( screen->impl, &rect );
+    if (ret != 0 ) exit(1);
+    draw_on_screen( screen );
+    SDL_SetRenderDrawColor( screen->impl, r,g,b,a );
 }
 
 void destroy_image( struct image* image )

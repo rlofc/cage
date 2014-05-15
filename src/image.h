@@ -57,6 +57,20 @@ struct image
     int height;
 };
 
+/* cldoc:begin-category(Constants) */
+/* Image blending mode
+ * Setting the blend mode changes how an image
+ * is being drawn on the screen on or another image.
+ * This is similar to the way Gimp or Photoshop apply layers
+ * one on the other.
+ */
+enum blend_mode {
+    NONE,
+    ADD,
+    MULTIPLY
+};
+/* cldoc:end-category() */
+
 /* Create a ready to use image
  * @filepath The full path of the image file
  * @screen The screen to associate the image with
@@ -64,6 +78,10 @@ struct image
  * @return <image> pointer or 0 on failure
  */
 struct image* create_image( const char* filepath, struct screen* screen );
+
+/* Create a blank image
+ */
+struct image* create_blank_image( struct screen* screen, int w, int h, struct color color );
 
 /* Destroy a created image
  * @image A valid <image> pointer created using <create_image>
@@ -117,4 +135,21 @@ void draw_image ( struct screen* screen,
                   int x, int y, 
                   struct rectangle* clip, 
                   double angle );
+
+/* Switch to draw on an image instead of the actual screen
+ */
+void draw_on_image( struct screen* screen, struct image* image );
+
+/* Switch back to draw on the actual screen
+ */
+void draw_on_screen( struct screen* screen );
+
+/* Set the method to use when drawing an image
+ */
+void set_blend_mode( struct image* image, enum blend_mode blend_mode );
+
+/* Fills the entire image with a color
+ */
+void clear_image( struct image* image, struct screen* screen, struct color color );
+
 #endif /* end of include guard: image */
