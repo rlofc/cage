@@ -23,7 +23,7 @@ CFLAGS = `sdl2-config --cflags` -c
 CFLAGS += -O3
 # CFLAGS += -g3
 ifeq ($(UNAME_S),Linux)
-	CCFLAGS += -std=c89
+	CFLAGS += -std=c89
 endif
 WARNINGS = -Werror -Wall -Wextra -pedantic-errors -Wformat=2 -Wno-import \
 		   -Wimplicit -Wmain -Wchar-subscripts -Wsequence-point -Wmissing-braces \
