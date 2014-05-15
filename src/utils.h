@@ -29,8 +29,8 @@
 struct rectangle {
     float x;
     float y;
-    float h;
     float w;
+    float h;
 };
 
 /* Point in sub-pixel space
