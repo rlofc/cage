@@ -10,10 +10,16 @@
  * we'll need to use later on.
  */
 static const int BASE_Y = 57;
+
 static float NO_SPEED     = 0;
-static float PREP_SPEED   = 0.25f;
-static float STOP_SPEED   = 0.1f;
-static float NORMAL_SPEED = 0.5f;
+
+static float BRAKE_SPEED   = 0.1f;
+static float PREP_SPEED    = 0.25f;
+static float NORMAL_SPEED  = 0.5f;
+
+static float BRAKE_SPEED_L  = -0.1f;
+static float PREP_SPEED_L   = -0.25f;
+static float NORMAL_SPEED_L = -0.5f;
 
 /* We use a string to represent the level map.
  * Each character represents a 16x16 pixels tile.
@@ -30,13 +36,14 @@ static const char* LEVEL = "             "
                            "-------------"
                            ".............";
 
-/* This struct holds the wizard sprite, animations
+/* The **wizard** struct  holds the wizard sprite, animations
  * and other state fields that should be kept and
- * managed throughout a game level.
+ * managed in-game.
  */
 struct wizard {
     struct sprite*     sprite;
-    struct animation*  walk;
+    struct animation*  walk_right;
+    struct animation*  walk_left;
     struct animation*  stand;
     struct animation*  spell;
     struct point       pos;
@@ -46,8 +53,8 @@ struct wizard {
 /* In this example, the wizard character is created
  * and destroyed within the scope of a single level.
  *
- * Creating a wizard means reading the sprite image
- * and creating a sprite with the proper frame size
+ * Creating a wizard means loading the sprite image
+ * and creating a sprite with a 32x32 frame size
  * as well as creating the set of animations required
  * to animate the wizard. 
  *
@@ -55,16 +62,16 @@ struct wizard {
  * sprites, however in this example the animations
  * are an integral part of the wizard data-structure.
  *
- * Pay attention to the way we defined the walking
- * loop cycle. First, we associated the walking speed
- * by using the user data parameter in add_frame.
- * Then, we set the loop sequence starting frame to
- * the second frame ( index=1 ). This way, the 
- * first frame ( index=0 ) of the walking animation is
+ * Pay attention to the way we define the walking
+ * loop cycle. First, we associate the walking speed
+ * by using the user-data parameter in __add\_frame__.
+ * Then, we set the loop sequence __loop\_from__ field to
+ * the 2nd frame ( index=1 ). This way, the
+ * 1st frame ( index=0 ) of the walking animation is
  * used as a transition frame from the standing pose.
- * We also limit the loop to the fifth frame ( index=4)
+ * We also limit the loop to the 5th frame ( index=4 )
  * allowing the last frame to translate the wizard
- * back to the standing pose.
+ * back into the standing pose.
  *
  * We finalize with setting the default pose and the
  * initial position.
@@ -76,15 +83,25 @@ static struct wizard* create_wizard( struct screen* screen )
 
     wizard->sprite = create_sprite( create_image( "res/wizard.png", screen ) , 32, 32);
 
-    wizard->walk = create_animation();
-        add_frame(wizard->walk, 4, 200, &PREP_SPEED);
-        add_frame(wizard->walk, 0, 200, &NORMAL_SPEED); /* <------+ */
-        add_frame(wizard->walk, 1, 200, &NORMAL_SPEED); /*        | */
-        add_frame(wizard->walk, 2, 200, &NORMAL_SPEED); /*        | */
-        add_frame(wizard->walk, 3, 200, &NORMAL_SPEED); /* <--+   | */
-        add_frame(wizard->walk, 4, 200, &STOP_SPEED);   /*    |   | */
-    wizard->walk->loop_from = 1; /* --------------------------|---+ */
-    wizard->walk->loop_to   = 4; /* --------------------------+     */
+    wizard->walk_right = create_animation();
+        add_frame(wizard->walk_right, 4, 200, &PREP_SPEED);
+        add_frame(wizard->walk_right, 0, 200, &NORMAL_SPEED); /* <------+ */
+        add_frame(wizard->walk_right, 1, 200, &NORMAL_SPEED); /*        | */
+        add_frame(wizard->walk_right, 2, 200, &NORMAL_SPEED); /*        | */
+        add_frame(wizard->walk_right, 3, 200, &NORMAL_SPEED); /* <--+   | */
+        add_frame(wizard->walk_right, 4, 200, &BRAKE_SPEED);   /*    |   | */
+    wizard->walk_right->loop_from = 1; /* --------------------------|---+ */
+    wizard->walk_right->loop_to   = 4; /* --------------------------+     */
+
+    wizard->walk_left = create_animation();
+        add_frame(wizard->walk_left, 15, 200, &PREP_SPEED_L);
+        add_frame(wizard->walk_left, 11, 200, &NORMAL_SPEED_L); /* <------+ */
+        add_frame(wizard->walk_left, 10, 200, &NORMAL_SPEED_L); /*        | */
+        add_frame(wizard->walk_left, 9, 200, &NORMAL_SPEED_L);  /*        | */
+        add_frame(wizard->walk_left, 8, 200, &NORMAL_SPEED_L);  /* <--+   | */
+        add_frame(wizard->walk_left, 15, 200, &BRAKE_SPEED_L);  /*    |   | */
+    wizard->walk_left->loop_from = 1; /* -----------------------------|---+ */
+    wizard->walk_left->loop_to   = 4; /* -----------------------------+     */
 
     wizard->stand = create_animation();
         add_frame(wizard->stand, 5, 100, &NO_SPEED); /* <---+ */
@@ -107,12 +124,13 @@ static struct wizard* create_wizard( struct screen* screen )
 }
 
 /* Destroying a wizard means destroying each and every 
- * created resource in the **create\_wizard** function,
- * otherwise, we will have a leak.
+ * created resource in the **create\_wizard** function.
+ * If we fail to do so, we will introduce a memory leak
+ * to the game.
  */
 static void destroy_wizard( struct wizard* wizard )
 {
-    destroy_animation( wizard->walk );
+    destroy_animation( wizard->walk_right );
     destroy_animation( wizard->spell );
     destroy_animation( wizard->stand );
     destroy_image( wizard->sprite->image );
@@ -124,32 +142,41 @@ static void destroy_wizard( struct wizard* wizard )
  * **animate\_wizard()** sets the wizard animation
  * based on the player keypresses and the animation user-data
  * as it was set up in the **create\_wizard()** function.
+ *
+ * We use the user-data value as a speed constant. This
+ * was setup as part of the animation.
  */
 static void animate_wizard( struct wizard* wizard, struct toolbox* tbox )
 {
     const void* px;
-    /* set wizard animation according to keyboard */
+
     struct animation* active_anim;
     active_anim = key_down( tbox->keyboard, KB_SPACE ) ? wizard->spell :
-                  key_down( tbox->keyboard, KB_RIGHT ) ? wizard->walk :
+                  key_down( tbox->keyboard, KB_RIGHT ) ? wizard->walk_right :
+                  key_down( tbox->keyboard, KB_LEFT ) ? wizard->walk_left :
                                                       wizard->stand;
     play_animation( wizard->sprite, active_anim );
-    /* animate the wizard */
+
     if (( px = animate_sprite( wizard->sprite, tbox->stopwatch ) ) != NULL) {
         wizard->speed = *((const float*)px);
     }
+    /* speed = px & WIZARD_IS_WALKING ? 1 : px & WIZARD_IS_STOPPING ? 2 : 3; */
+    /* speed *= px & WIZARD_DIR_LEFT ? -1.0f : 1.0f; */
+
     wizard->pos.x += wizard->speed;
 }
 
 
 /* At the beginning of the main game state, a title
- * sprite will show up with a shining effect.
+ * sprite will show up with a shining "bling" effect.
  * **game\_title** struct encapsulate both the sprite
  * and the shine animation.
  */
 struct game_title {
     struct sprite* sprite;
     struct animation* bling;
+    struct image* mask;
+    struct image* spot;
 };
 
 static void prepare_title( struct game_title* title, struct screen* screen )
@@ -193,10 +220,10 @@ static void cleanup_tree( struct tree* tree )
     destroy_animation( tree->windblow );
 }
 
-/* **level\_data** is stored inside
- * toolbox->data and as such, is made
- * available to the game state functios.
- * This is the place to store anything we
+/* **level\_data** is stored inside toolbox->data.
+ * The toolbox instance is being passed to our game
+ * state functions.
+ * This is the perfect place to store anything we
  * need to work with: characters, sprites, tiles,
  * timelines and the likes.
  */
@@ -207,6 +234,7 @@ struct level_data {
     struct image* earth_tile;
     struct tree tree;
     struct timeline* timeline;
+    struct font* font;
 };
 
 /* **slide\_title\_in()**, **slide\_title\_out()** and
@@ -220,9 +248,29 @@ struct level_data {
  * based on the event progess/duration, making it ideal
  * for use with interpolation functions.
  */
+static void* before_title_in( struct toolbox* tbox, float progress )
+{
+    struct rectangle c = { 0,0, 192, 108 };
+    struct rectangle r = { 0,0, 64, 64 };
+    struct level_data* ldata = tbox->data;
+    progress;
+    clear_image( ldata->title.mask, tbox->screen, make_RGB(0,0,0));
+    draw_on_image( tbox->screen, ldata->title.mask );
+    draw_image( tbox->screen, ldata->title.spot, -15,40, &r, 0 );
+    draw_on_screen( tbox->screen );
+    draw_image( tbox->screen, ldata->title.mask, 0, 0, &c, 0 );
+    return NULL;
+}
 static void* slide_title_in( struct toolbox* tbox, float progress )
 {
+    struct rectangle c = { 0,0, 192, 108 };
+    struct rectangle r = { 0,0, 64, 64 };
     struct level_data* ldata = tbox->data;
+    clear_image( ldata->title.mask, tbox->screen, make_RGB( 255*progress,255*progress,255*progress ));
+    draw_on_image( tbox->screen, ldata->title.mask );
+    draw_image( tbox->screen, ldata->title.spot, -15,40, &r, 0 );
+    draw_on_screen( tbox->screen );
+    draw_image( tbox->screen, ldata->title.mask, 0, 0, &c, 0 );
     draw_sprite( tbox->screen, ldata->title.sprite, cosine_interp(-100,20,progress),10);
     return NULL;
 }
@@ -248,9 +296,9 @@ static void* bling_title( struct toolbox* tbox, float progress )
  * level specific entities. Some entities require further
  * initialization, such as the timeline.
  * A timeline allows creating a sequence of events
- * on a, well.. time line. Each event has a start time
- * ,duration and callback function the will get called
- * each time the timeline is updated, if the event
+ * on a, well.. time line. Each event has a start time,
+ * duration and callback function the will get called
+ * each time the timeline is updated and if the event
  * is active.
  * We use a timeline to animate the title, creating 3
  * events: (1) slide the title into the screen (2)
@@ -272,18 +320,27 @@ static struct level_data* create_level_data( struct screen* screen )
     play_animation( ldata->tree.sprite, ldata->tree.windblow );
 
     ldata->timeline = create_timeline();
-        append_event( ldata->timeline, 1*SECOND, 1*SECOND,  slide_title_in );
+        append_event( ldata->timeline, 0,        1*SECOND,  before_title_in );
+        append_event( ldata->timeline, 0,        1*SECOND,  slide_title_in );
         append_event( ldata->timeline, 0,        4*SECONDS, bling_title );
         append_event( ldata->timeline, 0,        1*SECOND,  slide_title_out );
+
+    ldata->font = create_font( "res/pfont.png", 32, 4, screen );
+
+    ldata->title.mask = create_blank_image( screen, 192, 108, make_RGB(50,50,50) );
+    set_blend_mode( ldata->title.mask, MULTIPLY );
+    ldata->title.spot = create_image( "res/spot.png", screen );
+    set_blend_mode( ldata->title.spot, ADD );
     return ldata;
 }
 
-/* Even good things come to an end, and
+/* All good things come to an end, and
  * just like after a fine dinner, someone has to do
  * the dishes.
  */
 static void destroy_level_data( struct level_data* ldata )
 {
+    destroy_font( ldata->font );
     cleanup_title( &ldata->title );
     cleanup_tree( &ldata->tree );
     destroy_image( ldata->grass_tile );
@@ -293,16 +350,17 @@ static void destroy_level_data( struct level_data* ldata )
     free( ldata );
 }
 
-/* **prepare\_level()** is called by Cage before the level is
- * requested to update frames. This is the place
+/* **prepare\_level()** is called by Cage before the game loop
+ * starts to update frames. This is the place
  * to prepare the level and its data.
  */
 static int prepare_level( struct toolbox* tbox )
 {
     /* screen_size( tbox->screen, 1024/5, 576/5 ) ; */
-    screen_size( tbox->screen, 1024, 576 ) ;
-    screen_color( tbox->screen, make_RGB( 170,210,250 ) );
+    /* screen_size( tbox->screen, 1024, 576 ) ; */
+
     tbox->data = create_level_data( tbox->screen );
+    screen_color( tbox->screen, make_RGB( 170,210,250 ) );
     return tbox->data == 0 ? -1 : 0;
 }
 
@@ -317,6 +375,8 @@ static void draw_level( struct toolbox* tbox )
     struct level_data* ldata = tbox->data;
     struct rectangle tile_size = { 0,0,16,16 };
     unsigned int i;
+    char fps[10];
+    sprintf(fps,"FPS:%02d",1000/tbox->stopwatch);
 
     if ( ldata->wizard->sprite->active_animation == ldata->wizard->spell ) {
         if ( ldata->wizard->sprite->current_frame > 1 )
@@ -326,7 +386,6 @@ static void draw_level( struct toolbox* tbox )
     }
 
     for ( i = 0 ; i < strlen(LEVEL) ; i++ ) {
-        /* draw tiles from level map string */
         if ( LEVEL[i] != ' ' ) {
             int x = 16 * ( i%13 );
             int y = 16 * ( i/13 );
@@ -339,8 +398,10 @@ static void draw_level( struct toolbox* tbox )
     draw_sprite( tbox->screen, 
                  ldata->wizard->sprite, 
                  xy( ldata->wizard->pos.x, ldata->wizard->pos.y) );
-}
 
+    draw_text( tbox->screen, ldata->font, fps,75,3 );
+
+}
 
 /* **update\_level()** is called by the Cage game loop for every frame
  * and has to update the game state ( animations, positions, etc..)
