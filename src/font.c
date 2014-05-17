@@ -36,8 +36,9 @@ static uint32_t get_pixel32( uint32_t* pixels, int pitch, int x, int y ) {
 }
 
 int load_font( struct font*     image,
-               struct screen*   screen,
-               const char*      bitmap) 
+               const char*      filepath,
+               int ncols, int nrows,
+               struct screen*   screen)
 {
     uint32_t* pixels = NULL;
     int pitch = 0;
@@ -46,22 +47,22 @@ int load_font( struct font*     image,
     int rows;
     int i;
 
-    if ( load_image( &image->image, screen, bitmap ) == -1 ) return -1;
+    if ( load_image( &image->image, screen, filepath ) == -1 ) return -1;
     if ( lock_image( &image->image, (void**) &pixels, &pitch ) == -1 ) return -1;
     
     bg_color = pixels[0];
 
-    cell_w = image->image.width / 16;
-    cell_h = image->image.height / 16;
+    cell_w = image->image.width / ncols ;
+    cell_h = image->image.height / nrows;
 
     top = cell_h;
     base_a = cell_h;
 
     curr_char = 0;
 
-    for( rows = 0; rows < 16; ++rows ) {
+    for( rows = 0; rows < nrows; ++rows ) {
         int cols;
-        for( cols = 0; cols < 16; ++cols ) {
+        for( cols = 0; cols < ncols; ++cols ) {
             int p_col, p_row;
             image->chars[ curr_char ].x = cell_w * cols;
             image->chars[ curr_char ].y = cell_h * rows;
@@ -135,7 +136,7 @@ int load_font( struct font*     image,
     image->space = cell_w / 2;
     image->newline = base_a - top;
 
-    for( i = 0; i < 256; ++i ) {
+    for( i = 0; i < ncols*nrows; ++i ) {
         image->chars[ i ].y += top;
         image->chars[ i ].h -= top;
     }
@@ -145,10 +146,10 @@ int load_font( struct font*     image,
 }
 
 
-struct font* create_font( struct screen* screen, const char* pathname )
+struct font* create_font( const char* filepath, int cols, int rows, struct screen* screen )
 {
     struct font* f = malloc( sizeof( struct font ) );
-    if ( load_font( f, screen, pathname ) == -1 ) {
+    if ( load_font( f, filepath, cols, rows, screen ) == -1 ) {
         free( f );
         return NULL;
     }
@@ -180,7 +181,7 @@ void draw_text ( struct screen* screen, struct font* image, const char* text, in
             default: {
                int ascii = (unsigned char)text[ i ];
                draw_image( screen, &image->image, curX, curY, &image->chars[ ascii ], 0.0);
-               curX += image->chars[ ascii ].w + 1;
+               curX += image->chars[ ascii ].w + 1 - 1;
              }
         }
     }

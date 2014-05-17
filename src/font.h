@@ -45,7 +45,7 @@ struct font {
  *
  * @return New font, ready to use
  */
-struct font* create_font( struct screen* screen, const char* filepath );
+struct font* create_font( const char* filepath, int cols, int rows, struct screen* screen );
 
 /* Destory an existing font
  * @font Font to cleanup and deallocate
@@ -58,7 +58,7 @@ void destroy_font( struct font* font );
  *
  * @return -1 on error
  */
-int load_font ( struct font* font, struct screen* screen, const char* filepath );
+int load_font ( struct font* font, const char* filepath, int cols, int rows, struct screen* screen );
 
 /* Free any internally allocated resources for the font
  * @font Font to cleanup
