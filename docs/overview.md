@@ -41,13 +41,16 @@ contains a set of resources such as your game's screen and keyboard,
 as well as a reserved spot to store your custom data.
 
 
-## Sprites & Animation
+## Sprites, Animations and Timelines
 Coming soon...
 
 ## Keyboard & Gamepad Input
 Coming soon...
 
 ## Music & Sound Effects
+Coming soon...
+
+## Lighting & Effects
 Coming soon...
 
 ## Tricks & Patterns

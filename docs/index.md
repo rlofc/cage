@@ -16,20 +16,20 @@ However, apart of knowing it is in there you will not have
 to deal with SDL directly.
 
 ```c
-int prepare( struct toolbox* tb )
+int prepare( struct toolbox* tbox )
 {
-    tb->drawer = create_font( tb->screen, "font.png" );
-    return ( tb->drawer ? 0 : -1 );
+    tbox->data = create_font( "font.png", tbox->screen );
+    return ( tbox->data ? 0 : -1 );
 }
 
-void update( struct toolbox* tb )
+void update( struct toolbox* tbox )
 {
-    draw_text( tb->screen, tb->drawer, "Hello, World", xy( 0, 0 ) );
+    draw_text( tbox->screen, tbox->data, "Hello, World", xy( 0, 0 ) );
 }
 
-void teardown( struct toolbox* tb )
+void teardown( struct toolbox* tbox )
 {
-    destroy_font( tb->drawer );
+    destroy_font( tbox->data );
 }
 
 int main(int argc, char ** argv)
