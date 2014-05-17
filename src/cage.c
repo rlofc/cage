@@ -132,8 +132,8 @@ static void prepare_screen( struct screen* screen, const struct settings* settin
 
 static void teardown_screen( struct screen* screen )
 {
-    SDL_DestroyRenderer( screen->impl );
     SDL_DestroyWindow( screen->window );
+    SDL_DestroyRenderer( screen->impl );
 }
 
 static void message_box( struct screen* screen, const char* title, const char* message )
