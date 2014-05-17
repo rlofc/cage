@@ -1,6 +1,8 @@
 #ifndef TOOLBOX_H_W7RODJL2
 #define TOOLBOX_H_W7RODJL2
 
+#include <stdint.h>
+
 struct gamestate;
 
 /* Game toolbox passed to state callbacks
