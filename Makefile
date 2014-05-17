@@ -49,11 +49,13 @@ INFO_COLOR=\x1b[35;01m
 all: $(LIBRARY) extra
 
 $(LIBRARY): $(OBJECTS) $(INIPARSER_OBJECTS)
+	@mkdir -p build
 	@echo -e "Archiving $(INFO_COLOR)$(LIBRARY)$(NO_COLOR)"
 	@ar rcs $(LIBRARY) $(OBJECTS) $(INIPARSER_OBJECTS)
 	@echo "Done!"
 
 obj/%.o: src/%.c
+	@mkdir -p obj
 	@echo -e "Building $(INFO_COLOR)$@$(NO_COLOR)"
 	@$(CC) $< -o $@ $(CFLAGS) $(WARNINGS)
 
