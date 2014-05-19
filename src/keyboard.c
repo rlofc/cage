@@ -19,8 +19,12 @@
  *    3. This notice may not be removed or altered from any source
  *    distribution.
  */
+#include "internals.h"
 #include "keyboard.h"
 #include <SDL.h>
+
+static struct keyboard global_keyboard;
+struct keyboard* keyboard = &global_keyboard;
 
 uint8_t KB_SPACE = SDL_SCANCODE_SPACE;
 uint8_t KB_RIGHT = SDL_SCANCODE_RIGHT;
@@ -33,7 +37,7 @@ uint8_t KB_S     = SDL_SCANCODE_S;
 uint8_t KB_A     = SDL_SCANCODE_A;
 uint8_t KB_D     = SDL_SCANCODE_D;
 
-int key_pressed( struct keyboard* keyboard, uint8_t key ) {
+int key_pressed( uint8_t key ) {
     if ( keyboard->keys[ key ] ) {
         if ( keyboard->states[ key ] == 0 ) {
             keyboard->states[ key ] = 1;
@@ -45,6 +49,6 @@ int key_pressed( struct keyboard* keyboard, uint8_t key ) {
     return 0;
 }
 
-int key_down( struct keyboard* keyboard, uint8_t key ) {
+int key_down( uint8_t key ) {
     return ( keyboard->keys[ key ] );
 }

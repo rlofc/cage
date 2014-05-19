@@ -122,7 +122,7 @@ void cleanup_sprite ( struct sprite* resource );
  *
  * @return -1 on error
  */
-void draw_sprite ( struct screen* screen, struct sprite* resource,  int x, int y );
+void draw_sprite ( struct sprite* resource,  int x, int y );
 
 
 /* Update the sprite animation state

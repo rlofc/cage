@@ -24,20 +24,22 @@
 
 #include <SDL.h>
 #include "utils.h"
-#include "screen.h"
+#include "color.h"
 
 /* Use images to draw on screen, or as basis for sprites and fonts.
- * Images are read from a file and can be used to draw
+ * Images can be read from a file or created empty and can be used to draw
  * or to provide frames for sprites or characters for fonts.
  *
  * The simplest form of creating an image is by using <create_image>:
  *
  *     struct image* image;
- *     image = create_image("path/to/image.png", screen );
+ *     image = create_image("path/to/image.png" );
  *
- * You have to associate an image with a screen. You will
- * get a screen inside the <toolbox> argument passed to each
- * one of the game loop functions.
+ * Images can also be used to draw **on** instead of the screen:
+ *
+ *     draw_on_image( image );
+ *     ...
+ *     draw_on_screen();
  *
  * Images don't just disappear. You will have to explicitly
  * get rid of any image you create using <create_image> by calling
@@ -73,15 +75,19 @@ enum blend_mode {
 
 /* Create a ready to use image
  * @filepath The full path of the image file
- * @screen The screen to associate the image with
  *
- * @return <image> pointer or 0 on failure
+ * @return <image> pointer or NULL on failure
  */
-struct image* create_image( const char* filepath, struct screen* screen );
+struct image* create_image( const char* filepath );
 
 /* Create a blank image
+ * @width The width of the blank image
+ * @height The height of the blank image
+ * @color The default color of the blank image
+ *
+ * @return <image> pointer or NULL on failure
  */
-struct image* create_blank_image( struct screen* screen, int w, int h, struct color color );
+struct image* create_blank_image( int width, int height, struct color color );
 
 /* Destroy a created image
  * @image A valid <image> pointer created using <create_image>
@@ -90,12 +96,11 @@ void destroy_image( struct image* image );
 
 /* Load a image from an image file (PNG, JPG, etc..)
  * @image Already allocated image resource
- * @screen The screen to associate the image with
  * @filepath The full path of the image file
  *
  * @return -1 on error
  */
-int load_image( struct image* image, struct screen* screen, const char* filepath );
+int load_image( struct image* image, const char* filepath );
 
 /* Cleanup an initialized image resource
  * @image Loaded image to cleanup
@@ -109,8 +114,8 @@ int cleanup_image ( struct image* image );
 
 /* Lock a image to get pixel level access
  * @image Image to lock
- * @pixels pointer to pixels
- * @pitch pixel pitch
+ * @pixels pointer to update with the pixels pointer
+ * @pitch pointer to update with the pixel pitch 
  *
  * @return 0 on success or -1 on error
  */
@@ -118,11 +123,12 @@ int lock_image ( struct image* image, void** pixels, int* pitch );
 
 /* Unlock a locked image once your done with it
  * @image Locked image to unlock
+ *
+ * @return 0 on success or -1 on error
  */
 int unlock_image ( struct image* image );
 
 /* Draw an image on the screen
- * @screen Screen to draw on
  * @image Image to draw
  * @x X position
  * @y Y position
@@ -130,26 +136,26 @@ int unlock_image ( struct image* image );
  * @angle Rotate image in degrees
  *
  */
-void draw_image ( struct screen* screen, 
-                  struct image* image, 
+void draw_image ( struct image* image, 
                   int x, int y, 
                   struct rectangle* clip, 
                   double angle );
 
 /* Switch to draw on an image instead of the actual screen
+ * @image Image to draw on to
  */
-void draw_on_image( struct screen* screen, struct image* image );
-
-/* Switch back to draw on the actual screen
- */
-void draw_on_screen( struct screen* screen );
+void draw_on_image( struct image* image );
 
 /* Set the method to use when drawing an image
+ * @image <image> The blend method will work for
+ * @blend_mode The blend method to apply
  */
 void set_blend_mode( struct image* image, enum blend_mode blend_mode );
 
 /* Fills the entire image with a color
+ * @image Image to clear
+ * @color Color the use as fill
  */
-void clear_image( struct image* image, struct screen* screen, struct color color );
+void clear_image( struct image* image, struct color color );
 
 #endif /* end of include guard: image */

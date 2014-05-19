@@ -20,6 +20,7 @@
  *    distribution.
  */
 #include "cage.h"
+#include "internals.h"
 #include "image.h"
 #include "sound.h"
 #include <SDL.h>
@@ -29,7 +30,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-
 
 /* global toolbox so we can 
  * cleanup using atexit()
@@ -112,7 +112,7 @@ static void teardown_audio_device(void)
     Mix_CloseAudio();
 }
 
-static void prepare_screen( struct screen* screen, const struct settings* settings )
+static void prepare_screen( const struct settings* settings )
 {
     SDL_Window* window;
     SDL_Renderer* renderer;
@@ -130,22 +130,37 @@ static void prepare_screen( struct screen* screen, const struct settings* settin
     screen->offset_y = 0;
 }
 
-static void teardown_screen( struct screen* screen )
+static void teardown_screen( void )
 {
     SDL_DestroyWindow( screen->window );
     SDL_DestroyRenderer( screen->impl );
 }
 
-static void message_box( struct screen* screen, const char* title, const char* message )
+static void message_box( const char* title, const char* message )
 {
     SDL_ShowSimpleMessageBox( 0, title, message, screen->window );
+}
+
+void exit_with_error_msg( const char* msg )
+{
+    message_box( "Cage", msg );
+    exit(1);
+}
+
+#define ERROR_BUF_SIZE 1024*32
+static char error_msgs_buffer[ERROR_BUF_SIZE];
+
+void error_msg( const char* msg )
+{
+    strncat( error_msgs_buffer, "\n", ERROR_BUF_SIZE-1 );
+    strncat( error_msgs_buffer, msg , ERROR_BUF_SIZE-1 );
 }
 
 static void cleanup(void)
 {
     toolbox->next->teardown(toolbox);
     teardown_audio_device();
-    teardown_screen( toolbox->screen );
+    teardown_screen();
     free( toolbox );
     teardown_sdl();
 }
@@ -155,8 +170,6 @@ int gameloop(struct gamestate* state)
     bool quit = false;
 
     struct settings  settings = { 640, 360, 192, 108 };
-    struct screen    screen;
-    struct keyboard  keyboard;
     struct gamestate next;
 
     Uint32 start;
@@ -167,17 +180,18 @@ int gameloop(struct gamestate* state)
     read_conf_file( &settings );
 
     prepare_sdl();
-    prepare_screen( &screen, &settings );
+    prepare_screen( &settings );
     prepare_audio_device();
 
     toolbox = malloc( sizeof( struct toolbox ) );
     atexit(cleanup);
     toolbox->data = NULL;
-    toolbox->screen = &screen;
-    toolbox->keyboard = &keyboard;
 
+    toolbox->next = state;
     if (state->prepare( toolbox ) == -1 ) {
-        message_box( &screen, "Cage broke!", "Game state initialization failed!" );
+        error_msg( "Game state initialization failed!" );
+        message_box( "Cage broke!", error_msgs_buffer );
+        /* message_box( "Cage broke!", "Game state initialization failed!" ); */
         exit(1);
     }
 
@@ -191,7 +205,7 @@ int gameloop(struct gamestate* state)
                 quit = true;
                 break;
         }
-        SDL_RenderClear(screen.impl);
+        SDL_RenderClear(screen->impl);
 
         /* limit framerate to ~60FPS */
         now = SDL_GetTicks();
@@ -201,12 +215,13 @@ int gameloop(struct gamestate* state)
         next = *state;
         toolbox->stopwatch = now - start;
 
-        toolbox->keyboard->keys = SDL_GetKeyboardState(NULL);
+        keyboard->keys = SDL_GetKeyboardState(NULL);
+
         toolbox->next = &next;
         state->frame(toolbox);
         start = now;
         
-        SDL_RenderPresent(screen.impl);
+        SDL_RenderPresent(screen->impl);
 
         if ( next.frame != state->frame ) {
             state->teardown( toolbox );
@@ -214,7 +229,7 @@ int gameloop(struct gamestate* state)
             toolbox->stopwatch = 0;
             toolbox->data = NULL;
             if (state->prepare( toolbox ) == -1 ) {
-                message_box( &screen, "Cage broke!", "Game state initialization failed!" );
+                message_box( "Cage broke!", "Game state initialization failed!" );
                 exit(1);
             }
         }

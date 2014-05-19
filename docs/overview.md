@@ -37,8 +37,8 @@ game loop tasks:
 
 To help you with dealing with your game's state and resources,
 cage will provide you with a "toolbox". The <toolbox> structure
-contains a set of resources such as your game's screen and keyboard,
-as well as a reserved spot to store your custom data.
+a reserved spot to store your custom data, a stop watch indicating
+how much time passed since the last frame and a transition game state.
 
 
 ## Sprites, Animations and Timelines

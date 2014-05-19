@@ -24,6 +24,8 @@
 
 #include <math.h>
 
+/* cldoc:begin-category(Utilities) */
+
 /* Just a simple rectangle shape for image operations
  */
 struct rectangle {
@@ -39,6 +41,8 @@ struct point {
     float x;
     float y;
 };
+
+/* cldoc:end-category() */
 
 #define xy(X,Y) X,Y
 

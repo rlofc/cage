@@ -99,4 +99,7 @@ struct gamestate
  */
 int gameloop(struct gamestate* state);
 
+void exit_with_error_msg( const char* msg );
+void error_msg( const char* msg );
+
 #endif /* end of include guard: NGX_H_F8WRBKFT */

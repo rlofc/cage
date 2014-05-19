@@ -24,6 +24,7 @@
 int prepare_sprite ( struct sprite* sprite, 
                      struct image* image, int frame_width, int frame_height )
 {
+    if ( image == NULL || sprite == NULL ) return -1;
     sprite->image = image;
     sprite->frame_width = frame_width;
     sprite->frame_height = frame_height;
@@ -37,7 +38,7 @@ void cleanup_sprite ( struct sprite* sprite )
     sprite->active_animation = NULL;
 }
 
-void draw_sprite ( struct screen* screen, struct sprite* sprite,  int x, int y )
+void draw_sprite ( struct sprite* sprite,  int x, int y )
 {
     struct rectangle r;
     r.w = sprite->frame_width;
@@ -57,17 +58,17 @@ void draw_sprite ( struct screen* screen, struct sprite* sprite,  int x, int y )
         r.y = row * sprite->frame_height;
 
     }
-    draw_image( screen, sprite->image, x, y, &r, 0.0 );
+    draw_image( sprite->image, x, y, &r, 0.0 );
 }
 
 struct sprite* create_sprite( struct image* image, int w, int h)
 {
-    struct sprite* f = malloc( sizeof( struct sprite ) );
-    if ( prepare_sprite( f, image, w, h ) == -1 ) {
-        free( f );
+    struct sprite* sprite = malloc( sizeof( struct sprite ) );
+    if ( prepare_sprite( sprite, image, w, h ) == -1 ) {
+        free( sprite );
         return NULL;
     }
-    return f;
+    return sprite;
 }
 
 void destroy_sprite( struct sprite* sprite )

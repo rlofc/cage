@@ -29,13 +29,9 @@ struct gamestate;
  */
 struct toolbox {
     /* user data; set as you like */
-    void*             data;
-    /* top most game screen */
-    struct screen*    screen;
+    void* data;
     /* elapsed time since last frame ( in render-time only ) */
-    uint32_t          stopwatch;
-    /* last captured event ( in render-time only ) */
-    struct keyboard*  keyboard;
+    float stopwatch;
     /* optionally set this to the next state ( in render-time only ) */
     struct gamestate* next;
 };

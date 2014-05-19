@@ -20,13 +20,15 @@
  *    distribution.
  */
 #include "image.h"
+#include "screen.h"
+#include "internals.h"
 #include <memory.h>
 #include <stdlib.h>
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_surface.h>
 
-int load_image( struct image* image, struct screen* screen, const char* filepath) 
+int load_image( struct image* image, const char* filepath) 
 {
     int ret = -1;
     SDL_Surface* s = NULL;
@@ -98,8 +100,7 @@ int unlock_image( struct image* image )
     return 0;
 }
 
-void draw_image( struct screen*  screen,
-                 struct image*   image, 
+void draw_image( struct image*   image, 
                            int   x, 
                            int   y, 
              struct rectangle*   clip, 
@@ -128,14 +129,17 @@ void draw_image( struct screen*  screen,
 	SDL_RenderCopyEx( screen->impl, image->impl, &sdl_clip, &render_quad, angle, NULL, SDL_FLIP_NONE );
 }
 
-struct image* create_image( const char* filepath, struct screen* screen ) 
+struct image* create_image( const char* filepath ) 
 {
     struct image* image = malloc( sizeof (struct image) );
-    load_image( image, screen, filepath );
+    if ( load_image( image, filepath ) != 0 ) {
+        free( image );
+        image = NULL;
+    }
     return image;
 }
 
-struct image* create_blank_image( struct screen* screen, int w, int h, struct color color ) 
+struct image* create_blank_image( int w, int h, struct color color ) 
 {
     void * pixels;
     int pitch;
@@ -157,15 +161,9 @@ struct image* create_blank_image( struct screen* screen, int w, int h, struct co
     return image;
 }
 
-void draw_on_image( struct screen* screen, struct image* image )
+void draw_on_image( struct image* image )
 {
     int ret = SDL_SetRenderTarget( screen->impl, image->impl );
-    if (ret !=0 ) exit(1);
-}
-
-void draw_on_screen( struct screen* screen )
-{
-    int ret = SDL_SetRenderTarget( screen->impl, NULL );
     if (ret !=0 ) exit(1);
 }
 
@@ -180,7 +178,7 @@ void set_blend_mode( struct image* image, enum blend_mode blend_mode )
     SDL_SetTextureBlendMode( image->impl, sdl_mode );
 }
 
-void clear_image( struct image* image, struct screen* screen, struct color color )
+void clear_image( struct image* image, struct color color )
 {
     int ret;
     Uint8 r,g,b,a;
@@ -188,10 +186,10 @@ void clear_image( struct image* image, struct screen* screen, struct color color
     rect.x = 0; rect.y = 0; rect.w = image->width; rect.h = image->height;
     SDL_GetRenderDrawColor( screen->impl, &r, &g, &b, &a );
     SDL_SetRenderDrawColor( screen->impl, color.red, color.green, color.blue, color.alpha );
-    draw_on_image( screen, image );
+    draw_on_image( image );
     ret = SDL_RenderFillRect( screen->impl, &rect );
     if (ret != 0 ) exit(1);
-    draw_on_screen( screen );
+    draw_on_screen();
     SDL_SetRenderDrawColor( screen->impl, r,g,b,a );
 }
 

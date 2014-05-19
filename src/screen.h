@@ -25,42 +25,31 @@
 #include <SDL.h>
 #include "color.h"
 
-/* The game drawing surface
- * A screen is you drawing surface for you to draw on
- * your game images, sprites and text.
- * 
- * Your <gamestate> functions will get a screen 
- * to work with inside the <toolbox> parameter.
- */
-struct screen
-{
-    /* internal SDL renderer */
-    SDL_Renderer* impl;
-    /* internal SDL window */
-    SDL_Window* window;
-    /* Rendering X offset, for scrolling or shaking */
-    float offset_x;
-    /* Rendering Y offset, for scrolling or shaking */
-    float offset_y;
-};
+/* cldoc:begin-category(Screen) */
 
 /* Change screen background color
  */
-void screen_color( struct screen* screen, struct color background );
+void screen_color( struct color background );
 
 /* Change screen size
  */
-void screen_size( struct screen* screen, int width, int height );
+void screen_size( int width, int height );
 
 /* Shake the "camera". Works well for explosions and blows.
  * The screen will keep shaking as long as you call <shake_screen>.
  * To return the screen to its normal state, you should complement
  * with calling <relax_screen>.
  */
-void shake_screen( struct screen* screen, float stopwatch );
+void shake_screen( float stopwatch );
 
 /* Undo the screen shake effect.
  */
-void relax_screen( struct screen* screen, float stopwatch );
+void relax_screen( float stopwatch );
+
+/* Switch back to draw on the actual screen
+ */
+void draw_on_screen( void );
+
+/* cldoc:end-category() */
 
 #endif /* end of include guard: SCREEN_H_PCFZWLG4 */

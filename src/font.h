@@ -45,7 +45,7 @@ struct font {
  *
  * @return New font, ready to use
  */
-struct font* create_font( const char* filepath, int cols, int rows, struct screen* screen );
+struct font* create_font( const char* filepath, int cols, int rows );
 
 /* Destory an existing font
  * @font Font to cleanup and deallocate
@@ -58,7 +58,7 @@ void destroy_font( struct font* font );
  *
  * @return -1 on error
  */
-int load_font ( struct font* font, const char* filepath, int cols, int rows, struct screen* screen );
+int load_font ( struct font* font, const char* filepath, int cols, int rows );
 
 /* Free any internally allocated resources for the font
  * @font Font to cleanup
@@ -76,6 +76,6 @@ int cleanup_font ( struct font* font );
  *
  * @return -1 on error
  */
-void draw_text ( struct screen* screen, struct font* font, const char* text, int x, int y);
+void draw_text ( struct font* font, const char* text, int x, int y);
 
 #endif /* end of include guard: FONT_H_XYTHJIBT */

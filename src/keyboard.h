@@ -52,10 +52,6 @@
  *      }
  *
  */
-struct keyboard {
-    const uint8_t* keys;
-    int            states[256];
-};
 
 /* Check if a specific key has been pressed.
  * @keyboard Keyboard to test for
@@ -66,7 +62,7 @@ struct keyboard {
  *
  * @return 1 if the key was pressed or 0 otherwise
  */
-int key_pressed( struct keyboard* keyboard, uint8_t key );
+int key_pressed( uint8_t key );
 
 /* Check if a specific key is being held down.
  * @keyboard Keyboard to test for
@@ -76,7 +72,7 @@ int key_pressed( struct keyboard* keyboard, uint8_t key );
  *
  * @return 1 if the key is being held down or 0 otherwise
  */
-int key_down( struct keyboard* keyboard, uint8_t key );
+int key_down( uint8_t key );
 
 /* cldoc:begin-category(Constants) */
 extern uint8_t KB_SPACE;

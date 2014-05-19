@@ -18,13 +18,13 @@ to deal with SDL directly.
 ```c
 int prepare( struct toolbox* tbox )
 {
-    tbox->data = create_font( "font.png", tbox->screen );
+    tbox->data = create_font( "font.png" );
     return ( tbox->data ? 0 : -1 );
 }
 
 void update( struct toolbox* tbox )
 {
-    draw_text( tbox->screen, tbox->data, "Hello, World", xy( 0, 0 ) );
+    draw_text( tbox->data, "Hello, World", xy( 0, 0 ) );
 }
 
 void teardown( struct toolbox* tbox )

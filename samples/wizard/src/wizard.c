@@ -77,13 +77,15 @@ struct wizard {
  * initial position.
  *
  */
-static struct wizard* create_wizard( struct screen* screen )
+static struct wizard* create_wizard( void )
 {
     struct wizard* wizard = calloc(1, sizeof( struct wizard ) );
 
-    wizard->sprite = create_sprite( create_image( "res/wizard.png", screen ) , 32, 32);
+    wizard->sprite = create_sprite( create_image( "res/wizard.png" ) , 32, 32);
+    if ( wizard->sprite == NULL ) goto error;
 
     wizard->walk_right = create_animation();
+    if ( wizard->walk_right == NULL ) goto error;
         add_frame(wizard->walk_right, 4, 200, &PREP_SPEED);
         add_frame(wizard->walk_right, 0, 200, &NORMAL_SPEED); /* <------+ */
         add_frame(wizard->walk_right, 1, 200, &NORMAL_SPEED); /*        | */
@@ -94,6 +96,7 @@ static struct wizard* create_wizard( struct screen* screen )
     wizard->walk_right->loop_to   = 4; /* --------------------------+     */
 
     wizard->walk_left = create_animation();
+    if ( wizard->walk_left == NULL ) goto error;
         add_frame(wizard->walk_left, 15, 200, &PREP_SPEED_L);
         add_frame(wizard->walk_left, 11, 200, &NORMAL_SPEED_L); /* <------+ */
         add_frame(wizard->walk_left, 10, 200, &NORMAL_SPEED_L); /*        | */
@@ -104,10 +107,12 @@ static struct wizard* create_wizard( struct screen* screen )
     wizard->walk_left->loop_to   = 4; /* -----------------------------+     */
 
     wizard->stand = create_animation();
+    if ( wizard->stand == NULL ) goto error;
         add_frame(wizard->stand, 5, 100, &NO_SPEED); /* <---+ */
     wizard->stand->mode = FREEZE_LAST_FRAME; /* ------------+ */
 
     wizard->spell = create_animation();
+    if ( wizard->spell == NULL ) goto error;
         add_frame(wizard->spell, 5, 200, &NO_SPEED);
         add_frame(wizard->spell, 6, 200, &NO_SPEED);
         add_frame(wizard->spell, 7, 100, &NO_SPEED); /* <--+ */
@@ -121,6 +126,11 @@ static struct wizard* create_wizard( struct screen* screen )
     wizard->pos.y = BASE_Y;
 
     return wizard;
+
+error:
+    free( wizard );
+    error_msg( "Umable to create wizard" );
+    return NULL;
 }
 
 /* Destroying a wizard means destroying each and every 
@@ -151,9 +161,9 @@ static void animate_wizard( struct wizard* wizard, struct toolbox* tbox )
     const void* px;
 
     struct animation* active_anim;
-    active_anim = key_down( tbox->keyboard, KB_SPACE ) ? wizard->spell :
-                  key_down( tbox->keyboard, KB_RIGHT ) ? wizard->walk_right :
-                  key_down( tbox->keyboard, KB_LEFT ) ? wizard->walk_left :
+    active_anim = key_down( KB_SPACE ) ? wizard->spell :
+                  key_down( KB_RIGHT ) ? wizard->walk_right :
+                  key_down( KB_LEFT ) ? wizard->walk_left :
                                                       wizard->stand;
     play_animation( wizard->sprite, active_anim );
 
@@ -179,15 +189,30 @@ struct game_title {
     struct image* spot;
 };
 
-static void prepare_title( struct game_title* title, struct screen* screen )
+static int prepare_title( struct game_title* title )
 {
     int f;
-    title->sprite = create_sprite( create_image( "res/title.png", screen ), 70, 15 );
+    title->sprite = create_sprite( create_image( "res/title.png" ), 70, 15 );
+    if ( title->sprite == NULL ) goto error;
     title->bling = create_animation();
+    if ( title->bling == NULL ) goto error;
         add_frame( title->bling, 0, SECOND/2, NULL );
         for ( f = 5 ; f >= 0 ; f-- )
             add_frame( title->bling, f, SECOND/10 , NULL );
         title->bling->mode = FREEZE_LAST_FRAME;
+
+    title->mask = create_blank_image( 192, 108, make_RGB(50,50,50) );
+    if ( title->mask == NULL ) goto error;
+    set_blend_mode( title->mask, MULTIPLY );
+    title->spot = create_image( "res/spot.png" );
+    if ( title->spot == NULL ) goto error;
+    set_blend_mode( title->spot, ADD );
+
+    return 0;
+
+error:
+    error_msg( "Umable to prepare title" );
+    return -1;
 }
 
 static void cleanup_title( struct game_title* title )
@@ -204,14 +229,21 @@ struct tree {
     struct animation* windblow;
 };
 
-static void prepare_tree( struct tree* tree, struct screen* screen )
+static int prepare_tree( struct tree* tree )
 {
-    tree->sprite = create_sprite( create_image("res/tree.png", screen ) , 32,32 );
+    tree->sprite = create_sprite( create_image("res/tree.png" ) , 32,32 );
+    if ( tree->sprite == NULL ) goto error;
     tree->windblow = create_animation();
+    if ( tree->windblow == NULL ) goto error;
         add_frame( tree->windblow, 0, 1*SECOND, NULL );
         add_frame( tree->windblow, 1, 1*SECOND, NULL );
     tree->windblow->loop_from = 0;
     tree->windblow->loop_to = 1;
+    return 0;
+
+error:
+    error_msg( "Umable to prepare tree" );
+    return -1;
 }
 
 static void cleanup_tree( struct tree* tree )
@@ -254,38 +286,39 @@ static void* before_title_in( struct toolbox* tbox, float progress )
     struct rectangle r = { 0,0, 64, 64 };
     struct level_data* ldata = tbox->data;
     progress;
-    clear_image( ldata->title.mask, tbox->screen, make_RGB(0,0,0));
-    draw_on_image( tbox->screen, ldata->title.mask );
-    draw_image( tbox->screen, ldata->title.spot, -15,40, &r, 0 );
-    draw_on_screen( tbox->screen );
-    draw_image( tbox->screen, ldata->title.mask, 0, 0, &c, 0 );
+    clear_image( ldata->title.mask, make_RGB(0,0,0));
+    draw_on_image( ldata->title.mask );
+    draw_image( ldata->title.spot, -15,40, &r, 0 );
+    draw_on_screen();
+    draw_image( ldata->title.mask, 0, 0, &c, 0 );
     return NULL;
 }
+
 static void* slide_title_in( struct toolbox* tbox, float progress )
 {
     struct rectangle c = { 0,0, 192, 108 };
     struct rectangle r = { 0,0, 64, 64 };
     struct level_data* ldata = tbox->data;
-    clear_image( ldata->title.mask, tbox->screen, make_RGB( 255*progress,255*progress,255*progress ));
-    draw_on_image( tbox->screen, ldata->title.mask );
-    draw_image( tbox->screen, ldata->title.spot, -15,40, &r, 0 );
-    draw_on_screen( tbox->screen );
-    draw_image( tbox->screen, ldata->title.mask, 0, 0, &c, 0 );
-    draw_sprite( tbox->screen, ldata->title.sprite, cosine_interp(-100,20,progress),10);
+    clear_image( ldata->title.mask, make_RGB( 255*progress,255*progress,255*progress ));
+    draw_on_image( ldata->title.mask );
+    draw_image( ldata->title.spot, -15,40, &r, 0 );
+    draw_on_screen();
+    draw_image( ldata->title.mask, 0, 0, &c, 0 );
+    draw_sprite( ldata->title.sprite, cosine_interp(-100,20,progress),10);
     return NULL;
 }
 
 static void* slide_title_out( struct toolbox* tbox, float progress )
 {
     struct level_data* ldata = tbox->data;
-    draw_sprite( tbox->screen, ldata->title.sprite, cosine_interp(20,200,progress),10);
+    draw_sprite( ldata->title.sprite, cosine_interp(20,200,progress),10);
     return NULL;
 }
 
 static void* bling_title( struct toolbox* tbox, float progress )
 {
     struct level_data* ldata = tbox->data;
-    draw_sprite( tbox->screen, ldata->title.sprite, 20,10);
+    draw_sprite( ldata->title.sprite, 20,10);
     if ( progress < 0.1 )
         play_animation( ldata->title.sprite, ldata->title.bling );
     animate_sprite( ldata->title.sprite, tbox->stopwatch );
@@ -307,31 +340,39 @@ static void* bling_title( struct toolbox* tbox, float progress )
  * Using the SECOND and SECONDS constant is for
  * the sake of readability only.
  */
-static struct level_data* create_level_data( struct screen* screen )
+static struct level_data* create_level_data( void )
 {
     struct level_data* ldata = calloc( 1, sizeof ( struct level_data ) );
-    ldata->wizard = create_wizard( screen );
+    ldata->wizard = create_wizard();
+    if ( ldata->wizard == NULL ) goto error;
 
-    prepare_title( &ldata->title, screen );
-    prepare_tree( &ldata->tree, screen );
+    if ( prepare_title( &ldata->title ) != 0 ) goto error;
+    if ( prepare_tree( &ldata->tree ) != 0 ) goto error;
 
-    ldata->grass_tile = create_image( "res/grass_tile.png", screen );
-    ldata->earth_tile = create_image( "res/earth_tile.png", screen );
+    ldata->grass_tile = create_image( "res/grass_tile.png" );
+    if ( ldata->grass_tile == NULL ) goto error;
+
+    ldata->earth_tile = create_image( "res/earth_tile.png" );
+    if ( ldata->earth_tile == NULL ) goto error;
+
     play_animation( ldata->tree.sprite, ldata->tree.windblow );
 
     ldata->timeline = create_timeline();
-        append_event( ldata->timeline, 0,        1*SECOND,  before_title_in );
-        append_event( ldata->timeline, 0,        1*SECOND,  slide_title_in );
-        append_event( ldata->timeline, 0,        4*SECONDS, bling_title );
-        append_event( ldata->timeline, 0,        1*SECOND,  slide_title_out );
+    if ( ldata->timeline == NULL ) goto error;
+        append_event( ldata->timeline, 0, 1*SECOND,  before_title_in );
+        append_event( ldata->timeline, 0, 1*SECOND,  slide_title_in );
+        append_event( ldata->timeline, 0, 4*SECONDS, bling_title );
+        append_event( ldata->timeline, 0, 1*SECOND,  slide_title_out );;
 
-    ldata->font = create_font( "res/pfont.png", 32, 4, screen );
+    ldata->font = create_font( "res/pfont.png", 32, 4 );
+    if ( ldata->font == NULL ) goto error;
 
-    ldata->title.mask = create_blank_image( screen, 192, 108, make_RGB(50,50,50) );
-    set_blend_mode( ldata->title.mask, MULTIPLY );
-    ldata->title.spot = create_image( "res/spot.png", screen );
-    set_blend_mode( ldata->title.spot, ADD );
     return ldata;
+
+error:
+    free( ldata );
+    error_msg( "Unable to create level data" );
+    return NULL;
 }
 
 /* All good things come to an end, and
@@ -356,19 +397,16 @@ static void destroy_level_data( struct level_data* ldata )
  */
 static int prepare_level( struct toolbox* tbox )
 {
-    /* screen_size( tbox->screen, 1024/5, 576/5 ) ; */
-    /* screen_size( tbox->screen, 1024, 576 ) ; */
-
-    tbox->data = create_level_data( tbox->screen );
-    screen_color( tbox->screen, make_RGB( 170,210,250 ) );
-    return tbox->data == 0 ? -1 : 0;
+    tbox->data = create_level_data();
+    screen_color( make_RGB( 170,210,250 ) );
+    return tbox->data == NULL ? -1 : 0;
 }
 
-/* **draw\_level()** is called for every frame and draws
+/* **draw\_level()** draws the game frames, using
  * the content of the level (the wizard, level tiles, monsters, etc..).
  * It uses the level_data stored inside the toolbox as well
  * as the LEVEL string that represents the level map using
- * characters for tile selection.
+ * ascii chars as tiles index;
  */
 static void draw_level( struct toolbox* tbox )
 {
@@ -376,31 +414,29 @@ static void draw_level( struct toolbox* tbox )
     struct rectangle tile_size = { 0,0,16,16 };
     unsigned int i;
     char fps[10];
-    sprintf(fps,"FPS:%02d",1000/tbox->stopwatch);
+    sprintf(fps,"FPS:%02.0f",1000/tbox->stopwatch);
 
     if ( ldata->wizard->sprite->active_animation == ldata->wizard->spell ) {
         if ( ldata->wizard->sprite->current_frame > 1 )
-            shake_screen( tbox->screen, tbox->stopwatch );
+            shake_screen( tbox->stopwatch );
     } else {
-        relax_screen( tbox->screen, tbox->stopwatch );
+        relax_screen( tbox->stopwatch );
     }
 
     for ( i = 0 ; i < strlen(LEVEL) ; i++ ) {
         if ( LEVEL[i] != ' ' ) {
             int x = 16 * ( i%13 );
             int y = 16 * ( i/13 );
-            draw_image( tbox->screen, 
-                        LEVEL[i] == '-' ? ldata->grass_tile : ldata->earth_tile, 
+            draw_image( LEVEL[i] == '-' ? ldata->grass_tile : ldata->earth_tile, 
                         x, y, &tile_size, 0 ); 
         }
     }
-    draw_sprite( tbox->screen, ldata->tree.sprite, 100,56);
-    draw_sprite( tbox->screen, 
-                 ldata->wizard->sprite, 
+
+    draw_sprite( ldata->tree.sprite, 100,56);
+    draw_sprite( ldata->wizard->sprite, 
                  xy( ldata->wizard->pos.x, ldata->wizard->pos.y) );
 
-    draw_text( tbox->screen, ldata->font, fps,75,3 );
-
+    draw_text( ldata->font, fps,75,3 );
 }
 
 /* **update\_level()** is called by the Cage game loop for every frame
@@ -414,7 +450,7 @@ static void update_level( struct toolbox* tbox )
     animate_sprite( ldata->tree.sprite, tbox->stopwatch );
     draw_level( tbox );
     update_timeline( ldata->timeline, tbox ); 
-    if ( key_pressed( tbox->keyboard, KB_ESC ) ) exit(0);
+    if ( key_pressed( KB_ESC ) ) exit(0);
 }
 
 /* **teardown\_level()** is called by the Cage game loop once the state
@@ -424,7 +460,7 @@ static void update_level( struct toolbox* tbox )
 static void teardown_level( struct toolbox* tbox )
 {
     struct level_data* ldata = tbox->data;
-    destroy_level_data( ldata );
+    if ( ldata != NULL ) destroy_level_data( ldata );
 }
 
 /* Nothing much in here, just a setting the
@@ -433,6 +469,10 @@ static void teardown_level( struct toolbox* tbox )
  */
 int main( void )
 {
-    struct gamestate root = { prepare_level, update_level, teardown_level };
-    return gameloop( &root );
+    struct gamestate my_level = { 
+        prepare_level, 
+        update_level, 
+        teardown_level 
+    };
+    return gameloop( &my_level );
 }
