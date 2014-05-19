@@ -18,44 +18,5 @@
 #
 #    3. This notice may not be removed or altered from any source
 #    distribution.
-CC = gcc
-CFLAGS = `sdl2-config --cflags` -I../../src/ -c
-CFLAGS += -O3
-# CFLAGS += -g3
-ifeq ($(UNAME_S),Linux)
-	CFLAGS += -std=c89
-endif
-WARNINGS = -Werror -Wall -Wextra -pedantic-errors -Wformat=2 -Wno-import \
-		   -Wimplicit -Wmain -Wchar-subscripts -Wsequence-point -Wmissing-braces \
-		   -Wparentheses -Winit-self -Wswitch-enum -Wstrict-aliasing=2 -Wundef \
-		   -Wshadow -Wpointer-arith -Wbad-function-cast -Wcast-qual -Wcast-align \
-		   -Wwrite-strings -Wstrict-prototypes -Wold-style-definition -Wmissing-prototypes \
-		   -Wmissing-declarations -Wredundant-decls -Wnested-externs -Winline \
-		   -Wdisabled-optimization -Wunused-macros -Wno-unused
-LDFLAGS =
-LIBRARIES = `sdl2-config --static-libs` -L../../build/ -lSDL2_image -lSDL2_mixer -lcage
-SOURCES = $(wildcard src/*.c)
-OBJECTS = $(addprefix obj/,$(patsubst src/%,%,$(SOURCES:.c=.o) ) )
 BINARY = build/wizard
-
-NO_COLOR=\x1b[0m
-INFO_COLOR=\x1b[35;01m
-
-.PHONY: all
-
-all: $(BINARY) resources
-
-$(BINARY): $(OBJECTS) ../../build/libcage.a
-	@echo -e "Building $(INFO_COLOR)$(BINARY)$(NO_COLOR)"
-	@$(CC) $(LDFLAGS) $(OBJECTS) -o $@ $(LIBRARIES)
-	@echo "Done!"
-
-obj/%.o: src/%.c
-	@echo -e "Building $(INFO_COLOR)$@$(NO_COLOR)"
-	@$(CC) $< -o $@ $(CFLAGS) $(WARNINGS)
-
-resources:
-	@cp -rf res build/
-
-clean:
-	rm -rf $(BINARY) $(OBJECTS) build/res
+include ../common.mk
