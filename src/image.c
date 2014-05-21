@@ -132,7 +132,7 @@ void draw_image( struct image*   image,
 struct image* create_image( const char* filepath ) 
 {
     struct image* image = malloc( sizeof (struct image) );
-    if ( load_image( image, filepath ) != 0 ) {
+    if ( image != NULL && load_image( image, filepath ) != 0 ) {
         free( image );
         image = NULL;
     }
@@ -145,19 +145,21 @@ struct image* create_blank_image( int w, int h, struct color color )
     int pitch;
     SDL_Rect r;
     struct image* image = malloc( sizeof (struct image) );
-    r.x = 0; r.y = 0; r.w = w; r.h = h;
-    image->impl = SDL_CreateTexture( screen->impl, SDL_PIXELFORMAT_RGBA8888, 
-                                      SDL_TEXTUREACCESS_TARGET, w, h );
-    SDL_SetRenderTarget( screen->impl, image->impl );
-    SDL_SetRenderDrawColor( screen->impl, color.red, color.green, color.blue, color.alpha );
-    SDL_RenderClear( screen->impl );
-    SDL_SetRenderTarget( screen->impl, NULL );
-    if ( image->impl == NULL ) {
-        free( image ); 
-        return NULL;
+    if ( image != NULL ) {
+        r.x = 0; r.y = 0; r.w = w; r.h = h;
+        image->impl = SDL_CreateTexture( screen->impl, SDL_PIXELFORMAT_RGBA8888, 
+                SDL_TEXTUREACCESS_TARGET, w, h );
+        SDL_SetRenderTarget( screen->impl, image->impl );
+        SDL_SetRenderDrawColor( screen->impl, color.red, color.green, color.blue, color.alpha );
+        SDL_RenderClear( screen->impl );
+        SDL_SetRenderTarget( screen->impl, NULL );
+        if ( image->impl == NULL ) {
+            free( image ); 
+            return NULL;
+        }
+        image->width = w;
+        image->height = h;
     }
-    image->width = w;
-    image->height = h;
     return image;
 }
 

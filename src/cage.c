@@ -205,6 +205,10 @@ int game_loop( prepare_func_t prepare, update_func_t update, teardown_func_t tea
     prepare_audio_device();
 
     toolbox = malloc( sizeof( struct toolbox ) );
+    if ( toolbox == NULL ) {
+        exit(1);
+    }
+
     atexit(cleanup);
     toolbox->state = &state;
     toolbox->data = NULL;

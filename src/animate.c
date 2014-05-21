@@ -25,18 +25,22 @@
 struct animation* create_animation(void)
 {
     struct animation* ret = calloc( 1, sizeof( struct animation ) );
-    ret->mode = LOOP_FRAMES;
-    ret->loop_from = 0;
-    ret->loop_to   = 0;
+    if ( ret != NULL ) {
+        ret->mode = LOOP_FRAMES;
+        ret->loop_from = 0;
+        ret->loop_to = 0;
+    }
     return ret;
 }
 
 void add_frame( struct animation* animation, int index_in_sprite, int duration, void* userdata)
 {
-    animation->frames[animation->n_frames].frame = index_in_sprite;
-    animation->frames[animation->n_frames].duration = duration;
-    animation->frames[animation->n_frames].userdata = userdata;
-    animation->n_frames++;
+    if ( animation->n_frames < MAX_FRAMES_PER_ANIMATION ) {
+        animation->frames[animation->n_frames].frame = index_in_sprite;
+        animation->frames[animation->n_frames].duration = duration;
+        animation->frames[animation->n_frames].userdata = userdata;
+        animation->n_frames++;
+    }
 }
 
 void destroy_animation(struct animation* animation)

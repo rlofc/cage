@@ -5,7 +5,8 @@
 struct timeline* create_timeline(void)
 {
     struct timeline* timeline = malloc( sizeof( struct timeline ) );
-    init_timeline( timeline );
+    if ( timeline != NULL )
+        init_timeline( timeline );
     return timeline;
 }
 
@@ -14,7 +15,7 @@ void destroy_timeline( struct timeline* timeline )
     free( timeline );
 }
 
-int append_event( struct timeline* timeline, uint32_t wait, 
+int append_event( struct timeline* timeline, uint32_t wait,
                    uint32_t duration, void* (*callback) ( void* data, float elapsed_ms, float progress ) )
 {
     if ( timeline->next_event != -1 ) return -1;

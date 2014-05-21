@@ -64,7 +64,7 @@ void draw_sprite ( struct sprite* sprite,  int x, int y )
 struct sprite* create_sprite( struct image* image, int w, int h)
 {
     struct sprite* sprite = malloc( sizeof( struct sprite ) );
-    if ( prepare_sprite( sprite, image, w, h ) == -1 ) {
+    if ( sprite != NULL && prepare_sprite( sprite, image, w, h ) == -1 ) {
         free( sprite );
         return NULL;
     }
