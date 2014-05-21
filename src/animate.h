@@ -24,7 +24,6 @@
 
 #define MAX_FRAMES_PER_ANIMATION 256
 
-/* cldoc:begin-category(Constants) */
 /* Animation playback mode */
 enum animation_mode {
     /* Loop back to <loop_from> */
@@ -34,9 +33,8 @@ enum animation_mode {
     /* stop at the last frame */
     FREEZE_LAST_FRAME
 };
-/* cldoc:end-category() */
 
-/* Animation frames and durations for a sprite.
+/** Animation frames and durations for a sprite.
  * You may use the same animation definition
  * for any number of sprites:
  *
@@ -75,17 +73,27 @@ struct animation {
     int loop_to;
 };
 
-
-
-/* Create a new animation
+/**
+ * Create a new animation.
+ *
+ * @return New animation instance, ready to have frames
+ * added using add_frame().
  */
 struct animation* create_animation(void);
 
-/* Destory a previously created animation
+/**
+ * Destory a previously created animation.
+ * @param animation A previously created /ref animation to deallocate.
  */
 void destroy_animation(struct animation* animation);
 
-/* Add a new frame to an animation
+/**
+ * Add a new frame to an /ref animation.
+ * @param animation Animation to add the frame to.
+ * @param index_in_sprite The frame index in the sprite frames image.
+ * @param duration The time in milliseconds to play this frame.
+ * @param userdata Any data you would like to associate with this frame.
+ *        You will get this data pointer back when this frame gets played.
  */
 void add_frame( struct animation* animation, int index_in_sprite, int duration, void* userdata);
 

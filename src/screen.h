@@ -25,24 +25,27 @@
 #include <SDL.h>
 #include "color.h"
 
-/* cldoc:begin-category(Screen) */
+/* cldoc:begin-category(Graphics) */
 
 /* Change screen background color
  */
 void screen_color( struct color background );
 
-/* Change screen size
+/** 
+ * Change screen size
  */
 void screen_size( int width, int height );
 
-/* Shake the "camera". Works well for explosions and blows.
- * The screen will keep shaking as long as you call <shake_screen>.
+/** 
+ * Shake the "camera". Works well for explosions and blows.
+ * The screen will keep shaking as long as you call shake_screen().
  * To return the screen to its normal state, you should complement
- * with calling <relax_screen>.
+ * with calling relax_screen().
  */
 void shake_screen( float stopwatch );
 
-/* Undo the screen shake effect.
+/** 
+ * Undo the screen shake effect.
  */
 void relax_screen( float stopwatch );
 

@@ -1,0 +1,38 @@
+image
+================================
+
+image :c:func:`create_image` as
+
+
+struct image
+------------
+.. doxygenstruct:: image
+
+create_image
+------------
+.. doxygenfunction:: create_image
+
+create_blank_image
+------------------
+.. doxygenfunction:: create_blank_image
+
+destroy_image
+-------------
+.. doxygenfunction:: destroy_image
+
+load_image
+----------
+.. doxygenfunction:: load_image
+
+cleanup_image
+-------------
+.. doxygenfunction:: cleanup_image
+
+lock_image
+-------------
+.. doxygenfunction:: lock_image
+
+
+unlock_image
+-------------
+.. doxygenfunction:: unlock_image

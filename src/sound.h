@@ -23,7 +23,8 @@
 #define AUDIO_H_IJ4N19XA
 #include <SDL_mixer.h>
 #include <stdbool.h>
-/* sound effect
+/**
+ * sound effect
  */
 struct sound
 {
@@ -31,27 +32,31 @@ struct sound
     int        channel;
 };
 
-/* Create a new sound resource from an OGG, WAV or MP3 file
+/**
+ * Create a new sound resource from an OGG, WAV or MP3 file
  */
 struct sound* create_sound( const char* filepath );
 
-/* Cleanup and deallocate a sound resource
+/**
+ * Cleanup and deallocate a sound resource
  */
 void destroy_sound( struct sound* sound );
 
-/* Initialize an already allocated sound resource
- * @pathname file path to the sound file in ogg, wav or mp3 format
+/**
+ * Initialize an already allocated sound resource
+ * @param pathname file path to the sound file in ogg, wav or mp3 format
  *
  * The sound file in pathname will be loaded and stored
- * for use in @resource
+ * for use in /ref resource
  *
  * @return 0 or higher means success
  *         -1 or lower means failure
  */
 int load_sound( struct sound* sound, const char* filepath );
 
-/* Play sound Resource
- * @sound resource to play
+/**
+ * Play sound Resource
+ * @param sound resource to play
  *
  * Will play a valid sound resource
  * 
@@ -60,11 +65,14 @@ int load_sound( struct sound* sound, const char* filepath );
  */
 int play_sound( struct sound* sound );
 
-/* Stop playing a sound
+/**
+ * Stop playing a sound
  */
 void stop_sound( struct sound* sound );
 
-/* cleanup a loaded sound resource */
+/**
+ * cleanup a loaded sound resource
+ */
 void cleanup_sound( struct sound* sound );
 
 bool is_playing( struct sound* sound );

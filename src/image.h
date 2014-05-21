@@ -26,11 +26,12 @@
 #include "utils.h"
 #include "color.h"
 
-/* Use images to draw on screen, or as basis for sprites and fonts.
+/**
+ * Use images to draw on screen, or as basis for sprites and fonts.
  * Images can be read from a file or created empty and can be used to draw
  * or to provide frames for sprites or characters for fonts.
  *
- * The simplest form of creating an image is by using <create_image>:
+ * The simplest form of creating an image is by using create_image():
  *
  *     struct image* image;
  *     image = create_image("path/to/image.png" );
@@ -38,12 +39,12 @@
  * Images can also be used to draw **on** instead of the screen:
  *
  *     draw_on_image( image );
- *     ...
+ *     // draw images, sprites or text
  *     draw_on_screen();
  *
  * Images don't just disappear. You will have to explicitly
- * get rid of any image you create using <create_image> by calling
- * <destroy_image>:
+ * get rid of any image you create using create_image() by calling
+ * destroy_image():
  *
  *     destroy_image( image );
  *
@@ -51,16 +52,20 @@
  */
 struct image
 {
-    /* internal sdl representation */
+    /** 
+     * Images reference SDL_Textures, so you can use
+     * it to work with SDL directly, should you need
+     * any extra functionality that Cage does not provide
+     */
     SDL_Texture* impl;
-    /* texture width */
+    /** Image width in pixels */
     int width;
-    /* texture height */
+    /** Image height in pixels */
     int height;
 };
 
-/* cldoc:begin-category(Constants) */
-/* Image blending mode
+/**
+ * Image blending mode
  * Setting the blend mode changes how an image
  * is being drawn on the screen on or another image.
  * This is similar to the way Gimp or Photoshop apply layers
@@ -71,39 +76,44 @@ enum blend_mode {
     ADD,
     MULTIPLY
 };
-/* cldoc:end-category() */
 
-/* Create a ready to use image
- * @filepath The full path of the image file
+/**
+ * Create a ready to use image
+ * @param filepath The full path of the image file
+ * @note hello
  *
- * @return <image> pointer or NULL on failure
+ * @return \ref image pointer or NULL on failure
  */
 struct image* create_image( const char* filepath );
 
-/* Create a blank image
- * @width The width of the blank image
- * @height The height of the blank image
- * @color The default color of the blank image
+/**
+ * Create a blank image
+ * @param width The width of the blank image
+ * @param height The height of the blank image
+ * @param color The default color of the blank image
  *
- * @return <image> pointer or NULL on failure
+ * @return \ref image pointer or NULL on failure
  */
 struct image* create_blank_image( int width, int height, struct color color );
 
-/* Destroy a created image
- * @image A valid <image> pointer created using <create_image>
+/**
+ * Destroy a created image
+ * @param image A valid \ref image pointer created using create_image()
  */
 void destroy_image( struct image* image );
 
-/* Load a image from an image file (PNG, JPG, etc..)
- * @image Already allocated image resource
- * @filepath The full path of the image file
+/**
+ * Load a image from an image file (PNG, JPG, etc..)
+ * @param image Already allocated image resource
+ * @param filepath The full path of the image file
  *
  * @return -1 on error
  */
 int load_image( struct image* image, const char* filepath );
 
-/* Cleanup an initialized image resource
- * @image Loaded image to cleanup
+/**
+ * Cleanup an initialized image resource
+ * @param image Loaded image to cleanup
  *
  * Cleanup will free all internally allocated resources
  * for this image.
@@ -112,28 +122,31 @@ int load_image( struct image* image, const char* filepath );
  */
 int cleanup_image ( struct image* image );
 
-/* Lock a image to get pixel level access
- * @image Image to lock
- * @pixels pointer to update with the pixels pointer
- * @pitch pointer to update with the pixel pitch 
+/**
+ * Lock a image to get pixel level access
+ * @param image Image to lock
+ * @param pixels pointer to update with the pixels pointer
+ * @param pitch pointer to update with the pixel pitch 
  *
  * @return 0 on success or -1 on error
  */
 int lock_image ( struct image* image, void** pixels, int* pitch );
 
-/* Unlock a locked image once your done with it
- * @image Locked image to unlock
+/**
+ * Unlock a locked image once your done with it
+ * @param image Locked image to unlock
  *
  * @return 0 on success or -1 on error
  */
 int unlock_image ( struct image* image );
 
-/* Draw an image on the screen
- * @image Image to draw
- * @x X position
- * @y Y position
- * @clip Rectangle to draw
- * @angle Rotate image in degrees
+/**
+ * Draw an image on the screen
+ * @param image Image to draw
+ * @param x X position
+ * @param y Y position
+ * @param clip Rectangle to draw
+ * @param angle Rotate image in degrees
  *
  */
 void draw_image ( struct image* image, 
@@ -141,20 +154,23 @@ void draw_image ( struct image* image,
                   struct rectangle* clip, 
                   double angle );
 
-/* Switch to draw on an image instead of the actual screen
- * @image Image to draw on to
+/**
+ * Switch to draw on an image instead of the actual screen
+ * @param image Image to draw on to
  */
 void draw_on_image( struct image* image );
 
-/* Set the method to use when drawing an image
- * @image <image> The blend method will work for
- * @blend_mode The blend method to apply
+/**
+ * Set the method to use when drawing an image
+ * @param image \ref image The blend method will work for
+ * @param blend_mode The blend method to apply
  */
 void set_blend_mode( struct image* image, enum blend_mode blend_mode );
 
-/* Fills the entire image with a color
- * @image Image to clear
- * @color Color the use as fill
+/**
+ * Fills the entire image with a color
+ * @param image Image to clear
+ * @param color Color the use as fill
  */
 void clear_image( struct image* image, struct color color );
 

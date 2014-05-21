@@ -74,7 +74,6 @@ int key_pressed( uint8_t key );
  */
 int key_down( uint8_t key );
 
-/* cldoc:begin-category(Constants) */
 extern uint8_t KB_SPACE;
 extern uint8_t KB_RIGHT;
 extern uint8_t KB_LEFT;
@@ -85,6 +84,5 @@ extern uint8_t KB_W;
 extern uint8_t KB_S;
 extern uint8_t KB_A;
 extern uint8_t KB_D;
-/* cldoc:end-category() */
 
 #endif /* end of include guard: KEYBOARD_H_UQ7XHW8V */

@@ -24,9 +24,8 @@
 
 #include <math.h>
 
-/* cldoc:begin-category(Utilities) */
-
-/* Just a simple rectangle shape for image operations
+/**
+ * Just a simple rectangle shape for image operations
  */
 struct rectangle {
     float x;
@@ -35,21 +34,19 @@ struct rectangle {
     float h;
 };
 
-/* Point in sub-pixel space
+/**
+ * Point in sub-pixel space
  */
 struct point {
     float x;
     float y;
 };
 
-/* cldoc:end-category() */
-
 #define xy(X,Y) X,Y
 
-/* cldoc:begin-category(Utilities) */
-/* 1 second is 1000 milliseconds */
+/** 1 second is 1000 milliseconds */
 static int   SECOND       = 1000; 
-/* n seconds are n*1000 milliseconds */
+/** n seconds are n*1000 milliseconds */
 static int   SECONDS      = 1000; 
 
 static const double Pi = 3.14159265358979323846264338328;
@@ -72,7 +69,6 @@ static __inline float cosine_interp(float p1, float p2, float amount) {
     float m = (1-cos(amount*Pi))/2;
     return (p1*(1-m)+p2*m);
 }
-/* cldoc:end-category() */
 
 #define UNUSED(x) (void)(x)
 

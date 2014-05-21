@@ -40,7 +40,6 @@ OBJECTS = $(addprefix obj/,$(patsubst src/%,%,$(SOURCES:.c=.o) ) )
 INIPARSER_OBJECTS = $(addprefix obj/,$(patsubst src/%,%,$(INIPARSER_SOURCES:.c=.o) ) )
 LIBRARY = build/libcage.a
 CLDOC = python2 ~/.local/bin/cldoc
-INTERFACE = src/cage.h src/utils.h src/image.h src/screen.h src/sprite.h src/animate.h src/sound.h src/timeline.h src/toolbox.h src/font.h
 
 
 NO_COLOR=\x1b[0m
@@ -68,8 +67,8 @@ clean:
 
 doc:
 	@echo "Generating docs.."
-	@$(CLDOC) generate -x c `sdl2-config --cflags` -- --merge docs --output docs/build $(INTERFACE)
-	@cp -rf docs/images docs/build/
+	@doxygen cage
+	@cd sphinx && make html
 
 extra: $(LIBRARY)
 	cd samples/wizard && $(MAKE)
