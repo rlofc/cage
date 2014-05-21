@@ -156,7 +156,7 @@ static void destroy_wizard( struct wizard* wizard )
  * We use the user-data value as a speed constant. This
  * was setup as part of the animation.
  */
-static void animate_wizard( struct wizard* wizard, struct toolbox* tbox )
+static void animate_wizard( struct wizard* wizard, float elapsed_ms )
 {
     const void* px;
 
@@ -167,11 +167,9 @@ static void animate_wizard( struct wizard* wizard, struct toolbox* tbox )
                                                       wizard->stand;
     play_animation( wizard->sprite, active_anim );
 
-    if (( px = animate_sprite( wizard->sprite, tbox->stopwatch ) ) != NULL) {
+    if (( px = animate_sprite( wizard->sprite, elapsed_ms ) ) != NULL) {
         wizard->speed = *((const float*)px);
     }
-    /* speed = px & WIZARD_IS_WALKING ? 1 : px & WIZARD_IS_STOPPING ? 2 : 3; */
-    /* speed *= px & WIZARD_DIR_LEFT ? -1.0f : 1.0f; */
 
     wizard->pos.x += wizard->speed;
 }
@@ -252,9 +250,12 @@ static void cleanup_tree( struct tree* tree )
     destroy_animation( tree->windblow );
 }
 
-/* **level\_data** is stored inside toolbox->data.
- * The toolbox instance is being passed to our game
- * state functions.
+/* **level\_data** is stored in the state data
+ * variable.
+ * We populate the state data using the return
+ * value of the prepare state function.
+ * The same data pointer is passed back to
+ * the update and teardown functions.
  * This is the perfect place to store anything we
  * need to work with: characters, sprites, tiles,
  * timelines and the likes.
@@ -280,12 +281,13 @@ struct level_data {
  * based on the event progess/duration, making it ideal
  * for use with interpolation functions.
  */
-static void* before_title_in( struct toolbox* tbox, float progress )
+static void* before_title_in( void* data, float elapsed_ms, float progress )
 {
     struct rectangle c = { 0,0, 192, 108 };
     struct rectangle r = { 0,0, 64, 64 };
-    struct level_data* ldata = tbox->data;
-    progress;
+    struct level_data* ldata = data;
+    UNUSED(elapsed_ms);
+    UNUSED(progress);
     clear_image( ldata->title.mask, make_RGB(0,0,0));
     draw_on_image( ldata->title.mask );
     draw_image( ldata->title.spot, -15,40, &r, 0 );
@@ -294,11 +296,12 @@ static void* before_title_in( struct toolbox* tbox, float progress )
     return NULL;
 }
 
-static void* slide_title_in( struct toolbox* tbox, float progress )
+static void* slide_title_in( void* data, float elapsed_ms, float progress )
 {
     struct rectangle c = { 0,0, 192, 108 };
     struct rectangle r = { 0,0, 64, 64 };
-    struct level_data* ldata = tbox->data;
+    struct level_data* ldata = data;
+    UNUSED(elapsed_ms);
     clear_image( ldata->title.mask, make_RGB( 255*progress,255*progress,255*progress ));
     draw_on_image( ldata->title.mask );
     draw_image( ldata->title.spot, -15,40, &r, 0 );
@@ -308,20 +311,22 @@ static void* slide_title_in( struct toolbox* tbox, float progress )
     return NULL;
 }
 
-static void* slide_title_out( struct toolbox* tbox, float progress )
+static void* slide_title_out( void* data, float elapsed_ms,  float progress )
 {
-    struct level_data* ldata = tbox->data;
+    struct level_data* ldata = data;
+    UNUSED(elapsed_ms);
     draw_sprite( ldata->title.sprite, cosine_interp(20,200,progress),10);
     return NULL;
 }
 
-static void* bling_title( struct toolbox* tbox, float progress )
+static void* bling_title( void* data, float elapsed_ms, float progress )
 {
-    struct level_data* ldata = tbox->data;
+    struct level_data* ldata = data;
+    UNUSED(elapsed_ms);
     draw_sprite( ldata->title.sprite, 20,10);
     if ( progress < 0.1 )
         play_animation( ldata->title.sprite, ldata->title.bling );
-    animate_sprite( ldata->title.sprite, tbox->stopwatch );
+    animate_sprite( ldata->title.sprite, elapsed_ms );
     return NULL;
 }
 
@@ -395,32 +400,32 @@ static void destroy_level_data( struct level_data* ldata )
  * starts to update frames. This is the place
  * to prepare the level and its data.
  */
-static int prepare_level( struct toolbox* tbox )
+static void* prepare_level( void )
 {
-    tbox->data = create_level_data();
+    void* data = create_level_data();
     screen_color( make_RGB( 170,210,250 ) );
-    return tbox->data == NULL ? -1 : 0;
+    return data;
 }
 
 /* **draw\_level()** draws the game frames, using
  * the content of the level (the wizard, level tiles, monsters, etc..).
- * It uses the level_data stored inside the toolbox as well
+ * It uses the level_data stored inside the data arg as well
  * as the LEVEL string that represents the level map using
  * ascii chars as tiles index;
  */
-static void draw_level( struct toolbox* tbox )
+static void draw_level( void* data, float elapsed_ms )
 {
-    struct level_data* ldata = tbox->data;
+    struct level_data* ldata = data;
     struct rectangle tile_size = { 0,0,16,16 };
     unsigned int i;
     char fps[10];
-    sprintf(fps,"FPS:%02.0f",1000/tbox->stopwatch);
+    sprintf(fps,"FPS:%02.0f",1000/elapsed_ms);
 
     if ( ldata->wizard->sprite->active_animation == ldata->wizard->spell ) {
         if ( ldata->wizard->sprite->current_frame > 1 )
-            shake_screen( tbox->stopwatch );
+            shake_screen( elapsed_ms );
     } else {
-        relax_screen( tbox->stopwatch );
+        relax_screen( elapsed_ms );
     }
 
     for ( i = 0 ; i < strlen(LEVEL) ; i++ ) {
@@ -443,13 +448,13 @@ static void draw_level( struct toolbox* tbox )
  * and has to update the game state ( animations, positions, etc..)
  * as well as redraw the frame using **draw\_level()**.
  */
-static void update_level( struct toolbox* tbox )
+static void update_level( void* data, float elapsed_ms )
 {
-    struct level_data* ldata = tbox->data;
-    animate_wizard( ldata->wizard, tbox );
-    animate_sprite( ldata->tree.sprite, tbox->stopwatch );
-    draw_level( tbox );
-    update_timeline( ldata->timeline, tbox ); 
+    struct level_data* ldata = data;
+    animate_wizard( ldata->wizard, elapsed_ms );
+    animate_sprite( ldata->tree.sprite, elapsed_ms );
+    draw_level( data, elapsed_ms );
+    update_timeline( ldata->timeline, data, elapsed_ms ); 
     if ( key_pressed( KB_ESC ) ) exit(0);
 }
 
@@ -457,9 +462,9 @@ static void update_level( struct toolbox* tbox )
  * is invalidated (by setting a different game state) or when the 
  * game exits.
  */
-static void teardown_level( struct toolbox* tbox )
+static void teardown_level( void* data )
 {
-    struct level_data* ldata = tbox->data;
+    struct level_data* ldata = data;
     if ( ldata != NULL ) destroy_level_data( ldata );
 }
 

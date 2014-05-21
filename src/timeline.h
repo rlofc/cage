@@ -5,9 +5,7 @@
 
 #define MAX_TIMELINE_EVENTS 100
 
-struct toolbox;
-
-/* A sequence of timed events
+/** 
  * A timeline holds a sequence of events
  * on a, well.. time line. Each event has a start time,
  * a duration and a callback function.
@@ -32,7 +30,9 @@ struct timeline {
         /* Duration of the event */
         uint32_t ms_duration;
         /* Callback to call to */
-        void* (*callback) ( struct toolbox* t, float progress );
+        void* (*callback) ( void* data, 
+                            float elapsed_ms, 
+                            float progress );
     } events[MAX_TIMELINE_EVENTS];
     /* Number of registered events */
     int n_events;
@@ -44,38 +44,50 @@ struct timeline {
     int next_event;
 };
 
-/* Allocate and prepare a new timeline
+/**
+ * Allocate and prepare a new timeline
  * ready for use.
  *
  * @return - an allocated, ready to use timeline.
  */
 struct timeline* create_timeline(void);
 
-/* Destroy a previously created timeline
+/**
+ * Destroy a previously created timeline
  */
 void destroy_timeline( struct timeline* timeline );
 
-/* Append an event to the timeline
- * @timeline Timeline to append the event to
- * @wait Time to wait after the last event
- * @duration Time to actively call the callback or 0 for
- * a single call
- * @callback Callback function to call to
+/**
+ * Append an event to the timeline
+ * @param timeline Timeline to append the event to
+ * @param wait Time to wait after the last event
+ * @param duration Time to actively call the callback or 0 for
+ *                 a single call
+ * @param callback Callback function to call to
  *
  * @return -1 on error or the new event index
  */
-int append_event( struct timeline* timeline, uint32_t wait, 
-                   uint32_t duration, void* (*callback) ( struct toolbox* tbox, float progress ) );
+int append_event( struct timeline* timeline, 
+                  uint32_t wait, 
+                  uint32_t duration, 
+                  void* ( *callback ) ( void* data, 
+                                        float elapsed_ms, 
+                                        float progress ) );
 
-/* Update the timeline timers and invoke event callbacks
+/**
+ * Update the timeline timers and invoke event callbacks
  */
-void* update_timeline( struct timeline* timeline, struct toolbox* tbox );
+void* update_timeline( struct timeline* timeline, 
+                       void* data, 
+                       float elapsed_ms );
 
-/* Used to prepare an already allocated timeline
+/**
+ * Used to prepare an already allocated timeline
  */
 void init_timeline( struct timeline* timeline );
 
-/* Cleans a used timeline, but does not deallocate it
+/**
+ * Cleans a used timeline, but does not deallocate it
  */
 void cleanup_timeline( struct timeline* timeline );
 

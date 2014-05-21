@@ -74,4 +74,6 @@ static __inline float cosine_interp(float p1, float p2, float amount) {
 }
 /* cldoc:end-category() */
 
+#define UNUSED(x) (void)(x)
+
 #endif /* end of include guard: UTILS_H_EZIL3YD2 */
