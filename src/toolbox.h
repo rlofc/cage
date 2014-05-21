@@ -33,7 +33,7 @@ struct toolbox {
     /* elapsed time since last frame ( in render-time only ) */
     float stopwatch;
     /* optionally set this to the next state ( in render-time only ) */
-    struct gamestate* next;
+    struct gamestate* state;
 };
 
 #endif /* end of include guard: TOOLBOX_H_W7RODJL2 */

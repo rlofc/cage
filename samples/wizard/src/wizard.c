@@ -474,10 +474,8 @@ static void teardown_level( void* data )
  */
 int main( void )
 {
-    struct gamestate my_level = { 
+    return game_loop(
         prepare_level, 
         update_level, 
-        teardown_level 
-    };
-    return gameloop( &my_level );
+        teardown_level );
 }

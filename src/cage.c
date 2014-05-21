@@ -43,6 +43,13 @@ struct settings {
     int logical_height;
 };
 
+struct gamestate
+{
+    prepare_func_t prepare;
+    update_func_t update;
+    teardown_func_t teardown;
+} state = { NULL, NULL, NULL };
+
 static int read_conf_file( struct settings* settings )
 {
     FILE* fp;
@@ -158,25 +165,39 @@ void error_msg( const char* msg )
 
 static void cleanup(void)
 {
-    toolbox->next->teardown(toolbox);
+    toolbox->state->teardown(toolbox->data);
     teardown_audio_device();
     teardown_screen();
     free( toolbox );
     teardown_sdl();
 }
 
-int gameloop(struct gamestate* state)
+void game_state( prepare_func_t prepare, update_func_t update, teardown_func_t teardown )
+{
+    if ( toolbox->state->teardown != NULL ) toolbox->state->teardown( toolbox->data );
+    toolbox->state->prepare = prepare;
+    toolbox->state->update = update;
+    toolbox->state->teardown = teardown;
+    toolbox->stopwatch = 0;
+    toolbox->data = toolbox->state->prepare();
+    if ( toolbox->data == NULL ) {
+        error_msg( "Game state initialization failed!" );
+        message_box( "Cage broke!", error_msgs_buffer );
+        exit(1);
+    }
+}
+
+
+int game_loop( prepare_func_t prepare, update_func_t update, teardown_func_t teardown )
 {
     bool quit = false;
 
     struct settings  settings = { 640, 360, 192, 108 };
-    struct gamestate next;
 
     Uint32 start;
     Uint32 now ;
 
     SDL_Event event;
-
     read_conf_file( &settings );
 
     prepare_sdl();
@@ -185,15 +206,10 @@ int gameloop(struct gamestate* state)
 
     toolbox = malloc( sizeof( struct toolbox ) );
     atexit(cleanup);
+    toolbox->state = &state;
     toolbox->data = NULL;
 
-    toolbox->next = state;
-    if (state->prepare( toolbox ) == -1 ) {
-        error_msg( "Game state initialization failed!" );
-        message_box( "Cage broke!", error_msgs_buffer );
-        /* message_box( "Cage broke!", "Game state initialization failed!" ); */
-        exit(1);
-    }
+    game_state( prepare, update, teardown );
 
     start = SDL_GetTicks();
 
@@ -212,27 +228,14 @@ int gameloop(struct gamestate* state)
         if ( now-start < 16 ) SDL_Delay( 16 - (now-start) );
         now = SDL_GetTicks();
 
-        next = *state;
         toolbox->stopwatch = now - start;
 
         keyboard->keys = SDL_GetKeyboardState(NULL);
 
-        toolbox->next = &next;
-        state->frame(toolbox);
+        toolbox->state->update( toolbox->data, toolbox->stopwatch );
         start = now;
         
         SDL_RenderPresent(screen->impl);
-
-        if ( next.frame != state->frame ) {
-            state->teardown( toolbox );
-            *state = next;
-            toolbox->stopwatch = 0;
-            toolbox->data = NULL;
-            if (state->prepare( toolbox ) == -1 ) {
-                message_box( "Cage broke!", "Game state initialization failed!" );
-                exit(1);
-            }
-        }
     }
 
     return 0;
