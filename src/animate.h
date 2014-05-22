@@ -34,6 +34,16 @@ enum animation_mode {
     FREEZE_LAST_FRAME
 };
 
+/** Animation frame */
+struct frame {
+    /** frame number (top-left frame is 0) */
+    int frame;
+    /** duration of frame in milliseconds */
+    int duration;
+    /** user data */
+    void* userdata;
+};
+
 /** Animation frames and durations for a sprite.
  * You may use the same animation definition
  * for any number of sprites:
@@ -56,14 +66,7 @@ enum animation_mode {
  */
 struct animation {
     /* frames */
-    struct {
-        /* frame number (top-left frame is 0) */
-        int frame;
-        /* duration of frame in milliseconds */
-        int duration;
-        /* user data */
-        void* userdata;
-    } frames[MAX_FRAMES_PER_ANIMATION];
+    struct frame frames[MAX_FRAMES_PER_ANIMATION];
     /* number of frames for this animation */
     int n_frames;
     /* Animation playback mode */
@@ -88,13 +91,21 @@ struct animation* create_animation(void);
 void destroy_animation(struct animation* animation);
 
 /**
- * Add a new frame to an /ref animation.
- * @param animation Animation to add the frame to.
- * @param index_in_sprite The frame index in the sprite frames image.
- * @param duration The time in milliseconds to play this frame.
- * @param userdata Any data you would like to associate with this frame.
- *        You will get this data pointer back when this frame gets played.
+ * Add a new frame to an \ref animation
+ * @param animation Animation to add the frame to
+ * @param index_in_sprite The frame index in the sprite frames image
+ * @param duration The time in milliseconds to play this frame
+ * @param userdata Any data you would like to associate with this frame
+ *        You will get this data pointer back when this frame gets played
  */
 void add_frame( struct animation* animation, int index_in_sprite, int duration, void* userdata);
+
+/**
+ * Add a new set of frames to an \ref animation.
+ * @param animation Animation to add the frame to
+ * @param nframes Number of frames to add
+ * @param frames The frames to add as an array of \ref frame structs 
+ */
+void add_frames( struct animation* animation, int nframes, struct frame frames[] );
 
 #endif /* end of include guard: ANIMATE_H_QVL0GFIR */
