@@ -71,6 +71,10 @@ clean:
 
 doc:
 	@echo "Generating docs.."
+	@awk -f literst.awk samples/state/src/state.c > docs/source/state_sample.rst
+	@awk -f literst.awk samples/image/src/image.c > docs/source/image_sample.rst
+	@awk -f literst.awk samples/sprite/src/sprite.c > docs/source/sprite_sample.rst
+	@awk -f literst.awk samples/timeline/src/timeline.c > docs/source/timeline_sample.rst
 	@awk -f literst.awk samples/wizard/src/wizard.c > docs/source/wizard.rst
 	@doxygen cage
 	@cd docs && make html

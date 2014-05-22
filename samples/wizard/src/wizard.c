@@ -1,5 +1,5 @@
-/* samples/Wizard
- * ==============
+/* samples / wizard.c
+ * ==================
  */
 #include "cage.h"
 #include <string.h>

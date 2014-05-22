@@ -17,26 +17,10 @@ However, Cage is completely transparent, so you can "reach in" and work
 with SDL directly, should you want to.
 
 
-TL;DR
------
+The short version
+-----------------
 
-Here is the shortest game you can write using Cage:
-
-.. highlight:: c
-
-::
-
-    void update_game( void* data, float elapsed_ms )
-    {
-        exit(0);
-    }
-
-    int main(int argc, char ** argv)
-    {
-        return game_loop( NULL, update, NULL );
-    }
-
-And here is the second shortest one:
+Here is one of the shortest and most boring game you can write using Cage:
 
 .. highlight:: c
 
@@ -63,7 +47,7 @@ And here is the second shortest one:
     }
 
 Now, if you want the full picture all at once, jump over to :doc:`wizard`.
-Or, follow along with the docs and learn Cage piece by piece.
+Or, follow along with the docs and learn Cage "bar by bar". 
 
 .. toctree::
    :hidden:
@@ -76,6 +60,10 @@ Or, follow along with the docs and learn Cage piece by piece.
    animate
    timeline
    sound 
+   state_sample
+   image_sample
+   sprite_sample
+   timeline_sample
    wizard
 
 

@@ -19,6 +19,10 @@ destroy_image
 -------------
 .. doxygenfunction:: destroy_image
 
+draw_image
+----------
+.. doxygenfunction:: draw_image
+
 load_image
 ----------
 .. doxygenfunction:: load_image
@@ -30,7 +34,6 @@ cleanup_image
 lock_image
 -------------
 .. doxygenfunction:: lock_image
-
 
 unlock_image
 -------------

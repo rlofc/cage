@@ -24,13 +24,13 @@
 
 #define MAX_FRAMES_PER_ANIMATION 256
 
-/* Animation playback mode */
+/** Animation playback mode */
 enum animation_mode {
-    /* Loop back to <loop_from> */
+    /** Loop back to loop_from */
     LOOP_FRAMES,
-    /* go back in reverse and then return endlessly */
+    /** go back in reverse and then return endlessly */
     PINGPONG_FRAMES,
-    /* stop at the last frame */
+    /** stop at the last frame */
     FREEZE_LAST_FRAME
 };
 
