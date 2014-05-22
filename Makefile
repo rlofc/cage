@@ -61,6 +61,10 @@ obj/%.o: src/%.c
 	@$(CC) $< -o $@ $(CFLAGS) $(WARNINGS)
 
 clean:
+	@cd samples/state && $(MAKE) clean
+	@cd samples/image && $(MAKE) clean
+	@cd samples/sprite && $(MAKE) clean
+	@cd samples/timeline && $(MAKE) clean
 	@cd samples/wizard && $(MAKE) clean
 	@rm -rf $(LIBRARY) $(OBJECTS) $(INIPARSER_OBJECTS)
 	@rm -rf docs/build
@@ -72,4 +76,8 @@ doc:
 	@cd docs && make html
 
 extra: $(LIBRARY)
+	cd samples/state && $(MAKE)
+	cd samples/image && $(MAKE)
+	cd samples/sprite && $(MAKE)
+	cd samples/timeline && $(MAKE)
 	cd samples/wizard && $(MAKE)
