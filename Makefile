@@ -63,13 +63,13 @@ obj/%.o: src/%.c
 clean:
 	@cd samples/wizard && $(MAKE) clean
 	@rm -rf $(LIBRARY) $(OBJECTS) $(INIPARSER_OBJECTS)
-	@rm -rf sphinx/build
+	@rm -rf docs/build
 
 doc:
 	@echo "Generating docs.."
-	@awk -f literst.awk samples/wizard/src/wizard.c > sphinx/source/wizard.rst
+	@awk -f literst.awk samples/wizard/src/wizard.c > docs/source/wizard.rst
 	@doxygen cage
-	@cd sphinx && make html
+	@cd docs && make html
 
 extra: $(LIBRARY)
 	cd samples/wizard && $(MAKE)
