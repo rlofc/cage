@@ -3,13 +3,28 @@
 
 Welcome to Cage
 ===============
+
 Cage is an educational game development library. 
 It is designed and developed to help teach 2D game development using the C programming language.
 Cage prefers readability over flexibility and ease-of-use over features, in the spirit of
 **less is more**.
 
-Cage is designed to make it easy for poeple with very little
-game or graphics development experience to jump right in. 
+
+.. raw:: html
+
+    <hr/>
+
+    <iframe src="http://ghbtns.com/github-btn.html?user=rlofc&repo=cage&type=watch&count=true&size=large"
+      allowtransparency="true" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+
+    <iframe src="http://ghbtns.com/github-btn.html?user=rlofc&repo=cage&type=fork&count=true&size=large"
+      allowtransparency="true" frameborder="0" scrolling="0" width="156px" height="30px"></iframe>
+
+    <hr/>
+
+
+Cage aims to make it easier for beginner game developers to write games in C,
+emphesizing **beginner** and **C**.
 
 Internally, Cage contains (and restraints) SDL2, the Simple Direct-media Library.
 Apart of knowing it is in there, you will not have to deal with SDL directly.
@@ -46,7 +61,17 @@ Here is one of the shortest and most boring game you can write using Cage:
         return game_loop( prepare, update, teardown );
     }
 
-Now, if you want the full picture all at once, jump over to :doc:`wizard`.
+
+Granted, there are far better ways to write actual games.
+If C gives you the shivers, Lua and Haxe are excellent
+alternatives that have great game development toolkits. If
+you are not a beginner, you may want to work with SDL2
+(or Allegro) directly, with no "bars" between you and the raw toolkit.
+
+However, if you enjoy the beauty of C and want minimal cognitive burden
+than Cage is a viable option.
+
+If you want the full picture all at once, jump over to :doc:`wizard`.
 Or, follow along with the docs and learn Cage "bar by bar". 
 
 .. toctree::
