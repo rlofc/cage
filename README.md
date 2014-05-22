@@ -52,7 +52,7 @@ In **Mac OS/X** or **Linux**, simply:
 ### Getting Started
 
 Review the (evolving) Wizard sample code:
-[http://rlofc.github.io/cage/samples/wizard/doc/wizard.html](http://rlofc.github.io/cage/samples/wizard/doc/wizard.html)
+[http://rlofc.github.io/cage/wizard.html](http://rlofc.github.io/cage/wizard.html)
 
 ### Documentation
 
