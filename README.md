@@ -1,4 +1,4 @@
-![Cage](https://raw.githubusercontent.com/rlofc/cage/gh-pages/cage.png) (Cage Ain't a Game Engine)
+![Cage](https://raw.githubusercontent.com/rlofc/cage/gh-pages/_images/cage.png) (Cage Ain't a Game Engine)
 =============================================================================================
 
 Cage is an educational game development library that has a naive and simple design in the spirit of less is 
