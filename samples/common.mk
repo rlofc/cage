@@ -44,6 +44,9 @@ INFO_COLOR=\x1b[35;01m
 
 all: $(BINARY) resources
 
+../../build/libcage.a:
+	@cd ../../ && make build/libcage.a
+
 $(BINARY): $(OBJECTS) ../../build/libcage.a
 	@mkdir -p build
 	@echo -e "Building $(INFO_COLOR)$(BINARY)$(NO_COLOR)"
