@@ -27,9 +27,10 @@
 #include "color.h"
 
 /**
- * Use images to draw on screen, or as basis for sprites and fonts.
- * Images can be read from a file or created empty and can be used to draw
- * or to provide frames for sprites or characters for fonts.
+ * Images are the visual building blocks of your game.  Use images to draw on
+ * screen, or as basis for sprites and fonts.  Images can be read from a file or
+ * created empty and can be used to draw with or to provide frames for sprites
+ * or characters for fonts.
  *
  * The simplest form of creating an image is by using create_image():
  *
@@ -42,20 +43,19 @@
  *     // draw images, sprites or text
  *     draw_on_screen();
  *
- * Images don't just disappear. You will have to explicitly
- * get rid of any image you create using create_image() by calling
- * destroy_image():
+ * Images don't just disappear. You will have to explicitly get rid of any image
+ * you create using create_image() by calling destroy_image():
  *
  *     destroy_image( image );
  *
- *  Otherwise, you will have a memory leak.
+ *  If you fail to do so, you will have a memory leak.
  */
 struct image
 {
     /** 
-     * Images reference SDL_Textures, so you can use
-     * it to work with SDL directly, should you need
-     * any extra functionality that Cage does not provide
+     * Images reference SDL_Textures, so you can use it to work with SDL
+     * directly, should you need any extra functionality that Cage does not
+     * provide.
      */
     SDL_Texture* impl;
     /** Image width in pixels */
@@ -65,11 +65,9 @@ struct image
 };
 
 /**
- * Image blending mode
- * Setting the blend mode changes how an image
- * is being drawn on the screen on or another image.
- * This is similar to the way Gimp or Photoshop apply layers
- * one on the other.
+ * The image blend mode changes how an image is being drawn on the screen on or
+ * another image.  This is similar to the way Gimp or Photoshop apply layers one
+ * on the other.
  */
 enum blend_mode {
     NONE,
@@ -78,9 +76,8 @@ enum blend_mode {
 };
 
 /**
- * Create a ready to use image
+ * Create and load an image using a PNG file
  * @param filepath The full path of the image file
- * @note hello
  *
  * @return \ref image pointer or NULL on failure
  */
@@ -97,26 +94,30 @@ struct image* create_image( const char* filepath );
 struct image* create_blank_image( int width, int height, struct color color );
 
 /**
- * Destroy a created image
+ * Destroy an image created using create_image() or create_blank_image()
  * @param image A valid \ref image pointer created using create_image()
  */
 void destroy_image( struct image* image );
 
 /**
  * Load a image from an image file (PNG, JPG, etc..)
- * @param image Already allocated image resource
+ * @param image A preallocated image struct
  * @param filepath The full path of the image file
+ *
+ * @note You don't need to use load_image() if you already used create_image()
  *
  * @return -1 on error
  */
 int load_image( struct image* image, const char* filepath );
 
 /**
- * Cleanup an initialized image resource
- * @param image Loaded image to cleanup
+ * Cleanup any initialized image resources
+ * @param image Existing image to cleanup
  *
  * Cleanup will free all internally allocated resources
- * for this image.
+ * for this image, making it ready for deallocation.
+ *
+ * @note You don't need to use cleanup_image() if you use destroy_image()
  * 
  * @return -1 on error
  */
@@ -125,7 +126,8 @@ int cleanup_image ( struct image* image );
 /**
  * Lock a image to get pixel level access
  * @param image Image to lock
- * @param pixels pointer to update with the pixels pointer
+ * @param pixels pointer **reference** to the image pixels lock_image() will
+ * provide you with
  * @param pitch pointer to update with the pixel pitch 
  *
  * @return 0 on success or -1 on error
@@ -133,7 +135,7 @@ int cleanup_image ( struct image* image );
 int lock_image ( struct image* image, void** pixels, int* pitch );
 
 /**
- * Unlock a locked image once your done with it
+ * Unlock a locked image once you are done with it
  * @param image Locked image to unlock
  *
  * @return 0 on success or -1 on error

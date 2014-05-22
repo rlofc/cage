@@ -1,5 +1,51 @@
-game
-================================
+.. highlight:: c
+
+Game essentials
+===============
+
+The heart of almost every game is the game loop. The game
+loop processes events, runs the game logic and generates the
+game visuals and sounds.  
+
+.. image:: images/cage-callbacks.png
+    :align: center
+
+game_loop
+---------
+.. doxygenfunction:: game_loop
+
+To run its game loop, Cage must have a game state. The
+game state is built using three pointers to three functions:
+
+preparation function
+--------------------
+.. doxygentypedef:: prepare_func_t
+
+
+update function
+--------------------
+.. doxygentypedef:: update_func_t
+
+
+teardown function
+--------------------
+.. doxygentypedef:: teardown_func_t
+
+
+
+The state functions share a common feature - the user data
+argument.  The preparation function is reponsible for
+populating the user data pointer. The common pattern is to
+have a dedicated struct per state that holds all required
+state assets. 
+
+The update function will get the same user data pointer
+back, so it is able to use it to update and draw the game.
+
+The teardown function will also get the same user data
+pointer, this time it will usually use it to clean any
+allocated assets.
+
 Games will usually have different levels, menus, high score
 displays and the likes. These are represented as different
 gamestate entities.
@@ -7,14 +53,16 @@ gamestate entities.
 .. image:: images/cage-gamestates.png
     :align: center
 
-A composition of alternating gamestates make for a complete
-game.
+Transitioning between different states allow you
+to have a more complex game structure. Use game_state() to change
+the active game state using a new set of state functions:
 
-.. image:: images/cage-callbacks.png
-    :align: center
+game_state
+----------
+.. doxygenfunction:: game_state
 
 
-.. highlight:: c
+For example:
 
 ::
 
@@ -46,7 +94,7 @@ game.
      {
          // Handle the menu behavior.
          // When ready, switch to the level game state:
-         change_state( prepare_leve, update_level, teardown_level );
+         game_state( prepare_leve, update_level, teardown_level );
      }
 
      void teardown_menu( void* data )
@@ -58,26 +106,8 @@ game.
      int main(int argc, char ** argv)
      {
          // Set up the initial game state
-         return gameloop( prepare_menu, update_menu, teardown_menu );
+         return game_loop( prepare_menu, update_menu, teardown_menu );
      }
 
-game_loop
----------
-.. doxygenfunction:: game_loop
 
-game_state
-----------
-.. doxygenfunction:: game_state
-
-preparation function
---------------------
-.. doxygentypedef:: update_func_t
-
-update function
---------------------
-.. doxygentypedef:: teardown_func_t
-
-teardown function
---------------------
-.. doxygentypedef:: prepare_func_t
 

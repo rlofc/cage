@@ -44,7 +44,8 @@ void destroy_sound( struct sound* sound );
 
 /**
  * Initialize an already allocated sound resource
- * @param pathname file path to the sound file in ogg, wav or mp3 format
+ * @param sound \ref sound instance to use
+ * @param filepath file path to the sound file in ogg, wav or mp3 format
  *
  * The sound file in pathname will be loaded and stored
  * for use in /ref resource

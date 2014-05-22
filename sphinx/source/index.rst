@@ -1,27 +1,43 @@
-.. Cage documentation master file, created by
-   sphinx-quickstart on Tue May 20 18:57:03 2014.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+.. image:: images/cage.png
+    :align: right
 
-Welcome to Cage's documentation!
-================================
+Welcome to Cage
+===============
 Cage is an educational game development library. 
-It is designed and developed to help me teach 2D game dev using the C programming language.
-Cage prefers readability and simplicity, in the spirit of
+It is designed and developed to help teach 2D game development using the C programming language.
+Cage prefers readability over flexibility and ease-of-use over features, in the spirit of
 **less is more**.
 
-Cage is minimal and has a naive design so people with almost no 
-game or graphics development experience can jump right in. Internally, 
-Cage contains and restraints SDL2, the Simple Direct-media Library.
-However, apart of knowing it is in there you will not have
-to deal with SDL directly.
+Cage is designed to make it easy for poeple with very little
+game or graphics development experience to jump right in. 
 
-Ease-of-use instead of Flexibility and Features
-Transparency, almost no hidden stuff
-Still able to reach in
+Internally, Cage contains (and restraints) SDL2, the Simple Direct-media Library.
+Apart of knowing it is in there, you will not have to deal with SDL directly.
+However, Cage is completely transparent, so you can "reach in" and work
+with SDL directly, should you want to.
 
-In short
---------
+
+TL;DR
+-----
+
+Here is the shortest game you can write using Cage:
+
+.. highlight:: c
+
+::
+
+    void update_game( void* data, float elapsed_ms )
+    {
+        exit(0);
+    }
+
+    int main(int argc, char ** argv)
+    {
+        return game_loop( NULL, update, NULL );
+    }
+
+And here is the second shortest one:
+
 .. highlight:: c
 
 ::
@@ -46,34 +62,9 @@ In short
         return game_loop( prepare, update, teardown );
     }
 
+Now, if you want the full picture all at once, jump over to :doc:`wizard`.
+Or, follow along with the docs and learn Cage piece by piece.
 
-.. highlight:: c
-
-::
-
-    void* prepare( void )
-    {
-        return (void*)create_font( "font.png" );
-    }
-
-    void update( void* data, float elapsed_ms )
-    {
-        draw_text( (font*)data, "Hello, World", xy( 0, 0 ) );
-    }
-
-    void teardown( void* data )
-    {
-        destroy_font( (font*)data );
-    }
-
-    int main(int argc, char ** argv)
-    {
-        return game_loop( prepare, update, teardown );
-    }
-
-
-Cage Library
-------------
 .. toctree::
    :hidden:
 
@@ -85,5 +76,6 @@ Cage Library
    animate
    timeline
    sound 
+   wizard
 
 

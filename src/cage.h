@@ -33,21 +33,35 @@
 #include "toolbox.h"
 
 /**
- * This is the prototype of the preparation
- * function that may be provided to Cage in order
- * to set up any required assets for the activated
- * game state.
- * You pass a pointer to this function when you
- * call game_loop() or game_state().
+ * This is the prototype of the update function:
  *
- * @return something
+ *     void* prepare_game( void )
+ *     {
+ *         // Put any level setup and preparation code here
+ *         // and return a pointer to your level data or NULL
+ *         // in case of a failure.
+ *     }
+ *
+ * You may provide a preparation function to set up any required assets for the
+ * activated game state.  The preparation function is a good place to load
+ * resources or initialize your data.  You pass a pointer to this function when
+ * you call game_loop() or game_state().
+ *
+ * @return pointer to data or NULL on failure
  */
 typedef void* ( *prepare_func_t )( void ) ;
 
 /**
- * This is the prototype of the update function that
- * must be provided to Cage in order to update the game
- * in the game loop, for the activated state.
+ * This is the prototype of the update function:
+ *
+ *     void update_gane( void* data, float elapsed_ms )
+ *     {
+ *         // Update and draw your game
+ *     }
+ *
+ * The update function is called each time Cage wants you to create a new game
+ * frame. This is the place to update your game state, play or stop sound
+ * effects and draw your graphics.  
  *
  * You pass a pointer to this function when you
  * call game_loop() or game_state().
@@ -62,7 +76,12 @@ typedef void ( *update_func_t )( void* data, float elpased_ms ) ;
 /**
  * This is the prototype of the teardown function that may be provided
  * to Cage in order to free any allocated resources during the
- * active state run.
+ * active state run:
+ *
+ *     void teardown_gane( void* data )
+ *     {
+ *         // Put any cleanup code here...
+ *     }
  *
  * You may pass a pointer to this function when you
  * call game_loop() or game_state().
@@ -76,7 +95,7 @@ typedef void ( *teardown_func_t )( void* data ) ;
  *
  *     int main( void )
  *     {
- *         return game_loop(...);
+ *         return gameloop( prepare_game, update_game, teardown_game );
  *     }
  */
 int game_loop(

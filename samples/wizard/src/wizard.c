@@ -1,4 +1,6 @@
-/* ## Wizard */
+/* samples/Wizard
+ * ==============
+ */
 #include "cage.h"
 #include <string.h>
 #include <stdio.h>
@@ -21,7 +23,17 @@ static float BRAKE_SPEED_L  = -0.1f;
 static float PREP_SPEED_L   = -0.25f;
 static float NORMAL_SPEED_L = -0.5f;
 
-/* We use a string to represent the level map.
+/* 
+ * .. image:: ../../samples/wizard/res/earth_tile.png
+ *     :align: right
+ *     :width: 64px
+ *
+ * .. image:: ../../samples/wizard/res/grass_tile.png
+ *     :align: right
+ *     :width: 64px
+ *
+ *
+ * We use a string to represent the level map.
  * Each character represents a 16x16 pixels tile.
  * Whitespaces are empty tiles, dashes are grass tiles
  * and dots are earth tiles.
@@ -36,7 +48,10 @@ static const char* LEVEL = "             "
                            "-------------"
                            ".............";
 
-/* The **wizard** struct  holds the wizard sprite, animations
+/* Setting up the Wizard
+ * ---------------------
+ *
+ * The **wizard** struct  holds the wizard sprite, animations
  * and other state fields that should be kept and
  * managed in-game.
  */
@@ -52,6 +67,10 @@ struct wizard {
 
 /* In this example, the wizard character is created
  * and destroyed within the scope of a single level.
+ *
+ * .. image:: ../../samples/wizard/res/wizard.png
+ *     :align: right
+ *     :width: 256px
  *
  * Creating a wizard means loading the sprite image
  * and creating a sprite with a 32x32 frame size
@@ -129,7 +148,7 @@ static struct wizard* create_wizard( void )
 
 error:
     free( wizard );
-    error_msg( "Umable to create wizard" );
+    error_msg( "Unable to create wizard" );
     return NULL;
 }
 
@@ -175,7 +194,14 @@ static void animate_wizard( struct wizard* wizard, float elapsed_ms )
 }
 
 
-/* At the beginning of the main game state, a title
+/* The Title Effect
+ * ----------------
+ *
+ * .. image:: ../../samples/wizard/res/title.png
+ *     :align: right
+ *     :width: 128px
+ *
+ * At the beginning of the main game state, a title
  * sprite will show up with a shining "bling" effect.
  * **game\_title** struct encapsulate both the sprite
  * and the shine animation.
@@ -186,6 +212,12 @@ struct game_title {
     struct image* mask;
     struct image* spot;
 };
+
+/* We create a sprite for the title and an animation
+ * with 6 frames.
+ * We also create a mask image for a spot and fade-in
+ * effect.
+ */
 
 static int prepare_title( struct game_title* title )
 {
@@ -209,7 +241,7 @@ static int prepare_title( struct game_title* title )
     return 0;
 
 error:
-    error_msg( "Umable to prepare title" );
+    error_msg( "Unable to prepare title" );
     return -1;
 }
 
@@ -219,7 +251,10 @@ static void cleanup_title( struct game_title* title )
     destroy_animation( title->bling );
 }
 
-/* I just added another sprite to use as an 
+/* A Decorative Tree
+ * -----------------
+ *
+ * I just added another sprite to use as an 
  * animated scenery element, for fun..
  */
 struct tree {
@@ -240,7 +275,7 @@ static int prepare_tree( struct tree* tree )
     return 0;
 
 error:
-    error_msg( "Umable to prepare tree" );
+    error_msg( "Unable to prepare tree" );
     return -1;
 }
 
@@ -250,7 +285,10 @@ static void cleanup_tree( struct tree* tree )
     destroy_animation( tree->windblow );
 }
 
-/* **level\_data** is stored in the state data
+/* Tying everything together
+ * --------------------------------------
+ *
+ * **level\_data** is stored in the state data
  * variable.
  * We populate the state data using the return
  * value of the prepare state function.
@@ -396,7 +434,10 @@ static void destroy_level_data( struct level_data* ldata )
     free( ldata );
 }
 
-/* **prepare\_level()** is called by Cage before the game loop
+/* The Game State Functions
+ * ------------------------
+ *
+ * **prepare\_level()** is called by Cage before the game loop
  * starts to update frames. This is the place
  * to prepare the level and its data.
  */

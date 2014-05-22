@@ -1,6 +1,8 @@
 sprite
 ================================
 
+.. highlight:: c
+
 struct sprite
 -------------
 .. doxygenstruct:: sprite

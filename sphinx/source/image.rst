@@ -1,8 +1,7 @@
 image
 ================================
 
-image :c:func:`create_image` as
-
+.. highlight:: c
 
 struct image
 ------------

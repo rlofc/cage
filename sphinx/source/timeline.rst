@@ -1,6 +1,7 @@
 timeline
 ================================
 
+.. highlight:: c
 
 struct timeline
 ---------------

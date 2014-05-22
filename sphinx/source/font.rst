@@ -1,6 +1,8 @@
 font
 ====
 
+.. highlight:: c
+
 struct font
 -----------
 .. doxygenstruct:: font
