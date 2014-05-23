@@ -37,14 +37,14 @@ static void* fade_in( void* data, float elapsed_ms, float progress )
 static void* caption_1( void* data, float elapsed_ms, float progress )
 {
     struct sample_data* sd = data;
-    draw_text( sd->font, "Feel it..", 10, 10 );
+    draw_text( sd->font, "Once upon a time,", 10, 10 );
     UNUSED( elapsed_ms ); UNUSED( progress ); return NULL;
 }
 
 static void* caption_2( void* data, float elapsed_ms, float progress )
 {
     struct sample_data* sd = data;
-    draw_text( sd->font, "See it..", 10, 10 );
+    draw_text( sd->font, "in a land far, far away...", 10, 10 );
     UNUSED( elapsed_ms ); UNUSED( progress ); return NULL;
 }
 
