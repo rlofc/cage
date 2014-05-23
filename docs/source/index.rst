@@ -85,6 +85,7 @@ Or, follow along with the docs and learn Cage, bar by bar (pun intended).
    animate
    timeline
    sound 
+   keyboard
    state_sample
    image_sample
    sprite_sample

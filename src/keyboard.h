@@ -24,38 +24,16 @@
 
 #include <stdint.h>
 
-/* Keyboard state
- * You don't need to directly instantiate a keyboard in your code.
- * You will get a keyboard instance in the <toolbox> argument
- * passed to your game state functions.
+/**
+ * Checks if a specific key has been pressed.
+ * @param key Key to test
  *
- * To check if a key is being pressed, use <key_down>:
- *
- *     void update_super_cool_level( struct toolbox* toolbox )
+ *     void update_super_cool_level( void* data, float elapsed_ms )
  *     {
- *         ...
- *         if ( key_down( toolbox->keyboard, KB_UP ) ) {
- *             // do something
- *         }
- *         ...
- *      }
- *
- *  To check if a key was clicked (once), use <key_pressed>:
- *
- *     void update_super_cool_level( struct toolbox* toolbox )
- *     {
- *         ...
- *         if ( key_pressed( toolbox->keyboard, KB_SPACE ) ) {
+ *         if ( key_pressed( KB_SPACE ) ) {
  *             // do something once per key click
  *         }
- *         ...
  *      }
- *
- */
-
-/* Check if a specific key has been pressed.
- * @keyboard Keyboard to test for
- * @key Key to check (from the keyboard entitiy)
  *
  * This will return 0 after the first positive test, so 
  * you will get 1 only once.
@@ -64,9 +42,16 @@
  */
 int key_pressed( uint8_t key );
 
-/* Check if a specific key is being held down.
- * @keyboard Keyboard to test for
- * @key Key to check (from the keyboard entity)
+/** 
+ * Check if a specific key is being held down.
+ * @param key Key to test
+ *
+ *     void update_super_cool_level( void* data, float elapsed_ms )
+ *     {
+ *         if ( key_down( KB_RIGHT ) ) {
+ *             // do something
+ *         }
+ *      }
  *
  * This will return 1 as long as the key is being held down.
  *
