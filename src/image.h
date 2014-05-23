@@ -44,7 +44,7 @@
  *     draw_on_screen();
  *
  * Images don't just disappear. You will have to explicitly get rid of any image
- * you create using create_image() by calling destroy_image():
+ * you create using destroy_image():
  *
  *     destroy_image( image );
  *
@@ -77,7 +77,7 @@ enum blend_mode {
 
 /**
  * Create and load an image using a PNG file
- * @param filepath The full path of the image file
+ * @param filepath File path to the image file
  *
  * @return \ref image pointer or NULL on failure
  */

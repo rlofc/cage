@@ -48,7 +48,7 @@ allocated assets.
 
 Games will usually have different levels, menus, high score
 displays and the likes. These are represented as different
-gamestate entities.
+game states.
 
 .. image:: images/cage-gamestates.png
     :align: center

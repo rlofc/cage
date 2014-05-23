@@ -4,9 +4,9 @@
 Welcome to Cage
 ===============
 
-Cage is an educational game development library. 
+Cage is an elementry game development library.
 It is designed and developed to help teach 2D game development using the C programming language.
-Cage prefers readability over flexibility and ease-of-use over features, in the spirit of
+Cage prefers readability over flexibility and ease-of-use over a rich feature set, in the spirit of
 **less is more**.
 
 
@@ -71,8 +71,8 @@ you are not a beginner, you may want to work with SDL2
 However, if you enjoy the beauty of C and want minimal cognitive burden
 than Cage is a viable option.
 
-If you want the full picture all at once, jump over to :doc:`wizard`.
-Or, follow along with the docs and learn Cage "bar by bar". 
+For the full picture all at once, jump over to :doc:`wizard`.
+Or, follow along with the docs and learn Cage, bar by bar (pun intended).
 
 .. toctree::
    :hidden:

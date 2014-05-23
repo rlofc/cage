@@ -47,7 +47,7 @@
  * resources or initialize your data.  You pass a pointer to this function when
  * you call game_loop() or game_state().
  *
- * @return pointer to data or NULL on failure
+ * @return pointer to your game state data or NULL on failure
  */
 typedef void* ( *prepare_func_t )( void ) ;
 
