@@ -71,7 +71,7 @@ static void* prepare_sample( void )
         append_event( sd->timeline, 0, 1000, fade_in );
         append_event( sd->timeline, 0, 1000, caption_1 );
         append_event( sd->timeline, 0, 1000, caption_2 );
-        append_event( sd->timeline, 0, 1000, quit );
+        append_event( sd->timeline, 0, 0, quit );
     } else return NULL;
 
     sd->font = create_font( "res/font.png", 32, 4 );
