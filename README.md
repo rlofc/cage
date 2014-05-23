@@ -1,26 +1,36 @@
 ![Cage](https://raw.githubusercontent.com/rlofc/cage/gh-pages/_images/cage.png) (Cage Ain't a Game Engine)
 =============================================================================================
 
-Cage is an educational game development library that has a naive and simple design in the spirit of less is 
-more (or worse is better). It favors code readability over features (read: it's barely usable)
-and should work well for simple, old-school 2D games.
+Cage is an elementary game development library that has a
+naive and simple design in the spirit of less is more (or
+worse is better). It favors readability over flexibility and
+ease-of-use over a rich set of features (read: it's barely
+usable).
 
-Cage contains and constraints SDL2 so that a beginner game developer will not have to deal with it directly.
+Cage should work well for simple, old-school 2D
+games.  It contains and constraints SDL2 so that a beginner
+game developer will not have to deal with it directly.
+However, it is completely transparent, so you can still
+reach in and hack anything you need.
 
-I wrote Cage to help me teach my kids game programming using C. Avoiding native languages or keeping 
-distance from the machine level is not the proper way to teach programming, even for kids. This is why I 
-didn't choose Lua or Haxe, even though these are excellent technologies to write an actual game..
+I wrote Cage to help me teach my kids game programming using
+C. Avoiding native languages or keeping distance from the
+machine level is not the proper way to teach programming,
+even for kids. This is why I didn't choose Lua or Haxe, even
+though these are excellent technologies to write an actual
+game.
 
 ### Highlights
 
-* Plain C - No abstractions, no obstructions.
-* Easy to learn, Highly-Readable interfaces
-* Sprites - Animate using a sequence of frames in images.
-* Timelines - lets you sequence events for animation, story-telling etc.
-* Game States - Promotes scalable internal design.
-* Bitmap Fonts, Sounds, the usuals..
+* Plain C - No abstractions, no obstructions
+* Easy to learn - Human-readable programming interface
+* Sprites - Animate sequence of frames in image files
+* Timelines - Sequence events for animation, story-telling and effects
+* Game States - Promotes scalable internal game design
+* Bitmap Fonts, Sounds, the usuals
+* SDL2 inside - Cross platform, potentially more powerful
 
-### Install
+### Getting Started
 
 First, clone the repo:
 
@@ -49,15 +59,16 @@ In **Mac OS/X** or **Linux**, simply:
 
     cd cage && make
     
-### Getting Started
-
-Review the (evolving) Wizard sample code:
-[http://rlofc.github.io/cage/wizard.html](http://rlofc.github.io/cage/wizard.html)
 
 ### Documentation
 
-The generated docs are here:
+The docs are still work-in-progress:
+
 [http://rlofc.github.io/cage/](http://rlofc.github.io/cage/)
+
+Review the (evolving) Wizard sample code (literate
+programming style):
+[http://rlofc.github.io/cage/wizard.html](http://rlofc.github.io/cage/wizard.html)
 
 ### License
 
