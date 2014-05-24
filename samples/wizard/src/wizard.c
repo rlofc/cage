@@ -306,6 +306,7 @@ struct level_data {
     struct tree tree;
     struct timeline* timeline;
     struct font* font;
+    struct sound* music;
 };
 
 /* **slide\_title\_in()**, **slide\_title\_out()** and
@@ -354,6 +355,7 @@ static void* slide_title_out( void* data, float elapsed_ms,  float progress )
     struct level_data* ldata = data;
     UNUSED(elapsed_ms);
     draw_sprite( ldata->title.sprite, cosine_interp(20,200,progress),10);
+    set_volume( ldata->music, clamp( 1.0f-progress, 0.2f, 1.0f ) );
     return NULL;
 }
 
@@ -410,6 +412,8 @@ static struct level_data* create_level_data( void )
     ldata->font = create_font( "res/pfont.png", 32, 4 );
     if ( ldata->font == NULL ) goto error;
 
+    ldata->music = create_sound( "res/wizard.ogg" );
+    play_sound( ldata->music, -1 );
     return ldata;
 
 error:
@@ -424,6 +428,7 @@ error:
  */
 static void destroy_level_data( struct level_data* ldata )
 {
+    destroy_sound( ldata->music );
     destroy_font( ldata->font );
     cleanup_title( &ldata->title );
     cleanup_tree( &ldata->tree );

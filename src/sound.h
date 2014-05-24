@@ -22,60 +22,80 @@
 #ifndef AUDIO_H_IJ4N19XA
 #define AUDIO_H_IJ4N19XA
 #include <SDL_mixer.h>
-#include <stdbool.h>
+
 /**
- * sound effect
+ * Sound effect
  */
 struct sound
 {
+    /** Internal SDL2_Mixer sound chunk */
     Mix_Chunk *sound;
+    /** When playing, channel number in SDL2_Mixer */
     int        channel;
 };
 
 /**
- * Create a new sound resource from an OGG, WAV or MP3 file
+ * Create a new sound effect from an OGG, WAV or MP3 file
+ *
+ * @return a \ref sound effect resource or NULL on error
  */
 struct sound* create_sound( const char* filepath );
 
 /**
- * Cleanup and deallocate a sound resource
+ * Cleanup and deallocate a sound effect
+ * @param sound sound effect to cleanup and free
  */
 void destroy_sound( struct sound* sound );
 
 /**
- * Initialize an already allocated sound resource
+ * Initialize an already allocated sound effect
  * @param sound \ref sound instance to use
  * @param filepath file path to the sound file in ogg, wav or mp3 format
  *
- * The sound file in pathname will be loaded and stored
- * for use in /ref resource
+ * The sound file will be loaded and stored
+ * for use in the \ref sound effect.
  *
- * @return 0 or higher means success
- *         -1 or lower means failure
+ * @return 0 or higher on success or -1 or lower on failure
  */
 int load_sound( struct sound* sound, const char* filepath );
 
 /**
- * Play sound Resource
- * @param sound resource to play
+ * Play sound effect
+ * @param sound sound effect to play
+ * @param loops -1 - infinite, 0 - play once, 1 - twice and so on..
  *
- * Will play a valid sound resource
+ * Will play an initialized sound effect
  * 
  * @return 0 or higher means success
  *         -1 or lower means failure
  */
-int play_sound( struct sound* sound );
+int play_sound( struct sound* sound, int loops );
 
 /**
  * Stop playing a sound
+ * @param sound sound effect to stop playing
  */
 void stop_sound( struct sound* sound );
 
 /**
- * cleanup a loaded sound resource
+ * Internally cleanup an initialized sound effect
+ * @param sound sound effect to cleanup 
  */
 void cleanup_sound( struct sound* sound );
 
-bool is_playing( struct sound* sound );
+/**
+ * Set the volume of a sound effect
+ * @param sound sound effect to modify
+ * @param volume volume value between 0.0 and 1.0
+ */
+void set_volume( struct sound* sound, float volume );
+
+/**
+ * Test if a sound effect is playing
+ * @param sound sound effect to test
+ *
+ * @return 1 if the sound effect is being played or 0 otherwise
+ */
+int is_playing( struct sound* sound );
 
 #endif /* end of include guard: AUDIO_H_IJ4N19XA */

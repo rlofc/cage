@@ -44,10 +44,10 @@ int load_sound( struct sound* sound, const char* pathname )
     return 0;
 }
 
-int play_sound( struct sound* sound ) 
+int play_sound( struct sound* sound, int loops )
 {
     if ( is_playing( sound ) ) stop_sound( sound );
-    sound->channel = Mix_PlayChannel( -1, sound->sound, 1 );
+    sound->channel = Mix_PlayChannel( -1, sound->sound, loops );
     return 0;
 }
 
@@ -62,7 +62,12 @@ void cleanup_sound( struct sound* sound )
     Mix_FreeChunk( sound->sound );
 }
 
-bool is_playing( struct sound* sound )
+void set_volume( struct sound* sound, float volume )
+{
+    Mix_Volume( sound->channel, volume*MIX_MAX_VOLUME );
+}
+
+int is_playing( struct sound* sound )
 {
     return ( sound->channel != -1 );
 }
