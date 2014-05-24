@@ -20,11 +20,12 @@ Cage prefers readability over flexibility and ease-of-use over a rich feature se
     <iframe src="http://ghbtns.com/github-btn.html?user=rlofc&repo=cage&type=fork&count=true&size=large"
       allowtransparency="true" frameborder="0" scrolling="0" width="156px" height="30px"></iframe>
 
+
     <hr/>
 
 
 Cage aims to make it easier for beginner game developers to write games in C,
-emphesizing **beginner** and **C**.
+emphasizing **beginner** and **C**.
 
 Internally, Cage contains (and restraints) SDL2, the Simple Direct-media Library.
 Apart of knowing it is in there, you will not have to deal with SDL directly.
@@ -91,5 +92,6 @@ Or, follow along with the docs and learn Cage, bar by bar (pun intended).
    sprite_sample
    timeline_sample
    wizard
+   advanced
 
 

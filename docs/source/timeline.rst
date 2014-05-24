@@ -1,11 +1,15 @@
 timeline
-================================
+========
 
 .. highlight:: c
 
 struct timeline
 ---------------
 .. doxygenstruct:: timeline
+
+struct timeline_event
+---------------------
+.. doxygenstruct:: timeline_event
 
 create_timeline
 ---------------
@@ -18,6 +22,10 @@ destroy_timeline
 append_event
 ------------
 .. doxygenfunction:: append_event
+
+append_events
+-------------
+.. doxygenfunction:: append_events
 
 update_timeline
 ---------------

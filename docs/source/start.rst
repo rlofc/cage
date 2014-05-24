@@ -45,12 +45,13 @@ In **Mac OS/X** or **Linux**, simply:
 New Games
 ---------
 
-To start a new game project, clone **cage-boilerplate**:
+To start a new game project, clone **cage-bp** (Cage
+Boilerplate):
 
 ::
 
     git clone https://github.com/rlofc/cage-bp.git my_game
 
-By default, cage boiler plate is configured to find cage
-side-by-side to it, but you can edit the Makefile to change
+By default, the boilerplate project is configured to find cage
+side-by-side relative to its location, but you can edit the Makefile to change
 this.

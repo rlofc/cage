@@ -59,6 +59,8 @@ int key_pressed( uint8_t key );
  */
 int key_down( uint8_t key );
 
+/* Key symbols
+ */
 extern uint8_t KB_SPACE;
 extern uint8_t KB_RIGHT;
 extern uint8_t KB_LEFT;
