@@ -22,6 +22,7 @@
 #include "screen.h"
 #include "internals.h"
 #include "utils.h"
+#include <stdlib.h>
 
 static struct screen global_screen;
 struct screen* screen = &global_screen;

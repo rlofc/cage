@@ -141,8 +141,6 @@ struct image* create_image( const char* filepath )
 
 struct image* create_blank_image( int w, int h, struct color color ) 
 {
-    void * pixels;
-    int pitch;
     SDL_Rect r;
     struct image* image = malloc( sizeof (struct image) );
     if ( image != NULL ) {

@@ -29,6 +29,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <stdbool.h>
 
 /* global toolbox so we can 
@@ -53,18 +54,12 @@ struct gamestate
 static int read_conf_file( struct settings* settings )
 {
     FILE* fp;
-    char filename[256];
     char *token1; char *token2; char *str;
 
     char bufr[1024];
     char empty[1];
     empty[0] = 0;
-#ifdef _WIN32
-    errno_t err;
-    if( (err  = fopen_s( &fp, "res/game.conf", "r" )) !=0 ) return -1;
-#else
     if ((fp = fopen("res/game.conf", "r")) == NULL) return -1;
-#endif
     while (fgets(bufr, 1024, fp) != NULL)
     {
         if (bufr[0] == '#' || bufr[0] == '\n') continue;
