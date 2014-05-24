@@ -27,6 +27,19 @@ int append_event( struct timeline* timeline, uint32_t wait,
     return 0;
 }
 
+int append_events( struct timeline* timeline, 
+                   int nevents,
+                   struct timeline_event events[] )
+{
+    int i;
+    for ( i = 0 ; i < nevents ; i++ ) {
+        if ( append_event( timeline, events[i].ms_wait,
+                                     events[i].ms_duration,
+                                     events[i].callback ) == -1 ) break;
+    }
+    return i == nevents ? i : -1;
+}
+
 void* update_timeline( struct timeline* timeline, void* data, float elapsed_ms )
 {
     void* ret = NULL;

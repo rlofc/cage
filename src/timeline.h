@@ -5,6 +5,25 @@
 
 #define MAX_TIMELINE_EVENTS 100
 
+/**
+ * Timeline event holds a single registered
+ * event in a timeline. Timeline events can have a gap
+ * of time between the last scheduled event.
+ * Timeline events can also have a duration, which makes
+ * them long-running events.
+ * The manifestation of a timeline event is a callback call.
+ */
+struct timeline_event {
+    /** Time to wait before activating the event */ 
+    uint32_t ms_wait;
+    /** Duration of the event */
+    uint32_t ms_duration;
+    /** Callback to call to */
+    void* (*callback) ( void* data, 
+                        float elapsed_ms, 
+                        float progress );
+};
+
 /** 
  * A timeline holds a sequence of events
  * on a, well.. time line. Each event has a start time,
@@ -24,16 +43,7 @@
  */
 struct timeline {
     /* Events to activate */
-    struct {
-        /* Time to wait before activating the event */ 
-        uint32_t ms_wait;
-        /* Duration of the event */
-        uint32_t ms_duration;
-        /* Callback to call to */
-        void* (*callback) ( void* data, 
-                            float elapsed_ms, 
-                            float progress );
-    } events[MAX_TIMELINE_EVENTS];
+    struct timeline_event events[MAX_TIMELINE_EVENTS];
     /* Number of registered events */
     int n_events;
     /* Timer to keep track of the timeline running time */
@@ -73,6 +83,17 @@ int append_event( struct timeline* timeline,
                   void* ( *callback ) ( void* data, 
                                         float elapsed_ms, 
                                         float progress ) );
+/**
+ * Append an set of events to the timeline
+ * @param timeline Timeline to append the events to
+ * @param nevents Number of events to append
+ * @param events \ref timeline_event array
+ *
+ * @return -1 on error or the number of appended events
+ */
+int append_events( struct timeline* timeline, 
+                   int nevents,
+                   struct timeline_event events[] );
 
 /**
  * Update the timeline timers and invoke event callbacks
