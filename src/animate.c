@@ -53,7 +53,8 @@ void add_frame( struct animation* animation, int index_in_sprite, int duration,
     }
 }
 
-void add_frames( struct animation* animation, int nframes, struct frame frames[] )
+void add_frames( struct animation* animation, int nframes,
+                 struct frame frames[] )
 {
     int i;
     for ( i = 0 ; i < nframes ; i++ ) {
