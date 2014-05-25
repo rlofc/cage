@@ -4,7 +4,7 @@
 Welcome to Cage
 ===============
 
-Cage is an elementry game development library.
+Cage is an elementary game development library.
 It is designed and developed to help teach 2D game development using the C programming language.
 Cage prefers readability over flexibility and ease-of-use over a rich feature set, in the spirit of
 **less is more**.
