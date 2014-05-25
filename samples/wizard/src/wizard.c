@@ -148,7 +148,7 @@ static struct wizard* create_wizard( void )
 
 error:
     free( wizard );
-    error_msg( "Unable to create wizard" );
+    ERROR( "Unable to create wizard" );
     return NULL;
 }
 
@@ -241,7 +241,7 @@ static int prepare_title( struct game_title* title )
     return 0;
 
 error:
-    error_msg( "Unable to prepare title" );
+    ERROR( "Unable to prepare title" );
     return -1;
 }
 
@@ -275,7 +275,7 @@ static int prepare_tree( struct tree* tree )
     return 0;
 
 error:
-    error_msg( "Unable to prepare tree" );
+    ERROR( "Unable to prepare tree" );
     return -1;
 }
 
@@ -418,7 +418,7 @@ static struct level_data* create_level_data( void )
 
 error:
     free( ldata );
-    error_msg( "Unable to create level data" );
+    ERROR( "Unable to create level data" );
     return NULL;
 }
 

@@ -112,8 +112,5 @@ void game_state(
 
 void exit_with_error_msg( const char* msg );
 
-/* Set an error message
- */
-void error_msg( const char* msg );
 
 #endif /* end of include guard: NGX_H_F8WRBKFT */

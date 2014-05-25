@@ -24,6 +24,10 @@
 
 #include <math.h>
 
+/*
+ * G E O M E T R Y
+ */
+
 /**
  * Just a simple rectangle shape for image operations
  */
@@ -43,6 +47,10 @@ struct point {
 };
 
 #define xy(X,Y) X,Y
+
+/*
+ * M A T H
+ */
 
 /** 1 second is 1000 milliseconds */
 static int   SECOND       = 1000; 
@@ -69,6 +77,33 @@ static __inline float cosine_interp(float p1, float p2, float amount) {
     float m = (1-cos(amount*Pi))/2;
     return (p1*(1-m)+p2*m);
 }
+
+/*
+ * D E B U G G I N G
+ */
+
+/* Set an error message
+ */
+#define STRINGIFY(val) #val
+#define TOSTRING(val) STRINGIFY(val)
+#define AT __FILE__ ":" TOSTRING(__LINE__)
+
+/**
+ * error_msg() will append an error message to the error
+ * string. Cage will display the list of error messages
+ * if the game state preparation function fails.
+ */
+void error_msg( const char* msg );
+
+/**
+ * Using the ERROR() macro will add the filename and
+ * line number to an error message.
+ */
+#define ERROR(msg) error_msg( msg " @ " AT )
+
+/*
+ * M I S C
+ */
 
 #define UNUSED(x) (void)(x)
 

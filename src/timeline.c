@@ -1,5 +1,5 @@
 #include "timeline.h"
-#include "toolbox.h"
+#include "utils.h"
 #include <stdlib.h>
 
 struct timeline* create_timeline(void)
@@ -7,6 +7,8 @@ struct timeline* create_timeline(void)
     struct timeline* timeline = malloc( sizeof( struct timeline ) );
     if ( timeline != NULL )
         init_timeline( timeline );
+    else
+        ERROR( "Unable to malloc a timeline" );
     return timeline;
 }
 
@@ -18,8 +20,14 @@ void destroy_timeline( struct timeline* timeline )
 int append_event( struct timeline* timeline, uint32_t wait,
                    uint32_t duration, void* (*callback) ( void* data, float elapsed_ms, float progress ) )
 {
-    if ( timeline->acc_timer != 0 ) return -1;
-    if ( timeline->n_events == MAX_TIMELINE_EVENTS ) return -1;
+    if ( timeline->acc_timer != 0 ) {
+        ERROR( "Cannot append event after timeline updates" );
+        return -1;
+    }
+    if ( timeline->n_events == MAX_TIMELINE_EVENTS ) {
+        ERROR( "Reached timeline events capacity limit" );
+        return -1;
+    }
     timeline->events[ timeline->n_events ].ms_wait = wait;
     timeline->events[ timeline->n_events ].ms_duration = duration;
     timeline->events[ timeline->n_events ].callback = callback;

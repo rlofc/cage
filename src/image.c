@@ -41,14 +41,23 @@ int load_image( struct image* image, const char* filepath)
     int i;
 
     s = IMG_Load( filepath ) ;
-    if ( s == NULL ) goto exit;
+    if ( s == NULL ) {
+        ERROR( "Unable to load image into an SDL surface" );
+        goto exit;
+    }
 
     fs = SDL_ConvertSurfaceFormat( s, SDL_PIXELFORMAT_RGBA8888, 0 );
-    if ( fs == NULL ) goto free_s;
+    if ( fs == NULL ) {
+        ERROR( "Unable to convert the image surface format" );
+        goto free_s;
+    }
 
     image->impl = SDL_CreateTexture( screen->impl, SDL_PIXELFORMAT_RGBA8888, 
                                       SDL_TEXTUREACCESS_STREAMING, fs->w, fs->h );
-    if ( image->impl == NULL ) goto free_fs;
+    if ( image->impl == NULL ) {
+        ERROR( "Unable to create an SDL texture from surface" );
+        goto free_fs;
+    }
 
     image->width = fs->w;
     image->height = fs->h;
@@ -132,7 +141,7 @@ void draw_image( struct image*   image,
 struct image* create_image( const char* filepath ) 
 {
     struct image* image = malloc( sizeof (struct image) );
-    if ( image != NULL && load_image( image, filepath ) != 0 ) {
+    if ( image != NULL && load_image( image, filepath ) == -1 ) {
         free( image );
         image = NULL;
     }
@@ -147,16 +156,18 @@ struct image* create_blank_image( int w, int h, struct color color )
         r.x = 0; r.y = 0; r.w = w; r.h = h;
         image->impl = SDL_CreateTexture( screen->impl, SDL_PIXELFORMAT_RGBA8888, 
                 SDL_TEXTUREACCESS_TARGET, w, h );
-        SDL_SetRenderTarget( screen->impl, image->impl );
-        SDL_SetRenderDrawColor( screen->impl, color.red, color.green, color.blue, color.alpha );
-        SDL_RenderClear( screen->impl );
-        SDL_SetRenderTarget( screen->impl, NULL );
         if ( image->impl == NULL ) {
             free( image ); 
-            return NULL;
+            image = NULL;
+            ERROR( "Unable to create SDL texture for blank image" );
+        } else {
+            SDL_SetRenderTarget( screen->impl, image->impl );
+            SDL_SetRenderDrawColor( screen->impl, color.red, color.green, color.blue, color.alpha );
+            SDL_RenderClear( screen->impl );
+            SDL_SetRenderTarget( screen->impl, NULL );
+            image->width = w;
+            image->height = h;
         }
-        image->width = w;
-        image->height = h;
     }
     return image;
 }
