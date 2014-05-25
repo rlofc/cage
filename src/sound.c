@@ -26,10 +26,13 @@ struct sound* create_sound( const char* filepath )
 {
     struct sound* sound = malloc( sizeof( struct sound ) );
     if ( sound != NULL ) {
-        load_sound( sound, filepath );
+        if ( load_sound( sound, filepath ) == -1 ) goto error;
         sound->channel = -1;
     }
     return sound;
+error:
+    free( sound );
+    return NULL;
 }
 
 void destroy_sound( struct sound* sound )
@@ -40,15 +43,17 @@ void destroy_sound( struct sound* sound )
 
 int load_sound( struct sound* sound, const char* pathname )
 {
-    sound->sound = Mix_LoadWAV( pathname );
-    return 0;
+    if ( ( sound->sound = Mix_LoadWAV( pathname ) ) != NULL )
+        return 0;
+    else
+        return -1;
 }
 
 int play_sound( struct sound* sound, int loops )
 {
     if ( is_playing( sound ) ) stop_sound( sound );
     sound->channel = Mix_PlayChannel( -1, sound->sound, loops );
-    return 0;
+    return sound->channel;
 }
 
 void stop_sound( struct sound* sound )
