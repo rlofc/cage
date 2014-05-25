@@ -33,12 +33,12 @@ int prepare_sprite ( struct sprite* sprite,
     return 0;
 }
 
-void cleanup_sprite ( struct sprite* sprite )
+void cleanup_sprite( struct sprite* sprite )
 {
     sprite->active_animation = NULL;
 }
 
-void draw_sprite ( struct sprite* sprite,  int x, int y )
+void draw_sprite( struct sprite* sprite, int x, int y )
 {
     struct rectangle r;
     r.w = sprite->frame_width;
@@ -47,21 +47,21 @@ void draw_sprite ( struct sprite* sprite,  int x, int y )
         r.x = 0;
         r.y = 0;
     } else {
-        int frame = sprite->active_animation->frames[sprite->current_frame].frame;
-        int cols  = sprite->image->width / sprite->frame_width;
+        int frame =
+            sprite->active_animation->frames[sprite->current_frame].frame;
+        int cols = sprite->image->width / sprite->frame_width;
         /* int rows  = sprite->image->height / sprite->frame_height; */
-        
+
         int col = frame % cols;
         int row = frame / cols;
 
         r.x = col * sprite->frame_width;
         r.y = row * sprite->frame_height;
-
     }
     draw_image( sprite->image, x, y, &r, 0.0 );
 }
 
-struct sprite* create_sprite( struct image* image, int w, int h)
+struct sprite* create_sprite( struct image* image, int w, int h )
 {
     struct sprite* sprite = malloc( sizeof( struct sprite ) );
     if ( sprite != NULL && prepare_sprite( sprite, image, w, h ) == -1 ) {
@@ -77,40 +77,68 @@ void destroy_sprite( struct sprite* sprite )
     free( sprite );
 }
 
+static void consume_elapsed_time( struct sprite* sprite,
+                                  void ( *progression )( struct sprite* ) )
+{
+    struct animation* animation = sprite->active_animation;
+    int cfd = animation->frames[sprite->current_frame].duration;
+    while ( sprite->elapsed_frame >= cfd && cfd > 0 ) {
+        sprite->elapsed_frame -= cfd;
+        progression( sprite );
+        cfd = animation->frames[sprite->current_frame].duration;
+    }
+}
+
+static void progress_current_animation( struct sprite* sprite )
+{
+    struct animation* animation = sprite->active_animation;
+    switch ( sprite->active_animation->mode ) {
+        case LOOP_FRAMES:
+            sprite->current_frame = sprite->current_frame == animation->loop_to
+                                        ? animation->loop_from
+                                        : sprite->current_frame + 1;
+            break;
+        case FREEZE_LAST_FRAME:
+            sprite->current_frame =
+                sprite->current_frame + 1 == animation->n_frames
+                    ? sprite->current_frame
+                    : sprite->current_frame + 1;
+        case PINGPONG_FRAMES:
+        default:
+            sprite->current_frame = sprite->current_frame;
+    }
+}
+
+static void consume_current_animation( struct sprite* sprite )
+{
+    struct animation* animation = sprite->active_animation;
+    switch ( sprite->active_animation->mode ) {
+        case LOOP_FRAMES:
+            if ( sprite->current_frame <= animation->loop_to )
+                sprite->current_frame = animation->loop_to + 1;
+            else
+                sprite->current_frame += 1;
+            break;
+        case FREEZE_LAST_FRAME:
+        case PINGPONG_FRAMES:
+        default:
+            break;
+    }
+}
+
 void* animate_sprite( struct sprite* sprite, uint32_t elapsed )
 {
     void* ret = NULL;
     struct animation* animation = sprite->active_animation;
     if ( animation != NULL ) {
-        sprite->elapsed_frame+=elapsed;
-        if ( sprite->elapsed_frame > animation->frames[ sprite->current_frame ].duration ) {
-            /* If no new animation was set, proceed to the next logical frame */
+        sprite->elapsed_frame += elapsed;
+        if ( sprite->elapsed_frame >=
+             animation->frames[sprite->current_frame].duration ) {
             if ( sprite->next_animation == NULL ) {
-                switch ( sprite->active_animation->mode ) {
-                case LOOP_FRAMES:
-                    sprite->current_frame = 
-                        sprite->current_frame == animation->loop_to ? animation->loop_from
-                        : sprite->current_frame+1;
-                    break;
-                case FREEZE_LAST_FRAME:
-                    sprite->current_frame = 
-                        sprite->current_frame+1 == animation->n_frames ? sprite->current_frame
-                        : sprite->current_frame+1;
-                case PINGPONG_FRAMES:
-                default:
-                    sprite->current_frame = sprite->current_frame;
-                }
-                sprite->elapsed_frame = 0;
-            /* If a new animation was set, we need to translate to it */
+                consume_elapsed_time( sprite, progress_current_animation );
             } else {
-                /* Consume any remaining frames before we can move on */
-                if ( sprite->current_frame+1 < animation->n_frames ) {
-                    if ( sprite->current_frame <= animation->loop_to )
-                        sprite->current_frame = animation->loop_to+1;
-                    else
-                        sprite->current_frame += 1;
-                    sprite->elapsed_frame = 0;
-                /* Really no more frames left, move to the next animation */
+                if ( sprite->current_frame + 1 < animation->n_frames ) {
+                    consume_elapsed_time( sprite, consume_current_animation );
                 } else {
                     sprite->active_animation = sprite->next_animation;
                     sprite->next_animation = NULL;
@@ -118,7 +146,8 @@ void* animate_sprite( struct sprite* sprite, uint32_t elapsed )
                     sprite->elapsed_frame = 0;
                 }
             }
-            ret = sprite->active_animation->frames[ sprite->current_frame ].userdata;
+            ret = sprite->active_animation->frames[sprite->current_frame]
+                      .userdata;
         }
     }
     return ret;
@@ -126,8 +155,8 @@ void* animate_sprite( struct sprite* sprite, uint32_t elapsed )
 
 void play_animation( struct sprite* sprite, struct animation* animation )
 {
-    if ( sprite->active_animation!=animation &&
-         sprite->next_animation!=animation ) {
+    if ( sprite->active_animation != animation &&
+         sprite->next_animation != animation ) {
         if ( sprite->active_animation != NULL ) {
             sprite->next_animation = animation;
         } else {
