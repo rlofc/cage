@@ -26,3 +26,7 @@ cleanup_font
 draw_text
 ------------
 .. doxygenfunction:: draw_text 
+
+measure_text
+------------
+.. doxygenfunction:: measure_text

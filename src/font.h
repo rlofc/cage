@@ -1,21 +1,21 @@
 /* Copyright (c) 2014 Ithai Levi @RLofC
- * 
+ *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
  * arising from the use of this software.
- * 
+ *
  * Permission is granted to anyone to use this software for any purpose,
  * including commercial applications, and to alter it and redistribute it
  * freely, subject to the following restrictions:
- * 
+ *
  *    1. The origin of this software must not be misrepresented; you must not
  *    claim that you wrote the original software. If you use this software
  *    in a product, an acknowledgment in the product documentation would be
  *    appreciated but is not required.
- * 
+ *
  *    2. Altered source versions must be plainly marked as such, and must not be
  *    misrepresented as being the original software.
- * 
+ *
  *    3. This notice may not be removed or altered from any source
  *    distribution.
  */
@@ -25,20 +25,27 @@
 #include "utils.h"
 #include "image.h"
 
+#define MAX_FONT_CHARS 256
+
 /**
- * Use bitmap fonts to draw text 
+ * Use bitmap fonts to draw text
  * Bitmap fonts are made from images with a
  * matrix of characters in ascii order.
  */
-struct font {
+struct font
+{
     /** font characters image */
-    struct image     image;
+    struct image image;
     /** SDL character boundries */
-    struct rectangle chars[ 256 ];
-    /** size of new line */
-    int              newline;
-    /** size of space */
-    int              space;
+    struct rectangle chars_rects[MAX_FONT_CHARS];
+    /** line height */
+    int line_height;
+    /** height of spacing between lines */
+    int line_spacing;
+    /** width of a single space character */
+    int space_width;
+    /** width of spacing between characters */
+    int char_spacing;
 };
 
 /**
@@ -66,7 +73,7 @@ void destroy_font( struct font* font );
  *
  * @return -1 on error
  */
-int load_font ( struct font* font, const char* filepath, int cols, int rows );
+int load_font( struct font* font, const char* filepath, int cols, int rows );
 
 /**
  * Free any internally allocated resources for the font
@@ -74,7 +81,7 @@ int load_font ( struct font* font, const char* filepath, int cols, int rows );
  *
  * @return -1 on error
  */
-int cleanup_font ( struct font* font );
+int cleanup_font( struct font* font );
 
 /**
  * Use font to render text
@@ -82,9 +89,17 @@ int cleanup_font ( struct font* font );
  * @param text text to render
  * @param x x coordinates
  * @param y y coordinates
- *
- * @return -1 on error
  */
-void draw_text ( struct font* font, const char* text, int x, int y);
+void draw_text( struct font* font, const char* text, int x, int y );
+
+/**
+ * Measure the expected width and height of some text using a font
+ * @param font Font to use
+ * @param text text to render
+ * @param width a pointer to where the width will be stored
+ * @param height a pointer to where the height will be stored
+ */
+void measure_text( struct font* font, const char* text, int* width,
+                   int* height );
 
 #endif /* end of include guard: FONT_H_XYTHJIBT */
