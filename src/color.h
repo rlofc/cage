@@ -33,7 +33,7 @@ struct color {
     uint8_t alpha;
 };
 
-static struct color make_RGB( uint8_t red, uint8_t green, uint8_t blue )
+static struct color color_from_RGB( uint8_t red, uint8_t green, uint8_t blue )
 {
     struct color c;
     c.red = red; c.green = green; c.blue = blue; c.alpha = 255;

@@ -30,7 +30,7 @@ static void  teardown_outro( void* data );
  */
 static void* prepare_intro( void )
 {
-    screen_color( make_RGB( 255, 255, 255 ) );
+    screen_color( color_from_RGB( 255, 255, 255 ) );
     return create_font( "res/font.png", 32, 4 );
 }
 
@@ -57,7 +57,7 @@ static void teardown_intro( void* data )
  */
 static void* prepare_outro( void )
 {
-    screen_color( make_RGB( 255, 255, 255 ) );
+    screen_color( color_from_RGB( 255, 255, 255 ) );
     return create_font( "res/font.png", 32, 4 );
 }
 

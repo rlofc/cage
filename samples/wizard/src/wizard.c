@@ -231,7 +231,7 @@ static int prepare_title( struct game_title* title )
             add_frame( title->bling, f, SECOND/10 , NULL );
         title->bling->mode = FREEZE_LAST_FRAME;
 
-    title->mask = create_blank_image( 192, 108, make_RGB(50,50,50) );
+    title->mask = create_blank_image( 192, 108, color_from_RGB(50,50,50) );
     if ( title->mask == NULL ) goto error;
     set_blend_mode( title->mask, MULTIPLY );
     title->spot = create_image( "res/spot.png" );
@@ -327,7 +327,7 @@ static void* before_title_in( void* data, float elapsed_ms, float progress )
     struct level_data* ldata = data;
     UNUSED(elapsed_ms);
     UNUSED(progress);
-    clear_image( ldata->title.mask, make_RGB(0,0,0));
+    clear_image( ldata->title.mask, color_from_RGB(0,0,0));
     draw_on_image( ldata->title.mask );
     draw_image( ldata->title.spot, -15,40, &r, 0 );
     draw_on_screen();
@@ -341,7 +341,7 @@ static void* slide_title_in( void* data, float elapsed_ms, float progress )
     struct rectangle r = { 0,0, 64, 64 };
     struct level_data* ldata = data;
     UNUSED(elapsed_ms);
-    clear_image( ldata->title.mask, make_RGB( 255*progress,255*progress,255*progress ));
+    clear_image( ldata->title.mask, color_from_RGB( 255*progress,255*progress,255*progress ));
     draw_on_image( ldata->title.mask );
     draw_image( ldata->title.spot, -15,40, &r, 0 );
     draw_on_screen();
@@ -449,7 +449,7 @@ static void destroy_level_data( struct level_data* ldata )
 static void* prepare_level( void )
 {
     void* data = create_level_data();
-    screen_color( make_RGB( 170,210,250 ) );
+    screen_color( color_from_RGB( 170,210,250 ) );
     return data;
 }
 

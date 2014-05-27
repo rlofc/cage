@@ -30,7 +30,7 @@ struct sample_data {
 static void* fade_in( void* data, float elapsed_ms, float progress )
 {
     struct sample_data* sd = data;
-    screen_color( make_RGB( 255*progress, 255*progress, 255*progress ) );
+    screen_color( color_from_RGB( 255*progress, 255*progress, 255*progress ) );
     UNUSED( elapsed_ms ); return NULL;
 }
 
