@@ -16,12 +16,12 @@
 struct timeline_event {
     /** Time to wait before activating the event */ 
     uint32_t ms_wait;
-    /** Duration of the event */
-    uint32_t ms_duration;
     /** Callback to call to */
     void* (*callback) ( void* data, 
                         float elapsed_ms, 
                         float progress );
+    /** Duration of the event */
+    uint32_t ms_duration;
 };
 
 /** 
