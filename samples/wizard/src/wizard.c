@@ -110,7 +110,7 @@ static struct wizard* create_wizard( void )
         add_frame(wizard->walk_right, 1, 200, &NORMAL_SPEED); /*        | */
         add_frame(wizard->walk_right, 2, 200, &NORMAL_SPEED); /*        | */
         add_frame(wizard->walk_right, 3, 200, &NORMAL_SPEED); /* <--+   | */
-        add_frame(wizard->walk_right, 4, 200, &BRAKE_SPEED);   /*    |   | */
+        add_frame(wizard->walk_right, 4, 200, &BRAKE_SPEED);  /*    |   | */
     wizard->walk_right->loop_from = 1; /* --------------------------|---+ */
     wizard->walk_right->loop_to   = 4; /* --------------------------+     */
 
@@ -218,7 +218,6 @@ struct game_title {
  * We also create a mask image for a spot and fade-in
  * effect.
  */
-
 static int prepare_title( struct game_title* title )
 {
     int f;
@@ -346,7 +345,7 @@ static void* slide_title_in( void* data, float elapsed_ms, float progress )
     draw_image( ldata->title.spot, -15,40, &r, 0 );
     draw_on_screen();
     draw_image( ldata->title.mask, 0, 0, &c, 0 );
-    draw_sprite( ldata->title.sprite, cosine_interp(-100,20,progress),10);
+    draw_sprite( ldata->title.sprite, interpolate(-100,20,progress,circular_ease_out),10);
     return NULL;
 }
 
@@ -354,7 +353,7 @@ static void* slide_title_out( void* data, float elapsed_ms,  float progress )
 {
     struct level_data* ldata = data;
     UNUSED(elapsed_ms);
-    draw_sprite( ldata->title.sprite, cosine_interp(20,200,progress),10);
+    draw_sprite( ldata->title.sprite, interpolate(20,200,progress,circular_ease_in),10);
     set_volume( ldata->music, clamp( 1.0f-progress, 0.2f, 1.0f ) );
     return NULL;
 }

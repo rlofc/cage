@@ -23,6 +23,12 @@
 #include "utils.h"
 #include "easing.h"
 
+
+float interpolate( float from, float to, float amount, float (*easing)(float) )
+{
+    return from + ( to-from )*( easing( amount ) );
+}
+
 /*
  * Actual code by:
  * Warren Moore https://github.com/warrenm

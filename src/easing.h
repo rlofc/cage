@@ -22,7 +22,18 @@
 #ifndef EASING_H_FES178TS
 #define EASING_H_FES178TS
 
-/***
+/**
+ * Interpolate two values using an easing function
+ * @param from start value
+ * @param to end value
+ * @param amount a value from 0 to 1
+ * @param easing one of the following easing functions
+ *
+ * @return interpolated value
+ */
+float interpolate( float from, float to, float amount, float (*easing)(float) );
+
+/**
  * Function Graph:
  *
  *     |                      _.-'

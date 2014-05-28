@@ -73,11 +73,6 @@ static __inline float clamp(float x, float bottom, float top) {
     return x;
 }
 
-static __inline float cosine_interp(float p1, float p2, float amount) {
-    float m = (1-cos(amount*Pi))/2;
-    return (p1*(1-m)+p2*m);
-}
-
 /*
  * D E B U G G I N G
  */

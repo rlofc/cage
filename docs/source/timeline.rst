@@ -39,3 +39,12 @@ cleanup_timeline
 ----------------
 .. doxygenfunction:: cleanup_timeline
 
+Easing
+------
+
+Using easing interpolation functions you can use the progress
+argument in the timeline callbacks to create a factor value for
+animation effects such as smoothing the motion of a game title
+or even bouncing a ball.
+
+.. doxygenfile:: easing.h
