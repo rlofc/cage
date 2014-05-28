@@ -53,11 +53,12 @@ struct point {
  */
 
 /** 1 second is 1000 milliseconds */
-static int   SECOND       = 1000; 
+#define SECOND 1000
 /** n seconds are n*1000 milliseconds */
-static int   SECONDS      = 1000; 
+#define SECONDS 1000
 
 static const double Pi = 3.14159265358979323846264338328;
+static const double Pi_2 = 3.14159265358979323846264338328 * 2;
 
 static __inline float max(float x, float y) {
     return x > y ? x : y;
