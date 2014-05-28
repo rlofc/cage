@@ -37,7 +37,7 @@ static uint32_t get_pixel32( uint32_t* pixels, int pitch, int x, int y )
     return pixels[( y * ( pitch / 4 ) ) + x];
 }
 
-int load_font( struct font* image, const char* filepath, int ncols, int nrows )
+int load_font( struct font* font, const char* filepath, int ncols, int nrows )
 {
     uint32_t* pixels = NULL;
     int pitch = 0;
@@ -46,16 +46,16 @@ int load_font( struct font* image, const char* filepath, int ncols, int nrows )
     int rows;
     int i;
 
-    if ( load_image( &image->image, filepath ) == -1 ) return -1;
-    if ( ( image->image.width / ncols ) * ( image->image.height / nrows ) >
+    if ( load_image( &font->image, filepath ) == -1 ) return -1;
+    if ( ( font->image.width / ncols ) * ( font->image.height / nrows ) >
          MAX_FONT_CHARS )
         return -1;
-    if ( lock_image( &image->image, (void**)&pixels, &pitch ) == -1 ) return -1;
+    if ( lock_image( &font->image, (void**)&pixels, &pitch ) == -1 ) return -1;
 
     bg_color = pixels[0];
 
-    cell_w = image->image.width / ncols;
-    cell_h = image->image.height / nrows;
+    cell_w = font->image.width / ncols;
+    cell_h = font->image.height / nrows;
 
     top = cell_h;
     base_a = cell_h;
@@ -66,11 +66,11 @@ int load_font( struct font* image, const char* filepath, int ncols, int nrows )
         int cols;
         for ( cols = 0; cols < ncols; ++cols ) {
             int p_col, p_row;
-            image->chars_rects[curr_char].x = cell_w * cols;
-            image->chars_rects[curr_char].y = cell_h * rows;
+            font->chars_rects[curr_char].x = cell_w * cols;
+            font->chars_rects[curr_char].y = cell_h * rows;
 
-            image->chars_rects[curr_char].w = cell_w;
-            image->chars_rects[curr_char].h = cell_h;
+            font->chars_rects[curr_char].w = cell_w;
+            font->chars_rects[curr_char].h = cell_h;
 
             for ( p_col = 0; p_col < cell_w; ++p_col ) {
                 for ( p_row = 0; p_row < cell_h; ++p_row ) {
@@ -78,7 +78,7 @@ int load_font( struct font* image, const char* filepath, int ncols, int nrows )
                     int py = ( cell_h * rows ) + p_row;
 
                     if ( get_pixel32( pixels, pitch, px, py ) != bg_color ) {
-                        image->chars_rects[curr_char].x = px;
+                        font->chars_rects[curr_char].x = px;
                         p_col = cell_w;
                         p_row = cell_h;
                     }
@@ -91,8 +91,8 @@ int load_font( struct font* image, const char* filepath, int ncols, int nrows )
                     int py = ( cell_h * rows ) + p_row;
 
                     if ( get_pixel32( pixels, pitch, px, py ) != bg_color ) {
-                        image->chars_rects[curr_char].w =
-                            ( px - image->chars_rects[curr_char].x ) + 1;
+                        font->chars_rects[curr_char].w =
+                            ( px - font->chars_rects[curr_char].x ) + 1;
                         p_col = -1;
                         p_row = cell_h;
                     }
@@ -137,15 +137,17 @@ int load_font( struct font* image, const char* filepath, int ncols, int nrows )
         }
     }
 
-    image->space_width = cell_w / 2;
-    image->line_height = base_a - top + 2;
+    font->space_width = cell_w / 2;
+    font->line_height = base_a - top + 2;
+    font->char_spacing = 0;
+    font->line_spacing = 0;
 
     for ( i = 0; i < ncols * nrows; ++i ) {
-        image->chars_rects[i].y += top;
-        image->chars_rects[i].h -= top;
+        font->chars_rects[i].y += top;
+        font->chars_rects[i].h -= top;
     }
 
-    unlock_image( &image->image );
+    unlock_image( &font->image );
     return 0;
 }
 
