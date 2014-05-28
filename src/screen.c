@@ -20,6 +20,7 @@
  *    distribution.
  */
 #include "screen.h"
+#include "easing.h"
 #include "internals.h"
 #include "utils.h"
 #include <stdlib.h>
@@ -38,7 +39,8 @@ static struct cam cam_y = { 0.0f, 0.0f };
 static float animate_shake( struct cam* cam, float stopwatch, float rate )
 {
     float offset;
-    offset = cam->tgt*-1+fabs(cosine_interp( cam->tgt* -1.0f, cam->tgt ,cam->progress)); 
+    float interp = interpolate( cam->tgt* -1.0f, cam->tgt ,cam->progress, sine_ease_in_out );
+    offset = cam->tgt*-1+fabs( interp );
     cam->progress= clamp( cam->progress+( stopwatch / rate ), 0.0f, 1.0f );;
     if (cam->progress== 1.0f) { cam->progress= 0.0f; }
     return offset;
