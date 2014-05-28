@@ -187,7 +187,7 @@ int game_loop( create_func_t create, update_func_t update, destroy_func_t destro
 {
     bool quit = false;
 
-    struct settings  settings = { 640, 360, 192, 108 };
+    struct settings  settings = { 1280, 720, 192, 108 };
 
     Uint32 start;
     Uint32 now ;
