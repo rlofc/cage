@@ -65,6 +65,7 @@ clean:
 	@cd samples/image && $(MAKE) clean
 	@cd samples/sprite && $(MAKE) clean
 	@cd samples/timeline && $(MAKE) clean
+	@cd samples/callout && $(MAKE) clean
 	@cd samples/wizard && $(MAKE) clean
 	@rm -rf $(LIBRARY) $(OBJECTS) $(INIPARSER_OBJECTS)
 	@rm -rf docs/build
@@ -75,6 +76,7 @@ doc:
 	@awk -f literst.awk samples/image/src/image.c > docs/source/image_sample.rst
 	@awk -f literst.awk samples/sprite/src/sprite.c > docs/source/sprite_sample.rst
 	@awk -f literst.awk samples/timeline/src/timeline.c > docs/source/timeline_sample.rst
+	@awk -f literst.awk samples/callout/src/callout.c > docs/source/callout_sample.rst
 	@awk -f literst.awk samples/wizard/src/wizard.c > docs/source/wizard.rst
 	@doxygen cage
 	@cd docs && make html
@@ -84,4 +86,5 @@ extra: $(LIBRARY)
 	cd samples/image && $(MAKE)
 	cd samples/sprite && $(MAKE)
 	cd samples/timeline && $(MAKE)
+	cd samples/callout && $(MAKE)
 	cd samples/wizard && $(MAKE)
