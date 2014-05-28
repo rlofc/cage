@@ -73,6 +73,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\src\animate.c" />
     <ClCompile Include="..\..\src\cage.c" />
+    <ClCompile Include="..\..\src\easing.c" />
     <ClCompile Include="..\..\src\font.c" />
     <ClCompile Include="..\..\src\image.c" />
     <ClCompile Include="..\..\src\keyboard.c" />
