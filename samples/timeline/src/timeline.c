@@ -54,14 +54,14 @@ static void* quit( void* data, float elapsed_ms, float progress )
     UNUSED( data ); UNUSED( elapsed_ms ); UNUSED( progress ); return NULL;
 }
 
-/* Prepare
- * -------
+/* Create
+ * ------
  *
- * We use the game state prepare function to create the sample data
+ * We use the game state create() function to create the sample data
  * struct instance that holds the timeline and a font.
  * Once we have a new timeline, we use append_event() to add events.
  */
-static void* prepare_sample( void )
+static void* create_sample( void )
 {
     struct sample_data* sd = malloc( sizeof( struct sample_data ) );
     if ( sd == NULL ) return NULL;
@@ -93,14 +93,14 @@ static void update_sample( void* data, float elapsed_ms )
     update_timeline( sd->timeline, sd, elapsed_ms ); 
 }
 
-/* Teardown
- * --------
+/* Destroy
+ * -------
  *
- * In the teardown function we destroy the timeline, 
+ * In the destroy() function we destroy the timeline, 
  * destroy the font and free the memory we allocated for
  * the sample data struct.
  */
-static void teardown_sample( void* data )
+static void destroy_sample( void* data )
 {
     struct sample_data* sd = data;
     destroy_timeline( sd->timeline );
@@ -117,5 +117,5 @@ static void teardown_sample( void* data )
  */
 int main( void )
 {
-    return game_loop( prepare_sample, update_sample, teardown_sample );
+    return game_loop( create_sample, update_sample, destroy_sample );
 }

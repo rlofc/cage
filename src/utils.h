@@ -91,7 +91,7 @@ static __inline float cosine_interp(float p1, float p2, float amount) {
 /**
  * error_msg() will append an error message to the error
  * string. Cage will display the list of error messages
- * if the game state preparation function fails.
+ * if the game state create() function fails.
  */
 void error_msg( const char* msg );
 

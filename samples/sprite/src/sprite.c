@@ -22,7 +22,7 @@ static struct wizard {
 /* Prepare the sprite
  * ------------------
  *
- * We use the game state prepare function to create the sprite
+ * We use the game state create() function to create the sprite
  * using an image resource, as well as the animation resource
  * for the walk cycle.
  * If no errors are encountered, we proceed to add frames to
@@ -30,10 +30,10 @@ static struct wizard {
  * Finally, we play the animation, making it active for the
  * sprite.
  * Notice the way we use a static variable to hold the wizard
- * struct and use its pointer as the prepare function return
+ * struct and use its pointer as the create() function return
  * value.
  */
-static void* prepare_sample( void )
+static void* create_sample( void )
 {
     wizard.sprite = create_sprite( create_image( "res/wizard.png" ), 32, 32 );
     if ( wizard.sprite == NULL ) return NULL;
@@ -71,11 +71,11 @@ static void update_sample( void* data, float elapsed_ms )
  * --------
  *
  * Before exiting a state (or the game), Cage
- * will call the teardown function. Having allocated 3 resources
- * earlier in the prepare function, now is the time to clean up
+ * will call the destroy function. Having allocated 3 resources
+ * earlier in the create function, now is the time to clean up
  * by matching each create with a destory call.
  */
-static void teardown_sample( void* data )
+static void destroy_sample( void* data )
 {
     struct wizard* w = data;
     destroy_image( w->sprite->image );
@@ -92,5 +92,5 @@ static void teardown_sample( void* data )
  */
 int main( void )
 {
-    return game_loop( prepare_sample, update_sample, teardown_sample );
+    return game_loop( create_sample, update_sample, destroy_sample );
 }

@@ -31,42 +31,45 @@
 #include "animate.h"
 #include "timeline.h"
 #include "toolbox.h"
+#include "easing.h"
 
 /**
- * This is the prototype of the update function:
+ * This is the prototype of the create function:
  *
- *     void* prepare_game( void )
+ *     void* create_game( void )
  *     {
- *         // Put any level setup and preparation code here
+ *         // Put any level, menu or other game state setup code here
  *         // and return a pointer to your level data or NULL
  *         // in case of a failure.
  *     }
  *
- * You may provide a preparation function to set up any required assets for the
- * activated game state.  The preparation function is a good place to load
- * resources or initialize your data.  You pass a pointer to this function when
+ * You may provide a create function to create and set up a game state. 
+ * A game state will usually be a struct, holding sprites, images, fonts
+ * or any other assert required to run a level, a game menu or other game
+ * states.
+ * You pass a pointer to this function when
  * you call game_loop() or game_state().
  *
  * @return pointer to your game state data or NULL on failure
  */
-typedef void* ( *prepare_func_t )( void ) ;
+typedef void* ( *create_func_t )( void ) ;
 
 /**
  * This is the prototype of the update function:
  *
- *     void update_gane( void* data, float elapsed_ms )
+ *     void update_game( void* data, float elapsed_ms )
  *     {
  *         // Update and draw your game
  *     }
  *
- * The update function is called each time Cage wants you to create a new game
- * frame. This is the place to update your game state, play or stop sound
+ * The update function is called each time Cage wants you to update a new game
+ * frame. This is the place to change your game state, play or stop sound
  * effects and draw your graphics.  
  *
  * You pass a pointer to this function when you
  * call game_loop() or game_state().
  *
- * @param data the pointer you returned from the preparation
+ * @param data the pointer you returned from the create
  * function.
  * @param elapsed_ms time passed since last update in
  * milliseconds.
@@ -74,11 +77,11 @@ typedef void* ( *prepare_func_t )( void ) ;
 typedef void ( *update_func_t )( void* data, float elpased_ms ) ;
 
 /**
- * This is the prototype of the teardown function that may be provided
- * to Cage in order to free any allocated resources during the
- * active state run:
+ * This is the prototype of the destroy function that may be provided
+ * to Cage in order to free any allocated resources once a game state
+ * is being dismissed.
  *
- *     void teardown_gane( void* data )
+ *     void destroy_game( void* data )
  *     {
  *         // Put any cleanup code here...
  *     }
@@ -86,28 +89,28 @@ typedef void ( *update_func_t )( void* data, float elpased_ms ) ;
  * You may pass a pointer to this function when you
  * call game_loop() or game_state().
  *
- * @param data the pointer you returned from the preparation function.
+ * @param data the pointer you returned from the create function.
  */
-typedef void ( *teardown_func_t )( void* data ) ;
+typedef void ( *destroy_func_t )( void* data ) ;
 
 /**
  * Call this function to start your game.
  *
  *     int main( void )
  *     {
- *         return gameloop( prepare_game, update_game, teardown_game );
+ *         return gameloop( create_game, update_game, destroy_game );
  *     }
  */
 int game_loop(
-    prepare_func_t prepare,
+    create_func_t create,
     update_func_t update,
-    teardown_func_t teardown
+    destroy_func_t destroy
     );
 
 void game_state(
-    prepare_func_t prepare,
+    create_func_t create,
     update_func_t update,
-    teardown_func_t teardown
+    destroy_func_t destroy
     );
 
 void exit_with_error_msg( const char* msg );

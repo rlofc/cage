@@ -291,9 +291,9 @@ static void cleanup_tree( struct tree* tree )
  * **level\_data** is stored in the state data
  * variable.
  * We populate the state data using the return
- * value of the prepare state function.
+ * value of the create state function.
  * The same data pointer is passed back to
- * the update and teardown functions.
+ * the update and destory functions.
  * This is the perfect place to store anything we
  * need to work with: characters, sprites, tiles,
  * timelines and the likes.
@@ -442,11 +442,11 @@ static void destroy_level_data( struct level_data* ldata )
 /* The Game State Functions
  * ------------------------
  *
- * **prepare\_level()** is called by Cage before the game loop
+ * **create\_level()** is called by Cage before the game loop
  * starts to update frames. This is the place
- * to prepare the level and its data.
+ * to setup the level and its data.
  */
-static void* prepare_level( void )
+static void* create_level( void )
 {
     void* data = create_level_data();
     screen_color( color_from_RGB( 170,210,250 ) );
@@ -504,11 +504,11 @@ static void update_level( void* data, float elapsed_ms )
     if ( key_pressed( KB_ESC ) ) exit(0);
 }
 
-/* **teardown\_level()** is called by the Cage game loop once the state
+/* **destory\_level()** is called by the Cage game loop once the state
  * is invalidated (by setting a different game state) or when the 
  * game exits.
  */
-static void teardown_level( void* data )
+static void destroy_level( void* data )
 {
     struct level_data* ldata = data;
     if ( ldata != NULL ) destroy_level_data( ldata );
@@ -521,7 +521,7 @@ static void teardown_level( void* data )
 int main( void )
 {
     return game_loop(
-        prepare_level, 
+        create_level, 
         update_level, 
-        teardown_level );
+        destroy_level );
 }

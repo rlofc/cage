@@ -46,9 +46,9 @@ struct settings {
 
 struct gamestate
 {
-    prepare_func_t prepare;
+    create_func_t create;
     update_func_t update;
-    teardown_func_t teardown;
+    destroy_func_t destroy;
 } state = { NULL, NULL, NULL };
 
 static int read_conf_file( struct settings* settings )
@@ -160,21 +160,21 @@ void error_msg( const char* msg )
 
 static void cleanup(void)
 {
-    toolbox->state->teardown(toolbox->data);
+    toolbox->state->destroy(toolbox->data);
     teardown_audio_device();
     teardown_screen();
     free( toolbox );
     teardown_sdl();
 }
 
-void game_state( prepare_func_t prepare, update_func_t update, teardown_func_t teardown )
+void game_state( create_func_t create, update_func_t update, destroy_func_t destroy )
 {
-    if ( toolbox->state->teardown != NULL ) toolbox->state->teardown( toolbox->data );
-    toolbox->state->prepare = prepare;
+    if ( toolbox->state->destroy != NULL ) toolbox->state->destroy( toolbox->data );
+    toolbox->state->create = create;
     toolbox->state->update = update;
-    toolbox->state->teardown = teardown;
+    toolbox->state->destroy = destroy;
     toolbox->stopwatch = 0;
-    toolbox->data = toolbox->state->prepare();
+    toolbox->data = toolbox->state->create();
     if ( toolbox->data == NULL ) {
         error_msg( "Game state initialization failed!" );
         message_box( "Cage broke!", error_msgs_buffer );
@@ -183,7 +183,7 @@ void game_state( prepare_func_t prepare, update_func_t update, teardown_func_t t
 }
 
 
-int game_loop( prepare_func_t prepare, update_func_t update, teardown_func_t teardown )
+int game_loop( create_func_t create, update_func_t update, destroy_func_t destroy )
 {
     bool quit = false;
 
@@ -208,7 +208,7 @@ int game_loop( prepare_func_t prepare, update_func_t update, teardown_func_t tea
     toolbox->state = &state;
     toolbox->data = NULL;
 
-    game_state( prepare, update, teardown );
+    game_state( create, update, destroy );
 
     start = SDL_GetTicks();
 

@@ -4,13 +4,13 @@
  */
 #include "cage.h"
 
-/* Prepare
- * -------
+/* Create
+ * ------
  *
- * We use the game state prepare function to load the image resource
+ * We use the game state create() function to load the image resource
  * and return it as the state user data pointer.
  */
-static void* prepare_sample( void )
+static void* create_sample( void )
 {
     return create_image( "res/cage.png" ); 
 }
@@ -30,14 +30,15 @@ static void update_sample( void* data, float elapsed_ms )
     UNUSED( elapsed_ms );
 }
 
-/* Teardown
- * --------
+/* Destroy
+ * -------
  *
  * A create_image() call allocates the image and its
  * internal resources. To properly clean up our state we
- * need to use destory_image() in the teardown state function.
+ * need to use destroy_image() in the destroy state function.
+ *
  */
-static void teardown_sample( void* data )
+static void destroy_sample( void* data )
 {
     destroy_image( data );
 }
@@ -51,5 +52,5 @@ static void teardown_sample( void* data )
  */
 int main( void )
 {
-    return game_loop( prepare_sample, update_sample, teardown_sample );
+    return game_loop( create_sample, update_sample, destroy_sample );
 }

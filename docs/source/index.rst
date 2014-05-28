@@ -42,7 +42,7 @@ Here is one of the shortest and most boring game you can write using Cage:
 
 ::
 
-    void* prepare( void )
+    void* create( void )
     {
         return (void*)create_font( "font.png" );
     }
@@ -52,14 +52,14 @@ Here is one of the shortest and most boring game you can write using Cage:
         draw_text( (font*)data, "Hello, World", xy( 0, 0 ) );
     }
 
-    void teardown( void* data )
+    void destroy( void* data )
     {
         destroy_font( (font*)data );
     }
 
     int main(int argc, char ** argv)
     {
-        return game_loop( prepare, update, teardown );
+        return game_loop( create, update, destroy );
     }
 
 
