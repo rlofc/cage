@@ -19,7 +19,7 @@ static void* create_sample( void )
  * ------
  *
  * For each frame, the update state function will draw the image
- * using the image size as clipping boundries.
+ * using the image size as clipping boundaries.
  * We explicitly eliminate the unused parameter warning using
  * the UNUSED macro.
  */
