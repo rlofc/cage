@@ -7,6 +7,8 @@ worse is better). It favors readability over flexibility and
 ease-of-use over a rich set of features (read: it's barely
 usable).
 
+![Cage Screenshots](https://raw.githubusercontent.com/rlofc/cage/gh-pages/_images/cage-samples.png) 
+
 Cage should work well for simple, old-school 2D
 games.  It contains and constraints SDL2 so that a beginner
 game developer will not have to deal with it directly.
