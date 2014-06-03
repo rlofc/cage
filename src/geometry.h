@@ -45,7 +45,7 @@ float vec_dist_mntn( vec v1, vec v2 );
 /* normalize a vector */
 vec norm_vec( vec v );
 /* swap two vectors.. */
-void swap_vecs( vec* a, vec* b )
+void swap_vecs( vec* a, vec* b );
 
 /* point is a kind of a vec */
 typedef vec point;
@@ -69,7 +69,7 @@ int bbox_intersect( bbox b1, bbox b2, bbox* r );
 /* move a bbox to a new position, while preserving its
  * dimensions
  */
-bbox translate_bbox( bbox b, vec t )
+bbox translate_bbox( bbox b, vec t );
 /* returns the rectangle of an inner bbox */
 struct rectangle rect_from_sub_bbox( bbox outer, bbox inner );
 
