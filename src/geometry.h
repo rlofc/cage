@@ -38,12 +38,14 @@ float vec_len( vec v );
 float vec_dist( vec v1, vec v2 );
 /* squared distance between two vectors */
 float vec_dist_sqrd( vec v1, vec v2 );
-/* manhatten distance between two vectors, meaning */
+/* Manhattan distance between two vectors, meaning */
 /* the distance between the two vectors when following */
 /* only axis-aligned directions */
 float vec_dist_mntn( vec v1, vec v2 );
 /* normalize a vector */
 vec norm_vec( vec v );
+/* swap two vectors.. */
+void swap_vecs( vec* a, vec* b )
 
 /* point is a kind of a vec */
 typedef vec point;
@@ -64,6 +66,10 @@ int bbox_in_bbox( bbox i, bbox o );
 /* test if bboxes intersect each other */
 /* and return the intersection bbox */
 int bbox_intersect( bbox b1, bbox b2, bbox* r );
+/* move a bbox to a new position, while preserving its
+ * dimensions
+ */
+bbox translate_bbox( bbox b, vec t )
 /* returns the rectangle of an inner bbox */
 struct rectangle rect_from_sub_bbox( bbox outer, bbox inner );
 

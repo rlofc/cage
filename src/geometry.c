@@ -88,6 +88,12 @@ vec norm_vec( vec v )
     return div_vec( v, len );
 }
 
+void swap_vecs( vec* a, vec* b )
+{
+    vec tmp = *a;
+    a->x = b->x; a->y = b->y; b->x = tmp.x; b->y = tmp.y;
+}
+
 int point_in_bbox( point p, bbox b )
 {
     return ( ( p.x >= b.p1.x && p.x <= b.p2.x ) &&
@@ -107,6 +113,14 @@ int bbox_intersect( bbox b1, bbox b2, bbox* r )
     r->p2.y = min( b1.p2.y, b2.p2.y );
 
     return r->p2.x > r->p1.x && r->p2.y > r->p1.y;
+}
+
+bbox translate_bbox( bbox b, vec t )
+{
+    vec d = sub_vec( b.p2, b.p1 );
+    b.p1 = t;
+    b.p2 = add_vec( t, d );
+    return b;
 }
 
 struct rectangle rect_from_sub_bbox( bbox outer, bbox inner )
