@@ -408,7 +408,7 @@ static struct level_data* create_level_data( void )
         append_event( ldata->timeline, 0, 4*SECONDS, bling_title );
         append_event( ldata->timeline, 0, 1*SECOND,  slide_title_out );;
 
-    ldata->font = create_font( "res/pfont.png", 32, 4 );
+    ldata->font = create_font( "res/font.png", 32, 4 );
     if ( ldata->font == NULL ) goto error;
 
     ldata->music = create_sound( "res/wizard.ogg" );

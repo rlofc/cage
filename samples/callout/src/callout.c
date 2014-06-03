@@ -73,7 +73,7 @@ static void* create_sample( void )
 {
     SAFELY( sample_data.background = create_image("res/bg.png" ) );
     SAFELY( sample_data.stencil = create_image( "res/callout.png" ) );
-    SAFELY( sample_data.font = create_font( "res/font.png", 16, 16 ) );
+    SAFELY( sample_data.font = create_font( "res/cofont.png", 16, 16 ) );
     sample_data.font->line_spacing = 1;
     sample_data.font->char_spacing = 1;
     SAFELY( sample_data.timeline = create_timeline() );
