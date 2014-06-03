@@ -32,18 +32,18 @@
  * Just a simple rectangle shape for image operations
  */
 struct rectangle {
-    float x;
-    float y;
-    float w;
-    float h;
+    int x;
+    int y;
+    int w;
+    int h;
 };
 
 /**
  * Point in sub-pixel space
  */
-struct point {
-    float x;
-    float y;
+struct coords {
+    int x;
+    int y;
 };
 
 #define xy(X,Y) X,Y

@@ -61,7 +61,7 @@ struct wizard {
     struct animation*  walk_left;
     struct animation*  stand;
     struct animation*  spell;
-    struct point       pos;
+    point              pos;
     float              speed;
 };
 

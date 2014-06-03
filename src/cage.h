@@ -22,6 +22,7 @@
 #ifndef NGX_H_F8WRBKFT
 #define NGX_H_F8WRBKFT
 
+#include "geometry.h"
 #include "screen.h"
 #include "image.h"
 #include "sprite.h"

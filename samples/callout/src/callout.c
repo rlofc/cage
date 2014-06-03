@@ -33,8 +33,8 @@ static const char* CO_TEXT = "Welcome to Cage,\nthe elementary"
  * And, this is where the callout will originate from,
  * the callout arrow head position:
  */
-static const struct point CO_ORIGIN = { 20, 40 };
-static const struct point CO_TIP_OFFSET = { 10, 0 };
+static const struct coords CO_ORIGIN = { 20, 40 };
+static const struct coords CO_TIP_OFFSET = { 10, 0 };
 
 /*
  * These callback functions will be the events on
