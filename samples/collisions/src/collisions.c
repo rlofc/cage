@@ -1,10 +1,21 @@
 /* samples / collisions.c
  * ======================
  *
+ * This sample demonstrates a method for pixel-perfect
+ * collision detection. While this may not be the most
+ * optimized way to do this, it is clear and effective.
+ *
  */
 #include "cage.h"
 
-#define MAX_STARS 4
+/* Sample setup
+ * ------------
+ *
+ * For this demo we will use a star image.
+ * Each star will have its own position, 
+ * motion vector and bounding box.
+ */
+#define MAX_STARS 12
 
 struct star
 {
@@ -19,6 +30,10 @@ struct state
     struct star stars[MAX_STARS];
 };
 
+/*
+ * Web begin by creating, positioning
+ * and propelling the stars.
+ */
 static void* create_sample( void )
 {
     int i;
@@ -34,14 +49,12 @@ static void* create_sample( void )
     return state;
 }
 
-static bbox translate_bbox( bbox b, vec t )
-{
-    vec d = sub_vec( b.p2, b.p1 );
-    b.p1 = t;
-    b.p2 = add_vec( t, d );
-    return b;
-}
-
+/* Moving the stars
+ * ----------------
+ *
+ * update_star() moves a star on the screen using the star
+ * motion vector and tests for screen bounds collisions.
+ */
 static void update_star( struct star* star, float elapsed_ms )
 {
     bbox screen_bbox = {{0, 0}, {192, 108}};
@@ -57,12 +70,18 @@ static void update_star( struct star* star, float elapsed_ms )
     }
 }
 
-static void swap_vecs( vec* a, vec* b )
-{
-    vec tmp = *a;
-    a->x = b->x; a->y = b->y; b->x = tmp.x; b->y = tmp.y;
-}
-
+/* Collision detection
+ * -------------------
+ *
+ * When updating a frame, we traverse the star pairs
+ * graph and test for a bounding box intersection.
+ * To detect pixel-level collisions, we us pixels_collide()
+ * using the portion of intersection as a test area.
+ * If we detect a collision, we swap the star pair
+ * motion vectors to create a deflection effect.
+ * 
+ * When done, we update and draw the stars.
+ */
 static void update_sample( void* data, float elapsed_ms )
 {
     struct state* state = data;
@@ -96,11 +115,25 @@ static void update_sample( void* data, float elapsed_ms )
     }
 }
 
+/* Cleanup
+ * -------
+ *
+ * Clean up is simple enough. Just destroy the star
+ * image and free the state structure memory.
+ */
 static void destroy_sample( void* data )
 {
-    UNUSED( data );
+    struct state* state = data;
+    destroy_image( data->star_img );
+    free( data );
 }
 
+/* Main
+ * ----
+ *
+ * The usual game_loop call, using the usual state
+ * functions.
+ */
 int main( void )
 {
     return game_loop( create_sample, update_sample, destroy_sample );

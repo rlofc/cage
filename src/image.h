@@ -190,8 +190,8 @@ void clear_image( struct image* image, struct color color );
  * Test if two images have colliding pixels
  * @param img1 First image to test
  * @param rect1 Area in first image to test
- * @param img1 Second image to test
- * @param rect1 Area in second image to test
+ * @param img2 Second image to test
+ * @param rect2 Area in second image to test
  *
  * @return 1 if collision was found
  *         0 if no collisions were found

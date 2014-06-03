@@ -15,6 +15,10 @@ create_blank_image
 ------------------
 .. doxygenfunction:: create_blank_image
 
+create_target_image
+-------------------
+.. doxygenfunction:: create_target_image
+
 destroy_image
 -------------
 .. doxygenfunction:: destroy_image
@@ -38,3 +42,7 @@ lock_image
 unlock_image
 -------------
 .. doxygenfunction:: unlock_image
+
+pixels_collide
+--------------
+.. doxygenfunction:: pixels_collide
