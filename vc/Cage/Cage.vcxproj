@@ -75,6 +75,7 @@
     <ClCompile Include="..\..\src\cage.c" />
     <ClCompile Include="..\..\src\easing.c" />
     <ClCompile Include="..\..\src\font.c" />
+    <ClCompile Include="..\..\src\geometry.c" />
     <ClCompile Include="..\..\src\image.c" />
     <ClCompile Include="..\..\src\keyboard.c" />
     <ClCompile Include="..\..\src\screen.c" />
@@ -87,6 +88,7 @@
     <ClInclude Include="..\..\src\cage.h" />
     <ClInclude Include="..\..\src\color.h" />
     <ClInclude Include="..\..\src\font.h" />
+    <ClInclude Include="..\..\src\geometry.h" />
     <ClInclude Include="..\..\src\image.h" />
     <ClInclude Include="..\..\src\keyboard.h" />
     <ClInclude Include="..\..\src\mixer.h" />
