@@ -20,7 +20,7 @@ static struct sample_data {
     struct image* stencil;
     struct font* font;
     struct image* background;
-} sample_data;
+} sample_data = { NULL, NULL, NULL, NULL };
 
 /*
  * This is going to be the callout text:
@@ -65,16 +65,29 @@ static struct timeline_event CO_EVENTS[N_CO_EVENTS] = {
  * the state data structure: the background image,
  * the callout stencil, the font and the timeline.
  */
+#define SAFELY(c) \
+    if ( (c) == NULL ) goto error
+#define IF_NEEDED(f,p) \
+    if ( p != NULL ) f(p)
 static void* create_sample( void )
 {
-    sample_data.background = create_image( "res/bg.png" );
-    sample_data.stencil = create_image( "res/callout.png" ); 
-    sample_data.font = create_font( "res/font.png", 16, 16 );
+    SAFELY( sample_data.background = create_image("res/bg.png" ) );
+    SAFELY( sample_data.stencil = create_image( "res/callout.png" ) );
+    SAFELY( sample_data.font = create_font( "res/font.png", 16, 16 ) );
     sample_data.font->line_spacing = 1;
     sample_data.font->char_spacing = 1;
-    sample_data.timeline = create_timeline();
-    append_events( sample_data.timeline, N_CO_EVENTS, CO_EVENTS );
+    SAFELY( sample_data.timeline = create_timeline() );
+    if ( append_events( sample_data.timeline, N_CO_EVENTS, CO_EVENTS ) == -1 ) {
+        ERROR( "unable to append timeline events" ); goto error;
+    }
     return &sample_data;
+
+error:
+    IF_NEEDED( destroy_image, sample_data.background );
+    IF_NEEDED( destroy_image, sample_data.stencil );
+    IF_NEEDED( destroy_font, sample_data.font );
+    IF_NEEDED( destroy_timeline, sample_data.timeline );
+    return NULL;
 }
 
 /* Drawing a callout box
