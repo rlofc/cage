@@ -230,7 +230,7 @@ static void update_sample( void* data, float elapsed_ms )
 
 void* popup( void* data, float elapsed_ms, float progress )
 {
-    int x,y,tx,ty;
+    int x,y;
     struct sample_data* sdata = data;
     float bounce = (bounce_ease_out( progress ));
     int w,h; measure_text( sdata->font, CO_TEXT, &w, &h );
@@ -242,7 +242,7 @@ void* popup( void* data, float elapsed_ms, float progress )
 
 void* show( void* data, float elapsed_ms, float progress )
 {
-    int x,y,tx,ty;
+    int x,y;
     struct sample_data* sdata = data;
     int w,h; measure_text( sdata->font, CO_TEXT, &w, &h );
     x = w/2+CO_ORIGIN.x-((w/2-CO_TIP_OFFSET.x)*1.0f);
