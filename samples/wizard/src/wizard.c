@@ -230,7 +230,7 @@ static int prepare_title( struct game_title* title )
             add_frame( title->bling, f, SECOND/10 , NULL );
         title->bling->mode = FREEZE_LAST_FRAME;
 
-    title->mask = create_blank_image( 192, 108, color_from_RGB(50,50,50) );
+    title->mask = create_target_image( 192, 108, color_from_RGB(50,50,50) );
     if ( title->mask == NULL ) goto error;
     set_blend_mode( title->mask, MULTIPLY );
     title->spot = create_image( "res/spot.png" );

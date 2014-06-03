@@ -84,14 +84,24 @@ enum blend_mode {
 struct image* create_image( const char* filepath );
 
 /**
- * Create a blank image
+ * Create a blank image for direct pixel manipulation
  * @param width The width of the blank image
  * @param height The height of the blank image
- * @param color The default color of the blank image
  *
  * @return \ref image pointer or NULL on failure
  */
-struct image* create_blank_image( int width, int height, struct color color );
+struct image* create_blank_image( int width, int height );
+
+/**
+ * Create an image that can be used to draw other images or sprites
+ * on.
+ * @param width The width of the blank image
+ * @param height The height of the blank image
+ * @param color The default color of the target image
+ *
+ * @return \ref image pointer or NULL on failure
+ */
+struct image* create_target_image( int width, int height, struct color color );
 
 /**
  * Destroy an image created using create_image() or create_blank_image()
@@ -175,5 +185,19 @@ void set_blend_mode( struct image* image, enum blend_mode blend_mode );
  * @param color Color the use as fill
  */
 void clear_image( struct image* image, struct color color );
+
+/**
+ * Test if two images have colliding pixels
+ * @param img1 First image to test
+ * @param rect1 Area in first image to test
+ * @param img1 Second image to test
+ * @param rect1 Area in second image to test
+ *
+ * @return 1 if collision was found
+ *         0 if no collisions were found
+ *         -1 when error occured
+ */
+int pixels_collide( struct image* img1, struct rectangle* rect1,
+                    struct image* img2, struct rectangle* rect2 );
 
 #endif /* end of include guard: image */
