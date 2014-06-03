@@ -68,6 +68,9 @@ copy ..\..\3rdparty\SDL2_mixer-2.0.0\lib\x86\SDL2_mixer.dll  ..\$(Configuration)
 copy ..\..\3rdparty\SDL2_image-2.0.0\lib\x86\SDL2_image.dll  ..\$(Configuration)\SDL2_image.dll /Y
 copy ..\..\3rdparty\SDL2_image-2.0.0\lib\x86\zlib1.dll  ..\$(Configuration)\ /Y
 copy ..\..\3rdparty\SDL2_image-2.0.0\lib\x86\libpng16-16.dll  ..\$(Configuration)\ /Y</Command>
+copy ..\..\3rdparty\SDL2_mixer-2.0.0\lib\x86\libogg-0.dll  ..\$(Configuration)\ /Y</Command>
+copy ..\..\3rdparty\SDL2_mixer-2.0.0\lib\x86\libvorbis-0.dll  ..\$(Configuration)\ /Y</Command>
+copy ..\..\3rdparty\SDL2_mixer-2.0.0\lib\x86\libvorbisfile-3.dll  ..\$(Configuration)\ /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -97,6 +100,9 @@ copy ..\..\3rdparty\SDL2_mixer-2.0.0\lib\x86\SDL2_mixer.dll  ..\$(Configuration)
 copy ..\..\3rdparty\SDL2_image-2.0.0\lib\x86\SDL2_image.dll  ..\$(Configuration)\SDL2_image.dll /Y
 copy ..\..\3rdparty\SDL2_image-2.0.0\lib\x86\zlib1.dll  ..\$(Configuration)\ /Y
 copy ..\..\3rdparty\SDL2_image-2.0.0\lib\x86\libpng16-16.dll  ..\$(Configuration)\ /Y</Command>
+copy ..\..\3rdparty\SDL2_mixer-2.0.0\lib\x86\libogg-0.dll  ..\$(Configuration)\ /Y</Command>
+copy ..\..\3rdparty\SDL2_mixer-2.0.0\lib\x86\libvorbis-0.dll  ..\$(Configuration)\ /Y</Command>
+copy ..\..\3rdparty\SDL2_mixer-2.0.0\lib\x86\libvorbisfile-3.dll  ..\$(Configuration)\ /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
