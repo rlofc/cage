@@ -244,11 +244,11 @@ int pixels_collide( struct image* img1, struct rectangle* rect1,
     int collide = 0;
     if ( lock_image( img1, (void**)&pixels1, &pitch1 ) == -1 ) {
         ERROR( "Unable to lock img1" );
-        goto error;
+        collide = -1; goto done;
     }
     if ( lock_image( img2, (void**)&pixels2, &pitch2 ) == -1 ) {
         ERROR( "Unable to lock img2" );
-        goto error;
+        collide = -1; goto done;
     }
     for ( y1 = rect1->y, y2 = rect2->y; y1 < rect1->y + rect1->h; y1++, y2++ ) {
         for ( x1 = rect1->x, x2 = rect2->x; x1 < rect1->x + rect1->w;
@@ -263,8 +263,6 @@ int pixels_collide( struct image* img1, struct rectangle* rect1,
             }
         }
     }
-error:
-    collide = -1;
 done:
     unlock_image( img1 );
     unlock_image( img2 );
