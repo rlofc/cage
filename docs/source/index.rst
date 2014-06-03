@@ -92,6 +92,7 @@ Or, follow along with the docs and learn Cage, bar by bar (pun intended).
    sprite_sample
    timeline_sample
    callout_sample
+   collisions_sample
    wizard
    advanced
 

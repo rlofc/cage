@@ -58,9 +58,7 @@ static void* create_sample( void )
 static void update_star( struct star* star, float elapsed_ms )
 {
     bbox screen_bbox = {{0, 0}, {192, 108}};
-    vec speed = star->star_vec;
-    elapsed_ms;
-    star->star_pos = add_vec( star->star_pos, speed );
+    star->star_pos = add_vec( star->star_pos, star->star_vec );
     star->star_bbox = translate_bbox( star->star_bbox, star->star_pos );
     if ( bbox_in_bbox( star->star_bbox, screen_bbox ) == 0 ) {
         if ( star->star_bbox.p1.x < screen_bbox.p1.x ) star->star_vec.x = 1;
@@ -68,6 +66,7 @@ static void update_star( struct star* star, float elapsed_ms )
         if ( star->star_bbox.p2.x > screen_bbox.p2.x ) star->star_vec.x = -1;
         if ( star->star_bbox.p2.y > screen_bbox.p2.y ) star->star_vec.y = -1;
     }
+    UNUSED(elapsed_ms);
 }
 
 /* Collision detection
@@ -90,28 +89,24 @@ static void update_sample( void* data, float elapsed_ms )
     for ( i = 0; i < MAX_STARS; i++ ) {
         for ( j = 0; j < MAX_STARS; j++ ) {
             if ( i != j && visited[i][j] == 0 && visited[j][i] == 0 ) {
+                bbox sub;
                 struct star* a = &state->stars[i];
                 struct star* b = &state->stars[j];
-                bbox sub;
                 if ( bbox_intersect( a->star_bbox, b->star_bbox, &sub ) ) {
                     struct rectangle r1, r2;
                     r1 = rect_from_sub_bbox( a->star_bbox, sub );
                     r2 = rect_from_sub_bbox( b->star_bbox, sub );
-
-                    if ( pixels_collide( state->star_img, &r1, state->star_img,
-                                         &r2 ) )
+                    if ( pixels_collide( state->star_img, &r1, state->star_img, &r2 ) )
                         swap_vecs( &a->star_vec, &b->star_vec );
                 }
                 visited[i][j] = 1;
             }
         }
     }
-
     screen_color( color_from_RGB( 10, 20, 50 ) );
     for ( i = 0; i < MAX_STARS; i++ ) {
         update_star( &state->stars[i], elapsed_ms );
-        draw_image( state->star_img, VEC_XY( state->stars[i].star_pos ), NULL,
-                    0 );
+        draw_image( state->star_img, VEC_XY( state->stars[i].star_pos ), NULL, 0 );
     }
 }
 
@@ -124,7 +119,7 @@ static void update_sample( void* data, float elapsed_ms )
 static void destroy_sample( void* data )
 {
     struct state* state = data;
-    destroy_image( data->star_img );
+    destroy_image( state->star_img );
     free( data );
 }
 
