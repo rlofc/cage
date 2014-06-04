@@ -2,7 +2,7 @@
 =============================================================================================
 
 Cage is an elementary game development library that has a
-naive and simple design in the spirit of less is more (or
+naive design in the spirit of less is more (or
 worse is better). It favors readability over flexibility and
 ease-of-use over a rich set of features (read: it's barely
 usable).
@@ -10,9 +10,9 @@ usable).
 ![Cage Screenshots](https://raw.githubusercontent.com/rlofc/cage/gh-pages/_images/cage-samples.png) 
 
 Cage should work well for simple, old-school 2D
-games.  It contains and constraints SDL2 so that a beginner
-game developer will not have to deal with it directly.
-However, it is completely transparent, so you can still
+games. It contains (and constains) SDL2, so beginner
+game developers will not have to deal with it directly,
+but it is completely transparent, so you can still
 reach in and hack anything you need.
 
 I wrote Cage to help me teach my kids game programming using
@@ -24,13 +24,13 @@ game.
 
 ### Highlights
 
-* Plain C - No abstractions, no obstructions
+* Plain C - No abstractions, no distractions
 * Easy to learn - Human-readable programming interface
 * Sprites - Animate sequence of frames in image files
 * Timelines - Sequence events for animation, story-telling and effects
 * Game States - Promotes scalable internal game design
 * Bitmap Fonts, Sounds, the usuals
-* SDL2 inside - Cross platform, potentially more powerful
+* SDL2 inside - Runs on **Windows**, **Linux**, **Mac/OSX**, **iOS** and **Android**, potentially more powerful
 
 ### Getting Started
 
