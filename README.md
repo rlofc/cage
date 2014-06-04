@@ -10,7 +10,7 @@ usable).
 ![Cage Screenshots](https://raw.githubusercontent.com/rlofc/cage/gh-pages/_images/cage-samples.png) 
 
 Cage should work well for simple, old-school 2D
-games. It contains (and constains) SDL2, so beginner
+games. It contains (and constrains) SDL2, so beginner
 game developers will not have to deal with it directly,
 but it is completely transparent, so you can still
 reach in and hack anything you need.
