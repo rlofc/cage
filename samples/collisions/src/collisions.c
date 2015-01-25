@@ -96,7 +96,8 @@ static void update_sample( void* data, float elapsed_ms )
                     struct rectangle r1, r2;
                     r1 = rect_from_sub_bbox( a->star_bbox, sub );
                     r2 = rect_from_sub_bbox( b->star_bbox, sub );
-                    if ( pixels_collide( state->star_img, &r1, state->star_img, &r2 ) )
+                    if ( pixels_collide( state->star_img, &r1,
+                                         state->star_img, &r2 ) )
                         swap_vecs( &a->star_vec, &b->star_vec );
                 }
                 visited[i][j] = 1;
@@ -106,7 +107,8 @@ static void update_sample( void* data, float elapsed_ms )
     screen_color( color_from_RGB( 10, 20, 50 ) );
     for ( i = 0; i < MAX_STARS; i++ ) {
         update_star( &state->stars[i], elapsed_ms );
-        draw_image( state->star_img, VEC_XY( state->stars[i].star_pos ), NULL, 0 );
+        draw_image( state->star_img,
+                    VEC_XY( state->stars[i].star_pos ), NULL, 0 );
     }
 }
 

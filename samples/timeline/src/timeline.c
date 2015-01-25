@@ -30,7 +30,9 @@ struct sample_data {
 static void* fade_in( void* data, float elapsed_ms, float progress )
 {
     struct sample_data* sd = data;
-    screen_color( color_from_RGB( 255*progress, 255*progress, 255*progress ) );
+    screen_color( color_from_RGB( 255 * progress,
+                                  255 * progress,
+                                  255 * progress ) );
     UNUSED( elapsed_ms ); return NULL;
 }
 
@@ -50,7 +52,7 @@ static void* caption_2( void* data, float elapsed_ms, float progress )
 
 static void* quit( void* data, float elapsed_ms, float progress )
 {
-    exit(0);
+    exit( 0 );
     UNUSED( data ); UNUSED( elapsed_ms ); UNUSED( progress ); return NULL;
 }
 
@@ -87,25 +89,25 @@ cleanup:
 error:
     return NULL;
 }
- 
+
 /* Update
  * ------
  *
  * For each frame, the update state function will update the timeline,
  * resulting event callbacks invocation.
- * The data and elapsed_ms arguments we pass along will eventually end 
+ * The data and elapsed_ms arguments we pass along will eventually end
  * up getting to the timeline callbacks.
  */
 static void update_sample( void* data, float elapsed_ms )
 {
     struct sample_data* sd = data;
-    update_timeline( sd->timeline, sd, elapsed_ms ); 
+    update_timeline( sd->timeline, sd, elapsed_ms );
 }
 
 /* Destroy
  * -------
  *
- * In the destroy() function we destroy the timeline, 
+ * In the destroy() function we destroy the timeline,
  * destroy the font and free the memory we allocated for
  * the sample data struct.
  */

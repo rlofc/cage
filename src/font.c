@@ -108,7 +108,6 @@ int load_font( struct font* font, const char* filepath, int ncols, int nrows )
                         if ( p_row < top ) {
                             top = p_row;
                         }
-
                         /* Break the loops */
                         p_col = cell_w;
                         p_row = cell_h;
@@ -125,7 +124,6 @@ int load_font( struct font* font, const char* filepath, int ncols, int nrows )
                         if ( get_pixel32( pixels, pitch, px, py ) !=
                              bg_color ) {
                             base_a = p_row;
-
                             p_col = cell_w;
                             p_row = -1;
                         }
@@ -153,7 +151,7 @@ int load_font( struct font* font, const char* filepath, int ncols, int nrows )
 
 struct font* create_font( const char* filepath, int cols, int rows )
 {
-    struct font* f = malloc( sizeof( struct font ) );
+    struct font* f = malloc( sizeof( *f ) );
     if ( f != NULL && load_font( f, filepath, cols, rows ) == -1 ) {
         free( f );
         return NULL;

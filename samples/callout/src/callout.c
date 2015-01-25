@@ -176,7 +176,8 @@ static void fill_box( struct image* stencil, int x, int y, int w, int h )
     for ( r = 0 ; r <= inner_rows ; r++ ) {
         for ( c = 0 ; c <= inner_cols ; c++ ) {
             struct rectangle* rect = &rects[ FILL ];
-            if ( r == inner_rows && c == inner_cols ) rect = &rects[ FILL_COL_ROW_EX ];
+            if ( r == inner_rows && c == inner_cols )
+                rect = &rects[ FILL_COL_ROW_EX ];
             else if ( r == inner_rows ) rect = &rects[ FILL_ROW_EX ];
             else if ( c == inner_cols ) rect = &rects[ FILL_COL_EX ];
             draw_image( stencil, x+GSIZE+c*GSIZE,y+GSIZE+r*GSIZE, rect,0 );
@@ -189,8 +190,10 @@ static void fill_box( struct image* stencil, int x, int y, int w, int h )
  */
 static void draw_box( void* data, int x, int y, int w, int h )
 {
-    rects[ FILL_ROW_EX ].h = rects[ FILL_COL_ROW_EX ].h = ( ( h - GSIZE*2 ) % GSIZE );
-    rects[ FILL_COL_EX ].w = rects[ FILL_COL_ROW_EX ].w = ( ( w - GSIZE*2 ) % GSIZE );
+    rects[ FILL_ROW_EX ].h = rects[ FILL_COL_ROW_EX ].h =
+        ( ( h - GSIZE*2 ) % GSIZE );
+    rects[ FILL_COL_EX ].w = rects[ FILL_COL_ROW_EX ].w =
+        ( ( w - GSIZE*2 ) % GSIZE );
 
     rects[ LEFT_EX ].h = rects[ RIGHT_EX ].h =  ( ( h - GSIZE*2 ) % GSIZE );
     rects[ TOP_EX ].w  = rects[ BOTTOM_EX ].w   =  ( ( w - GSIZE*2 ) % GSIZE );

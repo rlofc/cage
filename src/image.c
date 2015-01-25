@@ -215,8 +215,10 @@ void clear_image( struct image* image, struct color color )
     SDL_Rect rect;
     rect.x = 0; rect.y = 0; rect.w = image->width; rect.h = image->height;
     SDL_GetRenderDrawColor( screen->impl, &r, &g, &b, &a );
-    SDL_SetRenderDrawColor( screen->impl, color.red, color.green, color.blue,
-                            color.alpha );
+    SDL_SetRenderDrawColor( screen->impl, color.red,
+                                          color.green,
+                                          color.blue,
+                                          color.alpha );
     draw_on_image( image );
     ret = SDL_RenderFillRect( screen->impl, &rect );
     if ( ret != 0 ) exit( 1 );
@@ -258,8 +260,7 @@ int pixels_collide( struct image* img1, struct rectangle* rect1,
             pix1 = pix1 & 0x000000ff;
             pix2 = pix2 & 0x000000ff;
             if ( pix1 > 0 && pix2 > 0 ) {
-                collide = 1;
-                goto done;
+                collide = 1; goto done;
             }
         }
     }
