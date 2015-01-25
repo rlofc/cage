@@ -18,6 +18,8 @@ static struct wizard {
     struct sprite* sprite;
     struct animation* walk_cycle;
 } wizard = { NULL, NULL };
+static void* create_sample( void );
+static void destroy_sample( void* data );
 
 /* Prepare the sprite
  * ------------------
@@ -36,9 +38,9 @@ static struct wizard {
 static void* create_sample( void )
 {
     wizard.sprite = create_sprite( create_image( "res/wizard.png" ), 32, 32 );
-    if ( wizard.sprite == NULL ) return NULL;
+    if ( wizard.sprite == NULL ) goto error;
     wizard.walk_cycle = create_animation();
-    if ( wizard.walk_cycle == NULL ) return NULL;
+    if ( wizard.walk_cycle == NULL ) goto error;
     else {
         struct frame frames[] = { { 0, 300, NULL },
                                   { 1, 300, NULL },
@@ -50,6 +52,9 @@ static void* create_sample( void )
     }
     play_animation( wizard.sprite, wizard.walk_cycle );
     return &wizard;
+error:
+    destroy_sample( &wizard );
+    return NULL;
 }
 
 /* Animate & draw

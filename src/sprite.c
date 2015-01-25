@@ -80,8 +80,10 @@ struct sprite* create_sprite( struct image* image, int w, int h )
 
 void destroy_sprite( struct sprite* sprite )
 {
-    cleanup_sprite( sprite );
-    free( sprite );
+    if ( sprite != NULL) {
+        cleanup_sprite( sprite );
+        free( sprite );
+    }
 }
 
 static void consume_elapsed_time( struct sprite* sprite,

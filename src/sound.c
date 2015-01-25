@@ -37,8 +37,10 @@ error:
 
 void destroy_sound( struct sound* sound )
 {
-    cleanup_sound( sound );
-    free( sound );
+    if ( sound != NULL ) {
+        cleanup_sound( sound );
+        free( sound );
+    }
 }
 
 int load_sound( struct sound* sound, const char* pathname )

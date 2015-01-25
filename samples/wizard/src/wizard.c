@@ -96,9 +96,11 @@ struct wizard {
  * initial position.
  *
  */
+static void destroy_wizard( struct wizard* wizard );
 static struct wizard* create_wizard( void )
 {
-    struct wizard* wizard = calloc(1, sizeof( struct wizard ) );
+    struct wizard* wizard = calloc(1, sizeof( *wizard ) );
+    if ( wizard == NULL ) goto error;
 
     wizard->sprite = create_sprite( create_image( "res/wizard.png" ) , 32, 32);
     if ( wizard->sprite == NULL ) goto error;
@@ -147,7 +149,7 @@ static struct wizard* create_wizard( void )
     return wizard;
 
 error:
-    free( wizard );
+    destroy_wizard( wizard );
     ERROR( "Unable to create wizard" );
     return NULL;
 }
@@ -159,12 +161,14 @@ error:
  */
 static void destroy_wizard( struct wizard* wizard )
 {
-    destroy_animation( wizard->walk_right );
-    destroy_animation( wizard->spell );
-    destroy_animation( wizard->stand );
-    destroy_image( wizard->sprite->image );
-    destroy_sprite( wizard->sprite );
-    free( wizard );
+    if ( wizard != NULL ) {
+        destroy_animation( wizard->walk_right );
+        destroy_animation( wizard->spell );
+        destroy_animation( wizard->stand );
+        destroy_image( wizard->sprite->image );
+        destroy_sprite( wizard->sprite );
+        free( wizard );
+    }
 }
 
 /* The wizard is controlled using the keyboard (for now).
@@ -212,6 +216,8 @@ struct game_title {
     struct image* mask;
     struct image* spot;
 };
+static int prepare_title( struct game_title* title );
+static void cleanup_title( struct game_title* title );
 
 /* We create a sprite for the title and an animation
  * with 6 frames.
@@ -241,6 +247,7 @@ static int prepare_title( struct game_title* title )
 
 error:
     ERROR( "Unable to prepare title" );
+    cleanup_title( title );
     return -1;
 }
 
@@ -248,6 +255,8 @@ static void cleanup_title( struct game_title* title )
 {
     destroy_sprite( title->sprite );
     destroy_animation( title->bling );
+    destroy_image( title->spot );
+    destroy_image( title->mask );
 }
 
 /* A Decorative Tree
@@ -264,15 +273,19 @@ struct tree {
 static int prepare_tree( struct tree* tree )
 {
     tree->sprite = create_sprite( create_image("res/tree.png" ) , 32,32 );
-    if ( tree->sprite == NULL ) goto error;
+    if ( tree->sprite == NULL ) goto cleanup_sprite;
     tree->windblow = create_animation();
-    if ( tree->windblow == NULL ) goto error;
+    if ( tree->windblow == NULL ) goto cleanup_animation;
         add_frame( tree->windblow, 0, 1*SECOND, NULL );
         add_frame( tree->windblow, 1, 1*SECOND, NULL );
     tree->windblow->loop_from = 0;
     tree->windblow->loop_to = 1;
     return 0;
 
+cleanup_animation:
+    destroy_animation( tree->windblow );
+cleanup_sprite:
+    destroy_sprite( tree->sprite );
 error:
     ERROR( "Unable to prepare tree" );
     return -1;
@@ -307,6 +320,8 @@ struct level_data {
     struct font* font;
     struct sound* music;
 };
+static struct level_data* create_level_data( void );
+static void destroy_level_data( struct level_data* ldata );
 
 /* **slide\_title\_in()**, **slide\_title\_out()** and
  * **bling\_title()** are used by the level
@@ -386,37 +401,41 @@ static void* bling_title( void* data, float elapsed_ms, float progress )
  */
 static struct level_data* create_level_data( void )
 {
-    struct level_data* ldata = calloc( 1, sizeof ( struct level_data ) );
-    ldata->wizard = create_wizard();
-    if ( ldata->wizard == NULL ) goto error;
+    struct level_data* ldata = calloc( 1, sizeof ( *ldata ) );
+    if ( ldata == NULL ) goto error;
 
-    if ( prepare_title( &ldata->title ) != 0 ) goto error;
-    if ( prepare_tree( &ldata->tree ) != 0 ) goto error;
+    ldata->wizard = create_wizard();
+    if ( ldata->wizard == NULL ) goto cleanup_level_data;
+
+    if ( prepare_title( &ldata->title ) != 0 ) goto cleanup_level_data;
+    if ( prepare_tree( &ldata->tree ) != 0 ) goto cleanup_level_data;
 
     ldata->grass_tile = create_image( "res/grass_tile.png" );
-    if ( ldata->grass_tile == NULL ) goto error;
+    if ( ldata->grass_tile == NULL ) goto cleanup_level_data;
 
     ldata->earth_tile = create_image( "res/earth_tile.png" );
-    if ( ldata->earth_tile == NULL ) goto error;
+    if ( ldata->earth_tile == NULL ) goto cleanup_level_data;
 
     play_animation( ldata->tree.sprite, ldata->tree.windblow );
 
     ldata->timeline = create_timeline();
-    if ( ldata->timeline == NULL ) goto error;
+    if ( ldata->timeline == NULL ) goto cleanup_level_data;
         append_event( ldata->timeline, 0, 1*SECOND,  before_title_in );
         append_event( ldata->timeline, 0, 1*SECOND,  slide_title_in );
         append_event( ldata->timeline, 0, 4*SECONDS, bling_title );
         append_event( ldata->timeline, 0, 1*SECOND,  slide_title_out );;
 
     ldata->font = create_font( "res/font.png", 32, 4 );
-    if ( ldata->font == NULL ) goto error;
+    if ( ldata->font == NULL ) goto cleanup_level_data;
 
     ldata->music = create_sound( "res/wizard.ogg" );
     play_sound( ldata->music, -1 );
     return ldata;
 
+cleanup_level_data:
+    destroy_level_data( ldata );
+
 error:
-    free( ldata );
     ERROR( "Unable to create level data" );
     return NULL;
 }

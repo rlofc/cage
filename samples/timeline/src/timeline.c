@@ -64,7 +64,7 @@ static void* quit( void* data, float elapsed_ms, float progress )
 static void* create_sample( void )
 {
     struct sample_data* sd = malloc( sizeof( struct sample_data ) );
-    if ( sd == NULL ) return NULL;
+    if ( sd == NULL ) goto error;
 
     sd->timeline = create_timeline();
     if ( sd->timeline ) {
@@ -72,11 +72,20 @@ static void* create_sample( void )
         append_event( sd->timeline, 0, 1000, caption_1 );
         append_event( sd->timeline, 0, 1000, caption_2 );
         append_event( sd->timeline, 0, 0, quit );
-    } else return NULL;
+    } else goto cleanup;
 
     sd->font = create_font( "res/font.png", 32, 4 );
-    if ( sd->font == NULL ) return NULL;
+    if ( sd->font == NULL ) goto cleanup;
     return sd;
+
+cleanup:
+    if ( sd != NULL ) {
+        destroy_timeline( sd->timeline );
+        destroy_font( sd->font );
+    }
+
+error:
+    return NULL;
 }
  
 /* Update
