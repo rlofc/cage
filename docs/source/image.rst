@@ -27,6 +27,14 @@ draw_image
 ----------
 .. doxygenfunction:: draw_image
 
+get_image_alpha
+-------------
+.. doxygenfunction:: get_image_alpha
+
+set_image_alpha
+-------------
+.. doxygenfunction:: set_image_alpha
+
 load_image
 ----------
 .. doxygenfunction:: load_image

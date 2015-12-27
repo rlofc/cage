@@ -67,47 +67,47 @@ For example:
 ::
 
      // These are the level state functions
-     void* create_level( void )
+     void* create_level(void)
      {
-         struct level_data* data = malloc( sizeof( struct level_data) );
+         struct level_data* data = malloc(sizeof(struct level_data));
          return level_data;
      }
 
-     void update_level( void* data, float elapsed_ms )
+     void update_level(void* data, float elapsed_ms)
      {
          // Update and draw your game
      }
 
-     void destroy_level( void* data )
+     void destroy_level(void* data)
      {
          // Put any cleanup code here...
-         free( data );
+         free(data);
      }
 
      // These are the game menu state functions
-     void* create_menu( void )
+     void* create_menu(void)
      {
-         struct menu_data* data = malloc( sizeof( struct menu_data) );
+         struct menu_data* data = malloc(sizeof(struct menu_data));
          return menu_data;
      }
 
-     void update_menu( void* data, float elapsed_ms )
+     void update_menu(void* data, float elapsed_ms)
      {
          // Handle the menu behavior.
          // When ready, switch to the level game state:
-         game_state( create_level, update_level, destroy_level );
+         game_state(create_level, update_level, destroy_level);
      }
 
-     void destroy_menu( void* data )
+     void destroy_menu(void* data)
      {
          // Put any cleamup code here...
-         free( data );
+         free(data);
      }
 
      // This is your game!
      int main(int argc, char ** argv)
      {
          // Set up the initial game state
-         return game_loop( create_menu, update_menu, destroy_menu );
+         return game_loop(create_menu, update_menu, destroy_menu);
      }
 

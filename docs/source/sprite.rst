@@ -20,8 +20,12 @@ prepare_sprite
 .. doxygenfunction:: prepare_sprite
 
 draw_sprite
---------------
+-----------
 .. doxygenfunction:: draw_sprite
+
+draw_sprite_frame
+-----------------
+.. doxygenfunction:: draw_sprite_frame
 
 animate_sprite
 --------------
@@ -30,4 +34,8 @@ animate_sprite
 play_animation
 --------------
 .. doxygenfunction:: play_animation
+
+stop_animation
+--------------
+.. doxygenfunction:: stop_animation
 

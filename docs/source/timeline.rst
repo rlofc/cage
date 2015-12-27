@@ -35,6 +35,14 @@ init_timeline
 -------------
 .. doxygenfunction:: init_timeline
 
+pause_timeline
+--------------
+.. doxygenfunction:: pause_timeline
+
+reset_timeline
+--------------
+.. doxygenfunction:: reset_timeline
+
 cleanup_timeline
 ----------------
 .. doxygenfunction:: cleanup_timeline

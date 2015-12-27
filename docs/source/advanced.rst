@@ -19,10 +19,10 @@ For example, you can easily create and destroy images like so:
 ::
 
     struct image* image;
-    image = create_image( "res/image.png" );
+    image = create_image("res/image.png");
 
-    if ( image!=NULL ) {
-        destroy_image( image );
+    if (image!=NULL) {
+        destroy_image(image);
     }
 
 Or, if you want, you can do:
@@ -31,11 +31,11 @@ Or, if you want, you can do:
 
     struct image image;
     // this will work on already allocated image structs
-    if ( load_image( &image, "res/image.png" ) == -1 ) {
+    if (load_image(&image, "res/image.png") == -1) {
         // something went wrong
     }
     // clean up any internally allocated resources
-    cleanup_image( &image );
+    cleanup_image(&image);
 
 
 Coding Style
@@ -44,6 +44,5 @@ Cage uses a slightly modified version of the Linux kernel
 coding style. The main differences are:
 
 * Indentation size is 4 spaces.
-* Parentheses are internally padded with spaces.
 * Pointer '*' sign is adjacent to the type and not to the
   variable.
