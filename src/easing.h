@@ -1,21 +1,21 @@
-/* Copyright (c) 2014 Ithai Levi @RLofC
- * 
+/* Copyright (c) 2014, 2015 Ithai Levi @RLofC
+ *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
  * arising from the use of this software.
- * 
+ *
  * Permission is granted to anyone to use this software for any purpose,
  * including commercial applications, and to alter it and redistribute it
  * freely, subject to the following restrictions:
- * 
+ *
  *    1. The origin of this software must not be misrepresented; you must not
  *    claim that you wrote the original software. If you use this software
  *    in a product, an acknowledgment in the product documentation would be
  *    appreciated but is not required.
- * 
+ *
  *    2. Altered source versions must be plainly marked as such, and must not be
  *    misrepresented as being the original software.
- * 
+ *
  *    3. This notice may not be removed or altered from any source
  *    distribution.
  */
@@ -31,7 +31,7 @@
  *
  * @return interpolated value
  */
-float interpolate( float from, float to, float amount, float (*easing)(float) );
+float interpolate(float from, float to, float amount, float (*easing)(float));
 
 /**
  * Function Graph:
@@ -45,11 +45,11 @@ float interpolate( float from, float to, float amount, float (*easing)(float) );
  *     +---------------------------
  *
  */
-float linear_interpolation( float p );
+float linear_interpolation(float p);
 
 /**
  * Function Graph:
- * 
+ *
  *     |                          '
  *     |                        ,'
  *     |                      ,'
@@ -59,7 +59,7 @@ float linear_interpolation( float p );
  *     +---------------------------
  *
  */
-float quadratic_ease_in( float p );
+float quadratic_ease_in(float p);
 
 /**
  * Function Graph:
@@ -73,7 +73,7 @@ float quadratic_ease_in( float p );
  *     +---------------------------
  *
  */
-float quadratic_ease_out( float p );
+float quadratic_ease_out(float p);
 
 /**
  * Function Graph:
@@ -87,11 +87,11 @@ float quadratic_ease_out( float p );
  *     +---------------------------
  *
  */
-float quadratic_ease_in_out( float p );
+float quadratic_ease_in_out(float p);
 
 /**
  * Function Graph:
- * 
+ *
  *     |                          '
  *     |                        ,'
  *     |                      ,'
@@ -101,7 +101,7 @@ float quadratic_ease_in_out( float p );
  *     +---------------------------
  *
  */
-float cubic_ease_in( float p );
+float cubic_ease_in(float p);
 
 /**
  * Function Graph:
@@ -115,7 +115,7 @@ float cubic_ease_in( float p );
  *     +---------------------------
  *
  */
-float cubic_ease_out( float p );
+float cubic_ease_out(float p);
 
 /**
  * Function Graph:
@@ -129,7 +129,7 @@ float cubic_ease_out( float p );
  *     +---------------------------
  *
  */
-float cubic_ease_in_out( float p );
+float cubic_ease_in_out(float p);
 
 /**
  * Function Graph:
@@ -143,7 +143,7 @@ float cubic_ease_in_out( float p );
  *     +---------------------------
  *
  */
-float quartic_ease_in( float p );
+float quartic_ease_in(float p);
 
 /**
  * Function Graph:
@@ -157,7 +157,7 @@ float quartic_ease_in( float p );
  *     +---------------------------
  *
  */
-float quartic_ease_out( float p );
+float quartic_ease_out(float p);
 
 /**
  * Function Graph:
@@ -171,7 +171,7 @@ float quartic_ease_out( float p );
  *     +---------------------------
  *
  */
-float quartic_ease_in_out( float p );
+float quartic_ease_in_out(float p);
 
 /**
  * Function Graph:
@@ -182,10 +182,10 @@ float quartic_ease_in_out( float p );
  *     |                        ,'
  *     |                   _,.-'
  *     |..............--'''
- *     +--------------------------- 
+ *     +---------------------------
  *
  */
-float quintic_ease_in( float p );
+float quintic_ease_in(float p);
 
 /**
  * Function Graph:
@@ -199,7 +199,7 @@ float quintic_ease_in( float p );
  *     +---------------------------
  *
  */
-float quintic_ease_out( float p );
+float quintic_ease_out(float p);
 
 /**
  * Function Graph:
@@ -213,7 +213,7 @@ float quintic_ease_out( float p );
  *     +---------------------------
  *
  */
-float quintic_ease_in_out( float p );
+float quintic_ease_in_out(float p);
 
 /**
  * Function Graph:
@@ -227,7 +227,7 @@ float quintic_ease_in_out( float p );
  *     +---------------------------
  *
  */
-float sine_ease_in( float p );
+float sine_ease_in(float p);
 
 /**
  * Function Graph:
@@ -241,7 +241,7 @@ float sine_ease_in( float p );
  *     +---------------------------
  *
  */
-float sine_ease_out( float p );
+float sine_ease_out(float p);
 
 /**
  * Function Graph:
@@ -255,7 +255,7 @@ float sine_ease_out( float p );
  *     +---------------------------
  *
  */
-float sine_ease_in_out( float p );
+float sine_ease_in_out(float p);
 
 /**
  * Function Graph:
@@ -269,7 +269,7 @@ float sine_ease_in_out( float p );
  *     +---------------------------
  *
  */
-float circular_ease_in( float p );
+float circular_ease_in(float p);
 
 /**
  * Function Graph:
@@ -283,7 +283,7 @@ float circular_ease_in( float p );
  *     +---------------------------
  *
  */
-float circular_ease_out( float p );
+float circular_ease_out(float p);
 
 /**
  * Function Graph:
@@ -297,7 +297,7 @@ float circular_ease_out( float p );
  *     +---------------------------
  *
  */
-float circular_ease_in_out( float p );
+float circular_ease_in_out(float p);
 
 /**
  * Function Graph:
@@ -311,7 +311,7 @@ float circular_ease_in_out( float p );
  *     +---------------------------
  *
  */
-float exponential_ease_in( float p );
+float exponential_ease_in(float p);
 
 /**
  * Function Graph:
@@ -325,8 +325,7 @@ float exponential_ease_in( float p );
  *     +---------------------------
  *
  */
-float exponential_ease_out( float p );
-
+float exponential_ease_out(float p);
 
 /**
  * Function Graph:
@@ -340,7 +339,7 @@ float exponential_ease_out( float p );
  *     +---------------------------
  *
  */
-float exponential_ease_in_out( float p );
+float exponential_ease_in_out(float p);
 
 /**
  * Function Graph:
@@ -354,7 +353,7 @@ float exponential_ease_in_out( float p );
  *     +----------`''-------+--+---
  *     |                    `-
  */
-float elastic_ease_in( float p );
+float elastic_ease_in(float p);
 
 /**
  * Function Graph:
@@ -369,11 +368,11 @@ float elastic_ease_in( float p );
  *     +---------------------------
  *
  */
-float elastic_ease_out( float p );
+float elastic_ease_out(float p);
 
 /**
  * Function Graph:
- *                   
+ *
  *     |             _,\      _.._
  *     1             /   `._,''
  *     |            .'
@@ -384,7 +383,7 @@ float elastic_ease_out( float p );
  *     +-------`=+-----------------
  *
  */
-float elastic_ease_in_out( float p );
+float elastic_ease_in_out(float p);
 
 /**
  * Function Graph:
@@ -398,7 +397,7 @@ float elastic_ease_in_out( float p );
  *     +--`..=------=,,-'----------
  *     |     `'''''
  */
-float back_ease_in( float p );
+float back_ease_in(float p);
 
 /**
  * Function Graph:
@@ -413,7 +412,7 @@ float back_ease_in( float p );
  *     +---------------------------
  *
  */
-float back_ease_out( float p );
+float back_ease_out(float p);
 
 /**
  * Function Graph:
@@ -428,7 +427,7 @@ float back_ease_out( float p );
  *     +-`.=-----,'----------------
  *     |   ``-''
  */
-float back_ease_in_out( float p );
+float back_ease_in_out(float p);
 
 /**
  * Function Graph:
@@ -442,7 +441,7 @@ float back_ease_in_out( float p );
  *     +---------------------------
  *
  */
-float bounce_ease_in( float p );
+float bounce_ease_in(float p);
 
 /**
  * Function Graph:
@@ -456,7 +455,7 @@ float bounce_ease_in( float p );
  *     +---------------------------
  *
  */
-float bounce_ease_out( float p );
+float bounce_ease_out(float p);
 
 /**
  * Function Graph:
@@ -470,6 +469,6 @@ float bounce_ease_out( float p );
  *     +---------------------------
  *
  */
-float bounce_ease_in_out( float p );
+float bounce_ease_in_out(float p);
 
 #endif /* end of include guard: EASING_H_FES178TS */

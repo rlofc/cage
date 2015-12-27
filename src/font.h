@@ -1,4 +1,4 @@
-/* Copyright (c) 2014 Ithai Levi @RLofC
+/* Copyright (c) 2014-2016 Ithai Levi @RLofC
  *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -32,8 +32,7 @@
  * Bitmap fonts are made from images with a
  * matrix of characters in ascii order.
  */
-struct font
-{
+struct font {
     /** font characters image */
     struct image image;
     /** SDL character boundries */
@@ -56,13 +55,13 @@ struct font
  *
  * @return New font, ready to use
  */
-struct font* create_font( const char* filepath, int cols, int rows );
+struct font* create_font(const char* filepath, int cols, int rows);
 
 /**
  * Destory an existing font
  * @param font Font to cleanup and deallocate
  */
-void destroy_font( struct font* font );
+void destroy_font(struct font* font);
 
 /**
  * Build a font from a font image file containing 16x16 (256) characters
@@ -73,7 +72,7 @@ void destroy_font( struct font* font );
  *
  * @return -1 on error
  */
-int load_font( struct font* font, const char* filepath, int cols, int rows );
+int load_font(struct font* font, const char* filepath, int cols, int rows);
 
 /**
  * Free any internally allocated resources for the font
@@ -81,7 +80,7 @@ int load_font( struct font* font, const char* filepath, int cols, int rows );
  *
  * @return -1 on error
  */
-int cleanup_font( struct font* font );
+int cleanup_font(struct font* font);
 
 /**
  * Use font to render text
@@ -90,7 +89,7 @@ int cleanup_font( struct font* font );
  * @param x x coordinates
  * @param y y coordinates
  */
-void draw_text( struct font* font, const char* text, int x, int y );
+void draw_text(struct font* font, const char* text, int x, int y);
 
 /**
  * Measure the expected width and height of some text using a font
@@ -99,7 +98,6 @@ void draw_text( struct font* font, const char* text, int x, int y );
  * @param width a pointer to where the width will be stored
  * @param height a pointer to where the height will be stored
  */
-void measure_text( struct font* font, const char* text, int* width,
-                   int* height );
+void measure_text(struct font* font, const char* text, int* width, int* height);
 
 #endif /* end of include guard: FONT_H_XYTHJIBT */

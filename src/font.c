@@ -1,4 +1,4 @@
-/* Copyright (c) 2014 Ithai Levi @RLofC
+/* Copyright (c) 2014-2016 Ithai Levi @RLofC
  *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -32,12 +32,12 @@
  * http://lazyfoo.net/SDL_tutorials/lesson30/
  * -----------------------------------------------
  */
-static uint32_t get_pixel32( uint32_t* pixels, int pitch, int x, int y )
+static uint32_t get_pixel32(uint32_t* pixels, int pitch, int x, int y)
 {
-    return pixels[( y * ( pitch / 4 ) ) + x];
+    return pixels[(y * (pitch / 4)) + x];
 }
 
-int load_font( struct font* font, const char* filepath, int ncols, int nrows )
+int load_font(struct font* font, const char* filepath, int ncols, int nrows)
 {
     uint32_t* pixels = NULL;
     int pitch = 0;
@@ -46,11 +46,11 @@ int load_font( struct font* font, const char* filepath, int ncols, int nrows )
     int rows;
     int i;
 
-    if ( load_image( &font->image, filepath ) == -1 ) return -1;
-    if ( ( font->image.width / ncols ) * ( font->image.height / nrows ) >
-         MAX_FONT_CHARS )
+    if (load_image(&font->image, filepath) == -1) return -1;
+    if ((font->image.width / ncols) * (font->image.height / nrows) >
+        MAX_FONT_CHARS)
         return -1;
-    if ( lock_image( &font->image, (void**)&pixels, &pitch ) == -1 ) return -1;
+    if (lock_image(&font->image, (void**)&pixels, &pitch) == -1) return -1;
 
     bg_color = pixels[0];
 
@@ -62,9 +62,9 @@ int load_font( struct font* font, const char* filepath, int ncols, int nrows )
 
     curr_char = 0;
 
-    for ( rows = 0; rows < nrows; ++rows ) {
+    for (rows = 0; rows < nrows; ++rows) {
         int cols;
-        for ( cols = 0; cols < ncols; ++cols ) {
+        for (cols = 0; cols < ncols; ++cols) {
             int p_col, p_row;
             font->chars_rects[curr_char].x = cell_w * cols;
             font->chars_rects[curr_char].y = cell_h * rows;
@@ -72,12 +72,12 @@ int load_font( struct font* font, const char* filepath, int ncols, int nrows )
             font->chars_rects[curr_char].w = cell_w;
             font->chars_rects[curr_char].h = cell_h;
 
-            for ( p_col = 0; p_col < cell_w; ++p_col ) {
-                for ( p_row = 0; p_row < cell_h; ++p_row ) {
-                    int px = ( cell_w * cols ) + p_col;
-                    int py = ( cell_h * rows ) + p_row;
+            for (p_col = 0; p_col < cell_w; ++p_col) {
+                for (p_row = 0; p_row < cell_h; ++p_row) {
+                    int px = (cell_w * cols) + p_col;
+                    int py = (cell_h * rows) + p_row;
 
-                    if ( get_pixel32( pixels, pitch, px, py ) != bg_color ) {
+                    if (get_pixel32(pixels, pitch, px, py) != bg_color) {
                         font->chars_rects[curr_char].x = px;
                         p_col = cell_w;
                         p_row = cell_h;
@@ -85,27 +85,27 @@ int load_font( struct font* font, const char* filepath, int ncols, int nrows )
                 }
             }
 
-            for ( p_col = cell_w - 1; p_col >= 0; --p_col ) {
-                for ( p_row = 0; p_row < cell_h; ++p_row ) {
-                    int px = ( cell_w * cols ) + p_col;
-                    int py = ( cell_h * rows ) + p_row;
+            for (p_col = cell_w - 1; p_col >= 0; --p_col) {
+                for (p_row = 0; p_row < cell_h; ++p_row) {
+                    int px = (cell_w * cols) + p_col;
+                    int py = (cell_h * rows) + p_row;
 
-                    if ( get_pixel32( pixels, pitch, px, py ) != bg_color ) {
+                    if (get_pixel32(pixels, pitch, px, py) != bg_color) {
                         font->chars_rects[curr_char].w =
-                            ( px - font->chars_rects[curr_char].x ) + 1;
+                        (px - font->chars_rects[curr_char].x) + 1;
                         p_col = -1;
                         p_row = cell_h;
                     }
                 }
             }
 
-            for ( p_row = 0; p_row < cell_h; ++p_row ) {
-                for ( p_col = 0; p_col < cell_w; ++p_col ) {
-                    int px = ( cell_w * cols ) + p_col;
-                    int py = ( cell_h * rows ) + p_row;
+            for (p_row = 0; p_row < cell_h; ++p_row) {
+                for (p_col = 0; p_col < cell_w; ++p_col) {
+                    int px = (cell_w * cols) + p_col;
+                    int py = (cell_h * rows) + p_row;
 
-                    if ( get_pixel32( pixels, pitch, px, py ) != bg_color ) {
-                        if ( p_row < top ) {
+                    if (get_pixel32(pixels, pitch, px, py) != bg_color) {
+                        if (p_row < top) {
                             top = p_row;
                         }
                         /* Break the loops */
@@ -115,14 +115,13 @@ int load_font( struct font* font, const char* filepath, int ncols, int nrows )
                 }
             }
 
-            if ( curr_char == 'A' ) {
-                for ( p_row = cell_h - 1; p_row >= 0; --p_row ) {
-                    for ( p_col = 0; p_col < cell_w; ++p_col ) {
-                        int px = ( cell_w * cols ) + p_col;
-                        int py = ( cell_h * rows ) + p_row;
+            if (curr_char == 'A') {
+                for (p_row = cell_h - 1; p_row >= 0; --p_row) {
+                    for (p_col = 0; p_col < cell_w; ++p_col) {
+                        int px = (cell_w * cols) + p_col;
+                        int py = (cell_h * rows) + p_row;
 
-                        if ( get_pixel32( pixels, pitch, px, py ) !=
-                             bg_color ) {
+                        if (get_pixel32(pixels, pitch, px, py) != bg_color) {
                             base_a = p_row;
                             p_col = cell_w;
                             p_row = -1;
@@ -140,44 +139,44 @@ int load_font( struct font* font, const char* filepath, int ncols, int nrows )
     font->char_spacing = 0;
     font->line_spacing = 0;
 
-    for ( i = 0; i < ncols * nrows; ++i ) {
+    for (i = 0; i < ncols * nrows; ++i) {
         font->chars_rects[i].y += top;
         font->chars_rects[i].h -= top;
     }
 
-    unlock_image( &font->image );
+    unlock_image(&font->image);
     return 0;
 }
 
-struct font* create_font( const char* filepath, int cols, int rows )
+struct font* create_font(const char* filepath, int cols, int rows)
 {
-    struct font* f = malloc( sizeof( *f ) );
-    if ( f != NULL && load_font( f, filepath, cols, rows ) == -1 ) {
-        free( f );
+    struct font* f = malloc(sizeof(*f));
+    if (f != NULL && load_font(f, filepath, cols, rows) == -1) {
+        free(f);
         return NULL;
     }
     return f;
 }
 
-int cleanup_font( struct font* font )
+int cleanup_font(struct font* font)
 {
-    return cleanup_image( &font->image );
+    return cleanup_image(&font->image);
 }
 
-void destroy_font( struct font* font )
+void destroy_font(struct font* font)
 {
-    if ( font != NULL ) {
-        cleanup_font( font );
-        free( font );
+    if (font != NULL) {
+        cleanup_font(font);
+        free(font);
     }
 }
 
-void draw_text( struct font* font, const char* text, int x, int y )
+void draw_text(struct font* font, const char* text, int x, int y)
 {
     int curX = x, curY = y;
     unsigned int i;
-    for ( i = 0; i < strlen( text ); ++i ) {
-        switch ( text[i] ) {
+    for (i = 0; i < strlen(text); ++i) {
+        switch (text[i]) {
             case ' ':
                 curX += font->space_width;
                 break;
@@ -187,27 +186,26 @@ void draw_text( struct font* font, const char* text, int x, int y )
                 break;
             default: {
                 int ascii = (unsigned char)text[i];
-                draw_image( &font->image, curX, curY, &font->chars_rects[ascii],
-                            0.0 );
+                draw_image(&font->image, curX, curY, &font->chars_rects[ascii],
+                           0.0);
                 curX += font->chars_rects[ascii].w + font->char_spacing;
             }
         }
     }
 }
 
-void measure_text( struct font* font, const char* text, int* width,
-                   int* height )
+void measure_text(struct font* font, const char* text, int* width, int* height)
 {
     unsigned int i;
     int ascii;
     int w = *width = *height = 0;
-    for ( i = 0; i < strlen( text ); ++i ) {
-        switch ( text[i] ) {
+    for (i = 0; i < strlen(text); ++i) {
+        switch (text[i]) {
             case ' ':
                 w += font->space_width;
                 break;
             case '\n':
-                if ( *width < w ) *width = w;
+                if (*width < w) *width = w;
                 w = 0;
                 *height += font->line_height + font->line_spacing;
                 break;
@@ -216,6 +214,6 @@ void measure_text( struct font* font, const char* text, int* width,
                 w += font->chars_rects[ascii].w + font->char_spacing;
         }
     }
-    if ( *width < w ) *width = w;
+    if (*width < w) *width = w;
     *height += font->line_height;
 }

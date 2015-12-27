@@ -1,4 +1,4 @@
-/* Copyright (c) 2014 Ithai Levi @RLofC
+/* Copyright (c) 2014-2016 Ithai Levi @RLofC
  *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -28,61 +28,60 @@
 static struct screen global_screen;
 struct screen* screen = &global_screen;
 
-struct cam
-{
+struct cam {
     float progress;
     float tgt;
 };
 
-static struct cam cam_x = {0.0f, 0.0f};
-static struct cam cam_y = {0.0f, 0.0f};
+static struct cam cam_x = { 0.0f, 0.0f };
+static struct cam cam_y = { 0.0f, 0.0f };
 
-static float animate_shake( struct cam* cam, float stopwatch, float rate )
+static float animate_shake(struct cam* cam, float stopwatch, float rate)
 {
     float offset;
-    float interp = interpolate( cam->tgt * -1.0f, cam->tgt, cam->progress,
-                                sine_ease_in_out );
-    offset = cam->tgt * -1 + fabs( interp );
-    cam->progress = clamp( cam->progress + ( stopwatch / rate ), 0.0f, 1.0f );
+    float interp =
+    interpolate(cam->tgt * -1.0f, cam->tgt, cam->progress, sine_ease_in_out);
+    offset = cam->tgt * -1 + fabs(interp);
+    cam->progress = clamp(cam->progress + (stopwatch / rate), 0.0f, 1.0f);
     ;
-    if ( cam->progress == 1.0f ) {
+    if (cam->progress == 1.0f) {
         cam->progress = 0.0f;
     }
     return offset;
 }
 
-void shake_screen( float stopwatch )
+void shake_screen(float stopwatch)
 {
-    if ( cam_x.progress == 0.0f ) {
-        cam_x.tgt = ( rand() % 2 ) + 2;
+    if (cam_x.progress == 0.0f) {
+        cam_x.tgt = (rand() % 2) + 2;
     }
-    screen->offset_x = animate_shake( &cam_x, stopwatch, 100.0f );
-    if ( cam_y.progress == 0.0f ) {
-        cam_y.tgt = ( rand() % 2 ) + 2;
+    screen->offset_x = animate_shake(&cam_x, stopwatch, 100.0f);
+    if (cam_y.progress == 0.0f) {
+        cam_y.tgt = (rand() % 2) + 2;
     }
-    screen->offset_y = animate_shake( &cam_y, stopwatch, 100.0f );
+    screen->offset_y = animate_shake(&cam_y, stopwatch, 100.0f);
 }
 
-void relax_screen( float stopwatch )
+void relax_screen(float stopwatch)
 {
-    if ( cam_x.progress != 0.0f )
-        screen->offset_x = animate_shake( &cam_x, stopwatch, 500.0f );
-    if ( cam_y.progress != 0.0f )
-        screen->offset_y = animate_shake( &cam_y, stopwatch, 500.0f );
+    if (cam_x.progress != 0.0f)
+        screen->offset_x = animate_shake(&cam_x, stopwatch, 500.0f);
+    if (cam_y.progress != 0.0f)
+        screen->offset_y = animate_shake(&cam_y, stopwatch, 500.0f);
 }
 
-void screen_color( struct color bg )
+void screen_color(struct color bg)
 {
-    SDL_SetRenderDrawColor( screen->impl, bg.red, bg.green, bg.blue, bg.alpha );
+    SDL_SetRenderDrawColor(screen->impl, bg.red, bg.green, bg.blue, bg.alpha);
 }
 
-void screen_size( int width, int height )
+void screen_size(int width, int height)
 {
-    SDL_SetWindowSize( screen->window, width, height );
+    SDL_SetWindowSize(screen->window, width, height);
 }
 
-void draw_on_screen( void )
+void draw_on_screen(void)
 {
-    int ret = SDL_SetRenderTarget( screen->impl, NULL );
-    if ( ret != 0 ) exit( 1 );
+    int ret = SDL_SetRenderTarget(screen->impl, NULL);
+    if (ret != 0) exit(1);
 }

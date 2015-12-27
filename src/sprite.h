@@ -32,31 +32,30 @@
  * a set of fixed-sized frames and then pass it to create_sprite():
  *
  *     struct sprite* wizard = NULL;
- *     wizard = create_sprite( create_image( "wizard.png", screen ), 32, 32);
+ *     wizard = create_sprite(create_image("wizard.png", screen), 32, 32);
  *
  * Note that by creating both the sprite and the image, you are
  * responsible to the clean-up once you're done:
  *
- *     destroy_image( wizard->image );
- *     destroy_sprite( wizard );
+ *     destroy_image(wizard->image);
+ *     destroy_sprite(wizard);
  *
  * To animate a sprite, you need to create /ref animation instances,
  * indicating the frames to play. To actually play an animation,
  * use play_animation():
  *
- *     play_animation( wizard, walk );
+ *     play_animation(wizard, walk);
  *
  * Finally, to update the sprite animation, call animate_sprite():
  *
- *     void *data;
- *     data = animate_sprite( wizard, toolbox->stopwatch );
+ *     void* data;
+ *     data = animate_sprite(wizard, toolbox->stopwatch);
  *
  * Once a frame that has a user-data associated with it is played,
  * you will get the data pointer back.
  *
  */
-struct sprite
-{
+struct sprite {
     /** image used to draw sprite frames */
     struct image* image;
     /** width of each frame of the sprite */
@@ -81,13 +80,13 @@ struct sprite
  *
  * @return valid sprite pointer or NULL on error
  */
-struct sprite* create_sprite( struct image* image, int w, int h );
+struct sprite* create_sprite(struct image* image, int w, int h);
 
 /**
  * destroy an allocated sprite
  * @param sprite sprite created using create_sprite().
  */
-void destroy_sprite( struct sprite* sprite );
+void destroy_sprite(struct sprite* sprite);
 
 /**
  * Build a sprite from a sprite image file containing frame tiles.
@@ -98,8 +97,10 @@ void destroy_sprite( struct sprite* sprite );
  *
  * @return -1 on error
  */
-int prepare_sprite( struct sprite* sprite, struct image* image, int frame_width,
-                    int frame_height );
+int prepare_sprite(struct sprite* sprite,
+                   struct image* image,
+                   int frame_width,
+                   int frame_height);
 
 /**
  * Free any internally allocated resources for the \ref sprite
@@ -107,7 +108,7 @@ int prepare_sprite( struct sprite* sprite, struct image* image, int frame_width,
  *
  * @return -1 on error
  */
-void cleanup_sprite( struct sprite* sprite );
+void cleanup_sprite(struct sprite* sprite);
 
 /**
  * Draw the active frame of the sprite.
@@ -129,7 +130,7 @@ void draw_sprite( struct sprite* sprite, int x, int y );
  * @param sprite sprite to animate
  * @param elapsed_ms time since last rendered frame (usually elapsed_ms)
  */
-void* animate_sprite( struct sprite* sprite, uint32_t elapsed_ms );
+void* animate_sprite(struct sprite* sprite, uint32_t elapsed_ms);
 
 /**
  * Play a any binded sprite animation
@@ -140,6 +141,6 @@ void* animate_sprite( struct sprite* sprite, uint32_t elapsed_ms );
  * playing, the requested animation will be defered
  * until the previous keyframe is completed.
  */
-void play_animation( struct sprite* sprite, struct animation* animation );
+void play_animation(struct sprite* sprite, struct animation* animation);
 
 #endif /* end of include guard: SPRITE_H_XF4APTCE */

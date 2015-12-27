@@ -1,21 +1,21 @@
-/* Copyright (c) 2014 Ithai Levi @RLofC
- * 
+/* Copyright (c) 2014-2016 Ithai Levi @RLofC
+ *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
  * arising from the use of this software.
- * 
+ *
  * Permission is granted to anyone to use this software for any purpose,
  * including commercial applications, and to alter it and redistribute it
  * freely, subject to the following restrictions:
- * 
+ *
  *    1. The origin of this software must not be misrepresented; you must not
  *    claim that you wrote the original software. If you use this software
  *    in a product, an acknowledgment in the product documentation would be
  *    appreciated but is not required.
- * 
+ *
  *    2. Altered source versions must be plainly marked as such, and must not be
  *    misrepresented as being the original software.
- * 
+ *
  *    3. This notice may not be removed or altered from any source
  *    distribution.
  */
@@ -35,24 +35,23 @@
  * The simplest form of creating an image is by using create_image():
  *
  *     struct image* image;
- *     image = create_image("path/to/image.png" );
+ *     image = create_image("path/to/image.png");
  *
  * Images can also be used to draw **on** instead of the screen:
  *
- *     draw_on_image( image );
+ *     draw_on_image(image);
  *     // draw images, sprites or text
  *     draw_on_screen();
  *
  * Images don't just disappear. You will have to explicitly get rid of any image
  * you create using destroy_image():
  *
- *     destroy_image( image );
+ *     destroy_image(image);
  *
  *  If you fail to do so, you will have a memory leak.
  */
-struct image
-{
-    /** 
+struct image {
+    /**
      * Images reference SDL_Textures, so you can use it to work with SDL
      * directly, should you need any extra functionality that Cage does not
      * provide.
@@ -71,8 +70,9 @@ struct image
  */
 enum blend_mode {
     NONE,
+    BLEND,
     ADD,
-    MULTIPLY
+    MULTIPLY,
 };
 
 /**
@@ -81,7 +81,7 @@ enum blend_mode {
  *
  * @return \ref image pointer or NULL on failure
  */
-struct image* create_image( const char* filepath );
+struct image* create_image(const char* filepath);
 
 /**
  * Create a blank image for direct pixel manipulation
@@ -90,7 +90,7 @@ struct image* create_image( const char* filepath );
  *
  * @return \ref image pointer or NULL on failure
  */
-struct image* create_blank_image( int width, int height );
+struct image* create_blank_image(int width, int height);
 
 /**
  * Create an image that can be used to draw other images or sprites
@@ -101,13 +101,13 @@ struct image* create_blank_image( int width, int height );
  *
  * @return \ref image pointer or NULL on failure
  */
-struct image* create_target_image( int width, int height, struct color color );
+struct image* create_target_image(int width, int height, struct color color);
 
 /**
  * Destroy an image created using create_image() or create_blank_image()
  * @param image A valid \ref image pointer created using create_image()
  */
-void destroy_image( struct image* image );
+void destroy_image(struct image* image);
 
 /**
  * Load a image from an image file (PNG, JPG, etc..)
@@ -118,7 +118,7 @@ void destroy_image( struct image* image );
  *
  * @return -1 on error
  */
-int load_image( struct image* image, const char* filepath );
+int load_image(struct image* image, const char* filepath);
 
 /**
  * Cleanup any initialized image resources
@@ -128,21 +128,21 @@ int load_image( struct image* image, const char* filepath );
  * for this image, making it ready for deallocation.
  *
  * @note You don't need to use cleanup_image() if you use destroy_image()
- * 
+ *
  * @return -1 on error
  */
-int cleanup_image ( struct image* image );
+int cleanup_image(struct image* image);
 
 /**
  * Lock a image to get pixel level access
  * @param image Image to lock
  * @param pixels pointer **reference** to the image pixels lock_image() will
  * provide you with
- * @param pitch pointer to update with the pixel pitch 
+ * @param pitch pointer to update with the pixel pitch
  *
  * @return 0 on success or -1 on error
  */
-int lock_image ( struct image* image, void** pixels, int* pitch );
+int lock_image(struct image* image, void** pixels, int* pitch);
 
 /**
  * Unlock a locked image once you are done with it
@@ -150,7 +150,7 @@ int lock_image ( struct image* image, void** pixels, int* pitch );
  *
  * @return 0 on success or -1 on error
  */
-int unlock_image ( struct image* image );
+int unlock_image(struct image* image);
 
 /**
  * Draw an image on the screen
@@ -161,23 +161,24 @@ int unlock_image ( struct image* image );
  * @param angle Rotate image in degrees
  *
  */
-void draw_image ( struct image* image, 
-                  int x, int y, 
-                  struct rectangle* clip, 
-                  double angle );
+void draw_image(struct image* image,
+                int x,
+                int y,
+                struct rectangle* clip,
+                double angle);
 
 /**
  * Switch to draw on an image instead of the actual screen
  * @param image Image to draw on to
  */
-void draw_on_image( struct image* image );
+void draw_on_image(struct image* image);
 
 /**
  * Set the method to use when drawing an image
  * @param image \ref image The blend method will work for
  * @param blend_mode The blend method to apply
  */
-void set_blend_mode( struct image* image, enum blend_mode blend_mode );
+void set_blend_mode(struct image* image, enum blend_mode blend_mode);
 
 /**
  * Fills the entire image with a color
@@ -197,7 +198,9 @@ void clear_image( struct image* image, struct color color );
  *         0 if no collisions were found
  *         -1 when error occured
  */
-int pixels_collide( struct image* img1, struct rectangle* rect1,
-                    struct image* img2, struct rectangle* rect2 );
+int pixels_collide(struct image* img1,
+                   struct rectangle* rect1,
+                   struct image* img2,
+                   struct rectangle* rect2);
 
 #endif /* end of include guard: image */

@@ -1,4 +1,4 @@
-/* Copyright (c) 2014 Ithai Levi @RLofC
+/* Copyright (c) 2014-2016 Ithai Levi @RLofC
  *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -31,7 +31,7 @@ enum animation_mode {
     /** go back in reverse and then return endlessly */
     PINGPONG_FRAMES,
     /** stop at the last frame */
-    FREEZE_LAST_FRAME
+    FREEZE_LAST_FRAME,
 };
 
 /** Animation frame */
@@ -50,14 +50,14 @@ struct frame {
  *
  *     struct animation* walk = create_animation();
  *
- *     add_frame( walk, 0, 50, NULL );
- *     add_frame( walk, 1, 100, NULL );
- *     add_frame( walk, 2, 50,NULL );
+ *     add_frame(walk, 0, 50, NULL);
+ *     add_frame(walk, 1, 100, NULL);
+ *     add_frame(walk, 2, 50,NULL);
  *
  *     ...
- *     play_animation( zombie, walk );
+ *     play_animation(zombie, walk);
  *     ...
- *     play_animation( robot, walk );
+ *     play_animation(robot, walk);
  *
  *
  * You may also associate custom data with specific
@@ -82,13 +82,13 @@ struct animation {
  * @return New animation instance, ready to have frames
  * added using add_frame().
  */
-struct animation* create_animation( void );
+struct animation* create_animation(void);
 
 /**
  * Destory a previously created animation.
  * @param animation A previously created /ref animation to deallocate.
  */
-void destroy_animation( struct animation* animation );
+void destroy_animation(struct animation* animation);
 
 /**
  * Add a new frame to an \ref animation
@@ -98,8 +98,10 @@ void destroy_animation( struct animation* animation );
  * @param userdata Any data you would like to associate with this frame
  *        You will get this data pointer back when this frame gets played
  */
-void add_frame( struct animation* animation, int index_in_sprite, int duration,
-                void* userdata );
+void add_frame(struct animation* animation,
+               int index_in_sprite,
+               int duration,
+               void* userdata);
 
 /**
  * Add a new set of frames to an \ref animation.
@@ -107,7 +109,8 @@ void add_frame( struct animation* animation, int index_in_sprite, int duration,
  * @param nframes Number of frames to add
  * @param frames The frames to add as an array of \ref frame structs
  */
-void add_frames( struct animation* animation, int nframes,
-                 struct frame frames[] );
+void add_frames(struct animation* animation,
+                int nframes,
+                struct frame frames[]);
 
 #endif /* end of include guard: ANIMATE_H_QVL0GFIR */

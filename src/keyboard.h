@@ -1,4 +1,4 @@
-/* Copyright (c) 2014 Ithai Levi @RLofC
+/* Copyright (c) 2014-2016 Ithai Levi @RLofC
  * 
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -28,9 +28,9 @@
  * Checks if a specific key has been pressed.
  * @param key Key to test
  *
- *     void update_super_cool_level( void* data, float elapsed_ms )
+ *     void update_super_cool_level(void* data, float elapsed_ms)
  *     {
- *         if ( key_pressed( KB_SPACE ) ) {
+ *         if (key_pressed(KB_SPACE)) {
  *             // do something once per key click
  *         }
  *      }
@@ -46,9 +46,9 @@ int key_pressed( uint8_t key );
  * Check if a specific key is being held down.
  * @param key Key to test
  *
- *     void update_super_cool_level( void* data, float elapsed_ms )
+ *     void update_super_cool_level(void* data, float elapsed_ms)
  *     {
- *         if ( key_down( KB_RIGHT ) ) {
+ *         if (key_down(KB_RIGHT)) {
  *             // do something
  *         }
  *      }

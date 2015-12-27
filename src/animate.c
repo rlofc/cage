@@ -1,4 +1,4 @@
-/* Copyright (c) 2014 Ithai Levi @RLofC
+/* Copyright (c) 2014-2016 Ithai Levi @RLofC
  *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -22,10 +22,10 @@
 #include "animate.h"
 #include <stdlib.h>
 
-struct animation* create_animation( void )
+struct animation* create_animation(void)
 {
-    struct animation* ret = calloc( 1, sizeof( struct animation ) );
-    if ( ret != NULL ) {
+    struct animation* ret = calloc(1, sizeof(struct animation));
+    if (ret != NULL) {
         ret->mode = LOOP_FRAMES;
         ret->loop_from = -1;
         ret->loop_to = -1;
@@ -33,19 +33,21 @@ struct animation* create_animation( void )
     return ret;
 }
 
-void add_frame( struct animation* animation, int index_in_sprite, int duration,
-                void* userdata )
+void add_frame(struct animation* animation,
+               int index_in_sprite,
+               int duration,
+               void* userdata)
 {
-    if ( animation->n_frames < MAX_FRAMES_PER_ANIMATION ) {
+    if (animation->n_frames < MAX_FRAMES_PER_ANIMATION) {
         animation->frames[animation->n_frames].frame = index_in_sprite;
         animation->frames[animation->n_frames].duration = duration;
         animation->frames[animation->n_frames].userdata = userdata;
-        if ( animation->mode == LOOP_FRAMES ) {
-            if ( animation->loop_from == -1 ) {
+        if (animation->mode == LOOP_FRAMES) {
+            if (animation->loop_from == -1) {
                 animation->loop_from = 0;
             }
-            if ( animation->loop_to == -1 ||
-                 animation->loop_to == animation->n_frames - 1 ) {
+            if (animation->loop_to == -1 ||
+                animation->loop_to == animation->n_frames - 1) {
                 animation->loop_to = animation->n_frames;
             }
         }
@@ -53,17 +55,16 @@ void add_frame( struct animation* animation, int index_in_sprite, int duration,
     }
 }
 
-void add_frames( struct animation* animation, int nframes,
-                 struct frame frames[] )
+void add_frames(struct animation* animation, int nframes, struct frame frames[])
 {
     int i;
-    for ( i = 0; i < nframes; i++ ) {
-        add_frame( animation, frames[i].frame, frames[i].duration,
-                   frames[i].userdata );
+    for (i = 0; i < nframes; i++) {
+        add_frame(animation, frames[i].frame, frames[i].duration,
+                  frames[i].userdata);
     }
 }
 
-void destroy_animation( struct animation* animation )
+void destroy_animation(struct animation* animation)
 {
-    free( animation );
+    free(animation);
 }

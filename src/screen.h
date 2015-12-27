@@ -1,21 +1,21 @@
-/* Copyright (c) 2014 Ithai Levi @RLofC
- * 
+/* Copyright (c) 2014-2016 Ithai Levi @RLofC
+ *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
  * arising from the use of this software.
- * 
+ *
  * Permission is granted to anyone to use this software for any purpose,
  * including commercial applications, and to alter it and redistribute it
  * freely, subject to the following restrictions:
- * 
+ *
  *    1. The origin of this software must not be misrepresented; you must not
  *    claim that you wrote the original software. If you use this software
  *    in a product, an acknowledgment in the product documentation would be
  *    appreciated but is not required.
- * 
+ *
  *    2. Altered source versions must be plainly marked as such, and must not be
  *    misrepresented as being the original software.
- * 
+ *
  *    3. This notice may not be removed or altered from any source
  *    distribution.
  */
@@ -29,29 +29,29 @@
 
 /* Change screen background color
  */
-void screen_color( struct color background );
+void screen_color(struct color background);
 
-/** 
+/**
  * Change screen size
  */
-void screen_size( int width, int height );
+void screen_size(int width, int height);
 
-/** 
+/**
  * Shake the "camera". Works well for explosions and blows.
  * The screen will keep shaking as long as you call shake_screen().
  * To return the screen to its normal state, you should complement
  * with calling relax_screen().
  */
-void shake_screen( float stopwatch );
+void shake_screen(float stopwatch);
 
-/** 
+/**
  * Undo the screen shake effect.
  */
-void relax_screen( float stopwatch );
+void relax_screen(float stopwatch);
 
 /* Switch back to draw on the actual screen
  */
-void draw_on_screen( void );
+void draw_on_screen(void);
 
 /* cldoc:end-category() */
 

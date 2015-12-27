@@ -6,12 +6,11 @@
 /* The game drawing surface
  * A screen is you drawing surface for you to draw on
  * your game images, sprites and text.
- * 
- * Your <gamestate> functions will get a screen 
+ *
+ * Your <gamestate> functions will get a screen
  * to work with inside the <toolbox> parameter.
  */
-struct screen
-{
+struct screen {
     /* internal SDL renderer */
     SDL_Renderer* impl;
     /* internal SDL window */
@@ -25,10 +24,8 @@ extern struct screen* screen;
 
 struct keyboard {
     const uint8_t* keys;
-    int            states[256];
+    int states[256];
 };
 extern struct keyboard* keyboard;
 
-
 #endif /* end of include guard: INTERNALS_H_G9CYEQL6 */
-

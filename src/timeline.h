@@ -1,3 +1,24 @@
+/* Copyright (c) 2014-2016 Ithai Levi @RLofC
+ *
+ * This software is provided 'as-is', without any express or implied
+ * warranty. In no event will the authors be held liable for any damages
+ * arising from the use of this software.
+ *
+ * Permission is granted to anyone to use this software for any purpose,
+ * including commercial applications, and to alter it and redistribute it
+ * freely, subject to the following restrictions:
+ *
+ *    1. The origin of this software must not be misrepresented; you must not
+ *    claim that you wrote the original software. If you use this software
+ *    in a product, an acknowledgment in the product documentation would be
+ *    appreciated but is not required.
+ *
+ *    2. Altered source versions must be plainly marked as such, and must not be
+ *    misrepresented as being the original software.
+ *
+ *    3. This notice may not be removed or altered from any source
+ *    distribution.
+ */
 #ifndef TIMELINE_H_G613QT9P
 #define TIMELINE_H_G613QT9P
 
@@ -14,21 +35,19 @@
  * The manifestation of a timeline event is a callback call.
  */
 struct timeline_event {
-    /** Time to wait before activating the event */ 
+    /** Time to wait before activating the event */
     uint32_t ms_wait;
     /** Callback to call to */
-    void* (*callback) ( void* data, 
-                        float elapsed_ms, 
-                        float progress );
+    void* (*callback)(void* data, float elapsed_ms, float progress);
     /** Duration of the event */
     uint32_t ms_duration;
 };
 
-/** 
+/**
  * A timeline holds a sequence of events
  * on a, well.. time line. Each event has a start time,
  * a duration and a callback function.
- * The callback gets called each time the timeline 
+ * The callback gets called each time the timeline
  * is updated, as long as the event is active.
  *
  * You can use a time line to sequence animations,
@@ -38,7 +57,7 @@ struct timeline_event {
  * Events in a timeline cannot overlap. If you need
  * events to overlap (such as in a dialogue)
  * you will need to create more than one timeline,
- * just like you would have separate tracks in a 
+ * just like you would have separate tracks in a
  * video editor or an animation software.
  */
 struct timeline {
@@ -65,7 +84,7 @@ struct timeline* create_timeline(void);
 /**
  * Destroy a previously created timeline
  */
-void destroy_timeline( struct timeline* timeline );
+void destroy_timeline(struct timeline* timeline);
 
 /**
  * Append an event to the timeline
@@ -77,12 +96,12 @@ void destroy_timeline( struct timeline* timeline );
  *
  * @return -1 on error or the new event index
  */
-int append_event( struct timeline* timeline, 
-                  uint32_t wait, 
-                  uint32_t duration, 
-                  void* ( *callback ) ( void* data, 
-                                        float elapsed_ms, 
-                                        float progress ) );
+int append_event(struct timeline* timeline,
+                 uint32_t wait,
+                 uint32_t duration,
+                 void* (*callback)(void* data,
+                                   float elapsed_ms,
+                                   float progress));
 /**
  * Append an set of events to the timeline
  * @param timeline Timeline to append the events to
@@ -91,25 +110,23 @@ int append_event( struct timeline* timeline,
  *
  * @return -1 on error or the number of appended events
  */
-int append_events( struct timeline* timeline, 
-                   int nevents,
-                   struct timeline_event events[] );
+int append_events(struct timeline* timeline,
+                  int nevents,
+                  struct timeline_event events[]);
 
 /**
  * Update the timeline timers and invoke event callbacks
  */
-void* update_timeline( struct timeline* timeline, 
-                       void* data, 
-                       float elapsed_ms );
+void* update_timeline(struct timeline* timeline, void* data, float elapsed_ms);
 
 /**
  * Used to prepare an already allocated timeline
  */
-void init_timeline( struct timeline* timeline );
+void init_timeline(struct timeline* timeline);
 
 /**
  * Cleans a used timeline, but does not deallocate it
  */
-void cleanup_timeline( struct timeline* timeline );
+void cleanup_timeline(struct timeline* timeline);
 
 #endif /* end of include guard: TIMELINE_H_G613QT9P */
