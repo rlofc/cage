@@ -207,6 +207,9 @@ void set_blend_mode(struct image* image, enum blend_mode blend_mode)
         case NONE:
             sdl_mode = SDL_BLENDMODE_NONE;
             break;
+        case BLEND:
+            sdl_mode = SDL_BLENDMODE_BLEND;
+            break;
         case ADD:
             sdl_mode = SDL_BLENDMODE_ADD;
             break;
@@ -214,7 +217,7 @@ void set_blend_mode(struct image* image, enum blend_mode blend_mode)
             sdl_mode = SDL_BLENDMODE_MOD;
             break;
     }
-    SDL_SetTextureBlendMode( image->impl, sdl_mode );
+    SDL_SetTextureBlendMode(image->impl, sdl_mode);
 }
 
 void clear_image(struct image* image, struct color color)
