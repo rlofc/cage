@@ -23,6 +23,7 @@
 #define TIMELINE_H_G613QT9P
 
 #include <stdint.h>
+#include <stdbool.h>
 
 #define MAX_TIMELINE_EVENTS 100
 
@@ -71,6 +72,7 @@ struct timeline {
     uint32_t acc_timer;
     /* Pending event */
     int next_event;
+    bool paused;
 };
 
 /**
@@ -118,6 +120,17 @@ int append_events(struct timeline* timeline,
  * Update the timeline timers and invoke event callbacks
  */
 void* update_timeline(struct timeline* timeline, void* data, float elapsed_ms);
+
+/**
+ * Pause a running timeline, stopping any running timer
+ * accounting.
+ */
+void pause_timeline(struct timeline* timeline);
+
+/**
+ * Reset & restart a running or completed timeline.
+ */
+void reset_timeline(struct timeline* timeline);
 
 /**
  * Used to prepare an already allocated timeline

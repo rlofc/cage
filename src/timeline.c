@@ -78,33 +78,40 @@ int append_events(struct timeline* timeline,
 void* update_timeline(struct timeline* timeline, void* data, float elapsed_ms)
 {
     void* ret = NULL;
+    if (timeline->paused) return ret;
     uint32_t next_acc_timer;
 
     if (timeline->next_event < timeline->n_events) {
         timeline->timer += elapsed_ms;
         /* loop to make sure we will not miss a consecutive callback */
-        next_acc_timer = timeline->acc_timer +
-                         timeline->events[timeline->next_event].ms_wait;
-        while ( timeline->timer > next_acc_timer ) {
+        next_acc_timer =
+        timeline->acc_timer + timeline->events[timeline->next_event].ms_wait;
+        while (timeline->timer > next_acc_timer) {
+            int eee = timeline->next_event;
             uint32_t elapsed = timeline->timer - next_acc_timer;
             uint32_t duration =
+            timeline->events[timeline->next_event].ms_duration;
+            if (duration < elapsed_ms || elapsed > duration) {
+                timeline->acc_timer +=
+                timeline->events[timeline->next_event].ms_wait;
+                timeline->acc_timer +=
                 timeline->events[timeline->next_event].ms_duration;
-            if ( elapsed <= duration || duration < elapsed_ms ) {
-                float progress =
-                    duration == 0 ? 1.0f : (float)elapsed / (float)duration;
-                ret = timeline->events[timeline->next_event].callback(
-                    data, elapsed_ms, progress );
-                break;
-            } else {
-                timeline->acc_timer +=
-                    timeline->events[timeline->next_event].ms_wait;
-                timeline->acc_timer +=
-                    timeline->events[timeline->next_event].ms_duration;
                 timeline->next_event++;
-                if ( timeline->next_event == timeline->n_events ) break;
-                next_acc_timer = timeline->acc_timer +
-                                 timeline->events[timeline->next_event].ms_wait;
+                if (timeline->next_event < timeline->n_events)  // break;
+                    next_acc_timer =
+                    timeline->acc_timer +
+                    timeline->events[timeline->next_event].ms_wait;
             }
+            if ((elapsed <= duration || duration < elapsed_ms) &&
+                eee < timeline->n_events) {
+                float progress =
+                duration == 0 ? 1.0f : (float)elapsed / (float)duration;
+                ret =
+                timeline->events[eee].callback(data, elapsed_ms, progress);
+            }
+            if (elapsed <= duration ||
+                timeline->next_event < timeline->n_events)
+                break;
         }
     }
     return ret;
@@ -112,13 +119,24 @@ void* update_timeline(struct timeline* timeline, void* data, float elapsed_ms)
 
 void init_timeline(struct timeline* timeline)
 {
-    timeline->timer = 0;
     timeline->n_events = 0;
+    reset_timeline(timeline);
+}
+
+void pause_timeline(struct timeline* timeline)
+{
+    timeline->paused = true;
+}
+
+void reset_timeline(struct timeline* timeline)
+{
+    timeline->paused = false;
+    timeline->timer = 0;
     timeline->next_event = 0;
     timeline->acc_timer = 0;
 }
 
-void cleanup_timeline( struct timeline* timeline )
+void cleanup_timeline(struct timeline* timeline)
 {
     init_timeline(timeline);
 }
