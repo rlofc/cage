@@ -47,27 +47,27 @@ void cleanup_sprite(struct sprite* sprite)
     sprite->active_animation = NULL;
 }
 
-void draw_sprite( struct sprite* sprite, int x, int y )
+void draw_sprite_frame(struct sprite* sprite, int x, int y, int frame)
 {
     struct rectangle r;
     r.w = sprite->frame_width;
     r.h = sprite->frame_height;
-    if ( sprite->active_animation == NULL ) {
-        r.x = 0;
-        r.y = 0;
-    } else {
-        int frame =
-            sprite->active_animation->frames[sprite->current_frame].frame;
-        int cols = sprite->image->width / sprite->frame_width;
-        /* int rows  = sprite->image->height / sprite->frame_height; */
+    int cols = sprite->image->width / sprite->frame_width;
 
-        int col = frame % cols;
-        int row = frame / cols;
+    int col = frame % cols;
+    int row = frame / cols;
 
-        r.x = col * sprite->frame_width;
-        r.y = row * sprite->frame_height;
-    }
+    r.x = col * sprite->frame_width;
+    r.y = row * sprite->frame_height;
     draw_image(sprite->image, x, y, &r, 0.0);
+}
+
+void draw_sprite(struct sprite* sprite, int x, int y)
+{
+    int frame;
+    frame = sprite->active_animation == NULL ? 0
+        : sprite->active_animation->frames[sprite->current_frame].frame;
+    draw_sprite_frame(sprite, x, y, frame);
 }
 
 struct sprite* create_sprite(struct image* image, int w, int h)
@@ -176,4 +176,12 @@ void play_animation(struct sprite* sprite, struct animation* animation)
             sprite->elapsed_frame = 0;
         }
     }
+}
+
+void stop_animation(struct sprite* sprite)
+{
+    sprite->next_animation = NULL;
+    sprite->active_animation = NULL;
+    sprite->current_frame = 0;
+    sprite->elapsed_frame = 0;
 }

@@ -105,8 +105,6 @@ int prepare_sprite(struct sprite* sprite,
 /**
  * Free any internally allocated resources for the \ref sprite
  * @param sprite \ref sprite to cleanup
- *
- * @return -1 on error
  */
 void cleanup_sprite(struct sprite* sprite);
 
@@ -120,10 +118,20 @@ void cleanup_sprite(struct sprite* sprite);
  * be drawn.
  * If an \ref animation is active, the animation state
  * will determine the frame to draw.
- *
- * @return -1 on error
  */
-void draw_sprite( struct sprite* sprite, int x, int y );
+void draw_sprite(struct sprite* sprite, int x, int y);
+
+/**
+ * Draw the specified frame of the sprite.
+ * @param sprite sprite to use
+ * @param x x coordinates
+ * @param y y coordinates
+ * @param frame frame index to draw from the sprite sheet
+ *
+ * This function can be used to override any animation or just
+ * use a sprite for its sprite sheet.
+ */
+void draw_sprite_frame(struct sprite* sprite, int x, int y, int frame);
 
 /**
  * Update the sprite animation state
@@ -142,5 +150,16 @@ void* animate_sprite(struct sprite* sprite, uint32_t elapsed_ms);
  * until the previous keyframe is completed.
  */
 void play_animation(struct sprite* sprite, struct animation* animation);
+
+/**
+ * Stop any playing animation
+ * @param sprite /ref sprite to work on.
+ *
+ * Use this function to stop any currently playing or staged
+ * animation. This will clear any running animation and so
+ * any new animation activated using /ref play_animation
+ * will start immediately.
+ */
+void stop_animation(struct sprite* sprite);
 
 #endif /* end of include guard: SPRITE_H_XF4APTCE */
