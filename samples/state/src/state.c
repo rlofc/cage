@@ -10,16 +10,16 @@
 /* State prototypes
  * ----------------
  *
- * The following function prototypes are the sample 
+ * The following function prototypes are the sample
  * state functions for an **intro** state and an **outro** state.
  */
-static void* create_intro( void );
-static void  update_intro( void* data, float elapsed_ms );
-static void  destroy_intro( void* data );
+static void* create_intro(void);
+static void update_intro(void* data, float elapsed_ms);
+static void destroy_intro(void* data);
 
-static void* create_outro( void );
-static void  update_outro( void* data, float elapsed_ms );
-static void  destroy_outro( void* data );
+static void* create_outro(void);
+static void update_outro(void* data, float elapsed_ms);
+static void destroy_outro(void* data);
 
 /* Intro state
  * -----------
@@ -28,24 +28,24 @@ static void  destroy_outro( void* data );
  * In this state we simply ask the user to press the space key.
  * When the key gets pressed, we switch to the outro state.
  */
-static void* create_intro( void )
+static void* create_intro(void)
 {
-    screen_color( color_from_RGB( 255, 255, 255 ) );
-    return create_font( "res/font.png", 32, 4 );
+    screen_color(color_from_RGB(255, 255, 255));
+    return create_font("res/font.png", 32, 4);
 }
 
-static void update_intro( void* data, float elapsed_ms )
+static void update_intro(void* data, float elapsed_ms)
 {
-    draw_text( data, "Press <SPACE> to continue...", 10, 10 );
-    if ( key_pressed( KB_SPACE ) ) {
-        game_state( create_outro, update_outro, destroy_outro );
+    draw_text(data, "Press <SPACE> to continue...", 10, 10);
+    if (key_pressed(KB_SPACE)) {
+        game_state(create_outro, update_outro, destroy_outro);
     }
-    UNUSED( elapsed_ms );
+    UNUSED(elapsed_ms);
 }
 
-static void destroy_intro( void* data )
+static void destroy_intro(void* data)
 {
-    destroy_font( data );
+    destroy_font(data);
 }
 
 /* Outro state
@@ -55,24 +55,24 @@ static void destroy_intro( void* data )
  * we use game_state() to change the state using the following three
  * state functions.
  */
-static void* create_outro( void )
+static void* create_outro(void)
 {
-    screen_color( color_from_RGB( 255, 255, 255 ) );
-    return create_font( "res/font.png", 32, 4 );
+    screen_color(color_from_RGB(255, 255, 255));
+    return create_font("res/font.png", 32, 4);
 }
 
-static void update_outro( void* data, float elapsed_ms )
+static void update_outro(void* data, float elapsed_ms)
 {
-    draw_text( data, "Press <ESC> to exit!", 60, 40 );
-    if ( key_pressed( KB_ESC ) ) {
-        exit( 0 );
+    draw_text(data, "Press <ESC> to exit!", 60, 40);
+    if (key_pressed(KB_ESC)) {
+        exit(0);
     }
-    UNUSED( elapsed_ms );
+    UNUSED(elapsed_ms);
 }
 
-static void destroy_outro( void* data )
+static void destroy_outro(void* data)
 {
-    destroy_font( data );
+    destroy_font(data);
 }
 
 /* Sample's main
@@ -82,7 +82,7 @@ static void destroy_outro( void* data )
  * execution to Cage's game_loop() function together with
  * the 3 state functions of the intro state.
  */
-int main( void )
+int main(void)
 {
-    return game_loop( create_intro, update_intro, destroy_intro );
+    return game_loop(create_intro, update_intro, destroy_intro);
 }

@@ -18,8 +18,8 @@ static struct wizard {
     struct sprite* sprite;
     struct animation* walk_cycle;
 } wizard = { NULL, NULL };
-static void* create_sample( void );
-static void destroy_sample( void* data );
+static void* create_sample(void);
+static void destroy_sample(void* data);
 
 /* Prepare the sprite
  * ------------------
@@ -35,41 +35,42 @@ static void destroy_sample( void* data );
  * struct and use its pointer as the create() function return
  * value.
  */
-static void* create_sample( void )
+static void* create_sample(void)
 {
-    wizard.sprite = create_sprite( create_image( "res/wizard.png" ), 32, 32 );
-    if ( wizard.sprite == NULL ) goto error;
+    wizard.sprite = create_sprite(create_image("res/wizard.png"), 32, 32);
+    if (wizard.sprite == NULL) goto error;
     wizard.walk_cycle = create_animation();
-    if ( wizard.walk_cycle == NULL ) goto error;
+    if (wizard.walk_cycle == NULL)
+        goto error;
     else {
         struct frame frames[] = { { 0, 300, NULL },
                                   { 1, 300, NULL },
                                   { 2, 300, NULL },
                                   { 3, 300, NULL } };
-        add_frames( wizard.walk_cycle, 4, frames );
+        add_frames(wizard.walk_cycle, 4, frames);
         wizard.walk_cycle->loop_from = 0;
         wizard.walk_cycle->loop_to = 3;
     }
-    play_animation( wizard.sprite, wizard.walk_cycle );
+    play_animation(wizard.sprite, wizard.walk_cycle);
     return &wizard;
 error:
-    destroy_sample( &wizard );
+    destroy_sample(&wizard);
     return NULL;
 }
 
 /* Animate & draw
  * --------------
  *
- * During the game, the update function uses the wizard 
+ * During the game, the update function uses the wizard
  * data to animate and draw the sprite. The elapsed_ms
  * argument is used by the animate_sprite() function so it
  * can track how long to play each animation frame.
  */
-static void update_sample( void* data, float elapsed_ms )
+static void update_sample(void* data, float elapsed_ms)
 {
     struct wizard* w = data;
-    animate_sprite( w->sprite, elapsed_ms );
-    draw_sprite( w->sprite, 10, 10 );
+    animate_sprite(w->sprite, elapsed_ms);
+    draw_sprite(w->sprite, 10, 10);
 }
 
 /* Clean-up
@@ -80,12 +81,12 @@ static void update_sample( void* data, float elapsed_ms )
  * earlier in the create function, now is the time to clean up
  * by matching each create with a destory call.
  */
-static void destroy_sample( void* data )
+static void destroy_sample(void* data)
 {
     struct wizard* w = data;
-    destroy_image( w->sprite->image );
-    destroy_sprite( w->sprite );
-    destroy_animation( w->walk_cycle );
+    destroy_image(w->sprite->image);
+    destroy_sprite(w->sprite);
+    destroy_animation(w->walk_cycle);
 }
 
 /* Main
@@ -95,7 +96,7 @@ static void destroy_sample( void* data )
  * execution to the game_loop() function together with
  * the 3 state functions we wrote.
  */
-int main( void )
+int main(void)
 {
-    return game_loop( create_sample, update_sample, destroy_sample );
+    return game_loop(create_sample, update_sample, destroy_sample);
 }

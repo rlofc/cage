@@ -12,20 +12,18 @@
  * ------------
  *
  * For this demo we will use a star image.
- * Each star will have its own position, 
+ * Each star will have its own position,
  * motion vector and bounding box.
  */
 #define MAX_STARS 12
 
-struct star
-{
+struct star {
     vec star_pos;
     vec star_vec;
     bbox star_bbox;
 };
 
-struct state
-{
+struct state {
     struct image* star_img;
     struct star stars[MAX_STARS];
 };
@@ -34,17 +32,17 @@ struct state
  * Web begin by creating, positioning
  * and propelling the stars.
  */
-static void* create_sample( void )
+static void* create_sample(void)
 {
     int i;
-    struct state* state = malloc( sizeof( struct state ) );
-    state->star_img = create_image( "res/star.png" );
-    for ( i = 0; i < MAX_STARS; i++ ) {
-        state->stars[i].star_pos = xy_vec( i * 16, i * 16 );
-        state->stars[i].star_vec = xy_vec( 2 - rand() % 4, 2 - rand() % 4 );
+    struct state* state = malloc(sizeof(struct state));
+    state->star_img = create_image("res/star.png");
+    for (i = 0; i < MAX_STARS; i++) {
+        state->stars[i].star_pos = xy_vec(i * 16, i * 16);
+        state->stars[i].star_vec = xy_vec(2 - rand() % 4, 2 - rand() % 4);
         state->stars[i].star_bbox.p1 = state->stars[i].star_pos;
         state->stars[i].star_bbox.p2 =
-            add_vec( state->stars[i].star_pos, xy_vec( 16, 16 ) );
+        add_vec(state->stars[i].star_pos, xy_vec(16, 16));
     }
     return state;
 }
@@ -55,16 +53,16 @@ static void* create_sample( void )
  * update_star() moves a star on the screen using the star
  * motion vector and tests for screen bounds collisions.
  */
-static void update_star( struct star* star, float elapsed_ms )
+static void update_star(struct star* star, float elapsed_ms)
 {
-    bbox screen_bbox = {{0, 0}, {192, 108}};
-    star->star_pos = add_vec( star->star_pos, star->star_vec );
-    star->star_bbox = translate_bbox( star->star_bbox, star->star_pos );
-    if ( bbox_in_bbox( star->star_bbox, screen_bbox ) == 0 ) {
-        if ( star->star_bbox.p1.x < screen_bbox.p1.x ) star->star_vec.x = 1;
-        if ( star->star_bbox.p1.y < screen_bbox.p1.y ) star->star_vec.y = 1;
-        if ( star->star_bbox.p2.x > screen_bbox.p2.x ) star->star_vec.x = -1;
-        if ( star->star_bbox.p2.y > screen_bbox.p2.y ) star->star_vec.y = -1;
+    bbox screen_bbox = { { 0, 0 }, { 192, 108 } };
+    star->star_pos = add_vec(star->star_pos, star->star_vec);
+    star->star_bbox = translate_bbox(star->star_bbox, star->star_pos);
+    if (bbox_in_bbox(star->star_bbox, screen_bbox) == 0) {
+        if (star->star_bbox.p1.x < screen_bbox.p1.x) star->star_vec.x = 1;
+        if (star->star_bbox.p1.y < screen_bbox.p1.y) star->star_vec.y = 1;
+        if (star->star_bbox.p2.x > screen_bbox.p2.x) star->star_vec.x = -1;
+        if (star->star_bbox.p2.y > screen_bbox.p2.y) star->star_vec.y = -1;
     }
     UNUSED(elapsed_ms);
 }
@@ -78,37 +76,36 @@ static void update_star( struct star* star, float elapsed_ms )
  * using the portion of intersection as a test area.
  * If we detect a collision, we swap the star pair
  * motion vectors to create a deflection effect.
- * 
+ *
  * When done, we update and draw the stars.
  */
-static void update_sample( void* data, float elapsed_ms )
+static void update_sample(void* data, float elapsed_ms)
 {
     struct state* state = data;
-    int visited[MAX_STARS][MAX_STARS] = {{0}};
+    int visited[MAX_STARS][MAX_STARS] = { { 0 } };
     int i, j;
-    for ( i = 0; i < MAX_STARS; i++ ) {
-        for ( j = 0; j < MAX_STARS; j++ ) {
-            if ( i != j && visited[i][j] == 0 && visited[j][i] == 0 ) {
+    for (i = 0; i < MAX_STARS; i++) {
+        for (j = 0; j < MAX_STARS; j++) {
+            if (i != j && visited[i][j] == 0 && visited[j][i] == 0) {
                 bbox sub;
                 struct star* a = &state->stars[i];
                 struct star* b = &state->stars[j];
-                if ( bbox_intersect( a->star_bbox, b->star_bbox, &sub ) ) {
+                if (bbox_intersect(a->star_bbox, b->star_bbox, &sub)) {
                     struct rectangle r1, r2;
-                    r1 = rect_from_sub_bbox( a->star_bbox, sub );
-                    r2 = rect_from_sub_bbox( b->star_bbox, sub );
-                    if ( pixels_collide( state->star_img, &r1,
-                                         state->star_img, &r2 ) )
-                        swap_vecs( &a->star_vec, &b->star_vec );
+                    r1 = rect_from_sub_bbox(a->star_bbox, sub);
+                    r2 = rect_from_sub_bbox(b->star_bbox, sub);
+                    if (pixels_collide(state->star_img, &r1, state->star_img,
+                                       &r2))
+                        swap_vecs(&a->star_vec, &b->star_vec);
                 }
                 visited[i][j] = 1;
             }
         }
     }
-    screen_color( color_from_RGB( 10, 20, 50 ) );
-    for ( i = 0; i < MAX_STARS; i++ ) {
-        update_star( &state->stars[i], elapsed_ms );
-        draw_image( state->star_img,
-                    VEC_XY( state->stars[i].star_pos ), NULL, 0 );
+    screen_color(color_from_RGB(10, 20, 50));
+    for (i = 0; i < MAX_STARS; i++) {
+        update_star(&state->stars[i], elapsed_ms);
+        draw_image(state->star_img, VEC_XY(state->stars[i].star_pos), NULL, 0);
     }
 }
 
@@ -118,11 +115,11 @@ static void update_sample( void* data, float elapsed_ms )
  * Clean up is simple enough. Just destroy the star
  * image and free the state structure memory.
  */
-static void destroy_sample( void* data )
+static void destroy_sample(void* data)
 {
     struct state* state = data;
-    destroy_image( state->star_img );
-    free( data );
+    destroy_image(state->star_img);
+    free(data);
 }
 
 /* Main
@@ -131,7 +128,7 @@ static void destroy_sample( void* data )
  * The usual game_loop call, using the usual state
  * functions.
  */
-int main( void )
+int main(void)
 {
-    return game_loop( create_sample, update_sample, destroy_sample );
+    return game_loop(create_sample, update_sample, destroy_sample);
 }
