@@ -185,7 +185,22 @@ void set_blend_mode(struct image* image, enum blend_mode blend_mode);
  * @param image Image to clear
  * @param color Color the use as fill
  */
-void clear_image( struct image* image, struct color color );
+void clear_image(struct image* image, struct color color);
+
+/**
+ * Get the current image alpha value (opacity).
+ * @param image Image to query
+ *
+ * @return 0-255 alpha value
+ */
+uint8_t get_image_alpha(struct image* image);
+
+/**
+ * Set the image alpha value (opacity).
+ * @param image Image to query
+ * @param alpha A new 0-255 alpha value
+ */
+void set_image_alpha(struct image* image, uint8_t alpha);
 
 /**
  * Test if two images have colliding pixels

@@ -236,6 +236,18 @@ void clear_image(struct image* image, struct color color)
     SDL_SetRenderDrawColor(screen->impl, r, g, b, a);
 }
 
+void set_image_alpha(struct image* image, uint8_t alpha)
+{
+    SDL_SetTextureAlphaMod(image->impl, alpha);
+}
+
+uint8_t get_image_alpha(struct image* image)
+{
+    Uint8 a;
+    SDL_GetTextureAlphaMod(image->impl, &a);
+    return a;
+}
+
 void destroy_image(struct image* image)
 {
     free(image);
