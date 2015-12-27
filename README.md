@@ -1,36 +1,34 @@
-![Cage](https://raw.githubusercontent.com/rlofc/cage/gh-pages/_images/cage.png) (Cage Ain't a Game Engine)
+![Cage](https://raw.githubusercontent.com/rlofc/rlofc.github.com/master/cage/_images/cage.png) (Cage Ain't a Game Engine)
 =============================================================================================
 
-Cage is an elementary game development library that has a
-naive design in the spirit of less is more (or
+Cage is an elementary game development library.
+Cage is minimalist in the spirit of less is more (or
 worse is better). It favors readability over flexibility and
 ease-of-use over a rich set of features (read: it's barely
 usable).
 
-![Cage Screenshots](https://raw.githubusercontent.com/rlofc/cage/gh-pages/_images/cage-samples.png) 
-
+![Cage Screenshots](https://raw.githubusercontent.com/rlofc/rlofc.github.com/master/cage/_images/cage-samples.png) 
 Cage should work well for simple, old-school 2D
-games. It contains (and constrains) SDL2, so beginner
-game developers will not have to deal with it directly,
-but it is completely transparent, so you can still
+games. It contains (and constrains) SDL2. This helps beginner
+game developers avoid dealing with SDL directly.
+However, cage implementation is transparent, so you can still
 reach in and hack anything you need.
 
-I wrote Cage to help me teach my kids game programming using
-C. Avoiding native languages or keeping distance from the
-machine level is not the proper way to teach programming,
-even for kids. This is why I didn't choose Lua or Haxe, even
-though these are excellent technologies to write an actual
-game.
+I initially wrote Cage to help me teach my kids game programming using
+C. I wanted to have a native C library so I can introduce them
+to the nuts and bolts of software engineering.
+So far, that didn't work as well as I hoped it would, but Cage
+did prove to be useful in, well, writing games.
 
 ### Highlights
 
 * Plain C - No abstractions, no distractions
-* Easy to learn - Human-readable programming interface
+* Easy to learn - A simple, highly readable programming interface
 * Sprites - Animate sequence of frames in image files
 * Timelines - Sequence events for animation, story-telling and effects
 * Game States - Promotes scalable internal game design
-* Bitmap Fonts, Sounds, the usuals
-* SDL2 inside - Runs on **Windows**, **Linux**, **Mac/OSX**, **iOS** and **Android**, potentially more powerful
+* Bitmap Fonts, Sound playback, yada yada 
+* SDL2 inside - Runs on **Windows**, **Linux**, **Mac/OSX**, **iOS** and **Android**, can potentially do anything SDL can
 
 ### Getting Started
 
