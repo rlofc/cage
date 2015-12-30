@@ -100,13 +100,38 @@ typedef void (*destroy_func_t)(void* data);
  *
  *     int main(void)
  *     {
- *         return gameloop(create_game, update_game, destroy_game);
+ *         return game_loop(create_game, update_game, destroy_game);
  *     }
  */
 int game_loop(create_func_t create,
               update_func_t update,
               destroy_func_t destroy);
 
+struct settings {
+    int window_width;
+    int window_height;
+    int logical_width;
+    int logical_height;
+    bool fullscreen;
+};
+
+int game_setup_and_loop(struct settings* settings,
+                        create_func_t create,
+                        update_func_t update,
+                        destroy_func_t destroy);
+
+/**
+ * Call this function to change your game state functions.
+ *
+ *     void update_current_level(void* data, float elapsed_ms)
+ *     {
+ *         // Yay.. level was just completed, let's
+ *         // change the game state to the next level.
+ *         game_state(create_next_level,
+ *                    update_next_level,
+ *                    destroy_next_level);
+ *     }
+ */
 void game_state(create_func_t create,
                 update_func_t update,
                 destroy_func_t destroy);

@@ -37,13 +37,6 @@
  */
 static struct toolbox* toolbox;
 
-struct settings {
-    int window_width;
-    int window_height;
-    int logical_width;
-    int logical_height;
-};
-
 struct gamestate {
     create_func_t create;
     update_func_t update;
@@ -123,7 +116,8 @@ static void prepare_screen(const struct settings* settings)
 
     window =
     SDL_CreateWindow("CAGE", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-                     settings->window_width, settings->window_height, 0);
+                     settings->window_width, settings->window_height,
+                     settings->fullscreen ? SDL_WINDOW_FULLSCREEN : 0);
 
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     SDL_RenderSetLogicalSize(renderer, settings->logical_width,
@@ -188,19 +182,24 @@ void game_state(create_func_t create,
     }
 }
 
-int game_loop(create_func_t create,
-              update_func_t update,
-              destroy_func_t destroy)
+static struct settings* g_settings;
+
+static void init_game(struct settings* settings)
+{
+    g_settings = settings;
+}
+
+int game_setup_and_loop(struct settings* settings,
+                        create_func_t create,
+                        update_func_t update,
+                        destroy_func_t destroy)
 {
     bool quit = false;
-    struct settings settings = { 1280, 720, 192, 108 };
     Uint32 start;
     Uint32 now;
     SDL_Event event;
-
-    read_conf_file(&settings);
     prepare_sdl();
-    prepare_screen(&settings);
+    prepare_screen(settings);
     prepare_audio_device();
     toolbox = malloc(sizeof(struct toolbox));
     if (toolbox == NULL) {
@@ -231,4 +230,13 @@ int game_loop(create_func_t create,
         SDL_RenderPresent(screen->impl);
     }
     return 0;
+}
+
+int game_loop(create_func_t create,
+              update_func_t update,
+              destroy_func_t destroy)
+{
+    struct settings settings = { 1280, 720, 192, 108, false };
+    read_conf_file(&settings);
+    return game_setup_and_loop(&settings, create, update, destroy);
 }
