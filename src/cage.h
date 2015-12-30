@@ -27,6 +27,7 @@
 #include "image.h"
 #include "sprite.h"
 #include "keyboard.h"
+#include "mouse.h"
 #include "font.h"
 #include "sound.h"
 #include "animate.h"
