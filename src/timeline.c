@@ -87,15 +87,15 @@ void* update_timeline(struct timeline* timeline, void* data, float elapsed_ms)
         next_acc_timer =
         timeline->acc_timer + timeline->events[timeline->next_event].ms_wait;
         while (timeline->timer > next_acc_timer) {
-            int eee = timeline->next_event;
+            int reg_next_event = timeline->next_event;
             uint32_t elapsed = timeline->timer - next_acc_timer;
             uint32_t duration =
             timeline->events[timeline->next_event].ms_duration;
             if (duration < elapsed_ms || elapsed > duration) {
                 timeline->acc_timer +=
-                timeline->events[timeline->next_event].ms_wait;
+                  timeline->events[timeline->next_event].ms_wait;
                 timeline->acc_timer +=
-                timeline->events[timeline->next_event].ms_duration;
+                  timeline->events[timeline->next_event].ms_duration;
                 timeline->next_event++;
                 if (timeline->next_event < timeline->n_events)  // break;
                     next_acc_timer =
@@ -103,14 +103,16 @@ void* update_timeline(struct timeline* timeline, void* data, float elapsed_ms)
                     timeline->events[timeline->next_event].ms_wait;
             }
             if ((elapsed <= duration || duration < elapsed_ms) &&
-                eee < timeline->n_events) {
+                reg_next_event < timeline->n_events) {
                 float progress =
                 duration == 0 ? 1.0f : (float)elapsed / (float)duration;
                 ret =
-                timeline->events[eee].callback(data, elapsed_ms, progress);
+                timeline->events[reg_next_event].callback(data,
+                                                          elapsed_ms,
+                                                          progress);
             }
             if (elapsed <= duration ||
-                timeline->next_event < timeline->n_events)
+                timeline->next_event == timeline->n_events)
                 break;
         }
     }
