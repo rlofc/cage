@@ -1,24 +1,22 @@
 ![Cage](https://raw.githubusercontent.com/rlofc/rlofc.github.com/master/cage/_images/cage.png) (Cage Ain't a Game Engine)
 =============================================================================================
 
-Cage is an elementary game development library.
-Cage is minimalist in the spirit of less is more (or
-worse is better). It favors readability over flexibility and
+Cage is an elementary game development library, written in the spirit of less is more (or
+worse is better). Cage favors readability over flexibility and
 ease-of-use over a rich set of features (read: it's barely
 usable).
 
 ![Cage Screenshots](https://raw.githubusercontent.com/rlofc/rlofc.github.com/master/cage/_images/cage-samples.png) 
 Cage should work well for simple, old-school 2D
-games. It contains (and constrains) SDL2. This helps beginner
-game developers avoid dealing with SDL directly.
-However, cage implementation is transparent, so you can still
-reach in and hack anything you need.
+games. It contains (and constrains) SDL2. It can help beginner
+game developers avoid dealing with SDL directly, but you can 
+still reach in and hack anything you need.
 
-I initially wrote Cage to help me teach my kids game programming using
-C. I wanted to have a native C library so I can introduce them
+I initially wrote Cage to help me teach my kids game development using
+C. I wanted to have a native library by which I can introduce them
 to the nuts and bolts of software engineering.
-So far, that didn't work as well as I hoped it would, but Cage
-did prove to be useful in, well, writing games.
+So far, that didn't work out as well as I hoped it would, but library
+did eventually prove to be useful in, well.. writing games.
 
 ### Highlights
 
