@@ -150,7 +150,8 @@ void* animate_sprite(struct sprite* sprite, uint32_t elapsed)
             } else {
                 if (sprite->current_frame + 1 < animation->n_frames) {
                     consume_elapsed_time(sprite, consume_current_animation);
-                } else {
+                }
+                if (sprite->current_frame + 1 >= animation->n_frames) {
                     sprite->active_animation = sprite->next_animation;
                     sprite->next_animation = NULL;
                     sprite->current_frame = 0;
@@ -172,6 +173,7 @@ void play_animation(struct sprite* sprite, struct animation* animation)
             sprite->next_animation = animation;
         } else {
             sprite->active_animation = animation;
+            sprite->next_animation = NULL;
             sprite->current_frame = 0;
             sprite->elapsed_frame = 0;
         }

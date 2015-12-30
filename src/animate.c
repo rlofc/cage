@@ -29,6 +29,7 @@ struct animation* create_animation(void)
         ret->mode = LOOP_FRAMES;
         ret->loop_from = -1;
         ret->loop_to = -1;
+        ret->n_frames = 0;
     }
     return ret;
 }
