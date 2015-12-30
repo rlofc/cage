@@ -216,6 +216,15 @@ int game_setup_and_loop(struct settings* settings,
             case SDL_QUIT:
                 quit = true;
                 break;
+            case SDL_MOUSEBUTTONDOWN:
+                touch->mode = 1;
+                touch->x = event.button.x;
+                touch->y = event.button.y;
+                break;
+            case SDL_MOUSEBUTTONUP:
+                touch->mode = 0;
+                touch->x = event.button.x;
+                touch->y = event.button.y;
         }
         SDL_RenderClear(screen->impl);
         /* limit framerate to ~60FPS */
