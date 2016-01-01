@@ -28,8 +28,8 @@
 
 /**
  * Images are the visual building blocks of your game.  Use images to draw on
- * screen, or as basis for sprites and fonts.  Images can be read from a file or
- * created empty and can be used to draw with or to provide frames for sprites
+ * screen, or as sources for sprites and fonts. Images can be read from a file
+ * or created empty and can be used directly or provide frames for sprites
  * or characters for fonts.
  *
  * The simplest form of creating an image is by using create_image():
@@ -37,18 +37,18 @@
  *     struct image* image;
  *     image = create_image("path/to/image.png");
  *
- * Images can also be used to draw **on** instead of the screen:
+ * Images can also be used as a drawing target instead of the screen:
  *
  *     draw_on_image(image);
  *     // draw images, sprites or text
  *     draw_on_screen();
  *
- * Images don't just disappear. You will have to explicitly get rid of any image
- * you create using destroy_image():
+ * You will have to explicitly get rid of any image you create
+ * using destroy_image():
  *
  *     destroy_image(image);
  *
- *  If you fail to do so, you will have a memory leak.
+ *  Not doing so will result a memory leak.
  */
 struct image {
     /**

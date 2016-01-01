@@ -5,9 +5,10 @@ Welcome to Cage
 ===============
 
 Cage is an elementary game development library.
-It is designed and developed to help teach 2D game development using the C programming language.
-Cage prefers readability over flexibility and ease-of-use over a rich feature set, in the spirit of
-**less is more**.
+It was initially designed and developed to help teach 2D game
+development using the C programming language.
+Cage prefers readability over flexibility and ease-of-use over
+a rich feature set, in the spirit of **less is more**.
 
 
 .. raw:: html
@@ -24,14 +25,11 @@ Cage prefers readability over flexibility and ease-of-use over a rich feature se
     <hr/>
 
 
-Cage aims to make it easier for beginner game developers to write games in C,
-emphasizing **beginner** and **C**.
-
-Internally, Cage contains (and restraints) SDL2, the Simple Direct-media Library.
-Apart of knowing it is in there, you will not have to deal with SDL directly.
-However, Cage is completely transparent, so you can "reach in" and work
-with SDL directly, should you want to.
-
+As a library, Cage is just a thin layer on top of SDL2,
+the Simple Direct-media Library. Cage offers the essential
+constructs for developing 2D games. It lets you handle images,
+sprites, animations, fonts, sounds and other game-specific
+entities using a clear and straighforward API.
 
 The short version
 -----------------
@@ -63,17 +61,16 @@ Here is one of the shortest and most boring game you can write using Cage:
     }
 
 
-Granted, there are far better ways to write actual games.
-If C gives you the shivers, Lua and Haxe are excellent
-alternatives that have great game development toolkits. If
-you are not a beginner, you may want to work with SDL2
-(or Allegro) directly, with no "bars" between you and the raw toolkit.
+Yes, there are easier ways to write games, and C may not look like
+the best choice. There is no `but` here. LÖVE2D, HaxeFlixer and
+Cocos2D are fine examples.
 
-However, if you enjoy the beauty of C and want minimal cognitive burden
-than Cage is a viable option.
+However, if you enjoy the beauty of C, if you want minimal cognitive burden
+and if you want to have long-living, portable code, then Cage could be
+a viable option.
 
-For the full picture all at once, jump over to :doc:`wizard`.
-Or, follow along with the docs and learn Cage, bar by bar (pun intended).
+For the full story all at once, jump over to :doc:`wizard`.
+Or, follow along with the docs and learn Cage step by step.
 
 .. toctree::
    :hidden:
@@ -87,6 +84,8 @@ Or, follow along with the docs and learn Cage, bar by bar (pun intended).
    timeline
    sound 
    keyboard
+   mouse
+   screen
    state_sample
    image_sample
    sprite_sample
@@ -95,5 +94,3 @@ Or, follow along with the docs and learn Cage, bar by bar (pun intended).
    collisions_sample
    wizard
    advanced
-
-

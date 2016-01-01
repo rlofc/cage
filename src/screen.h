@@ -25,19 +25,18 @@
 #include <SDL.h>
 #include "color.h"
 
-/* cldoc:begin-category(Graphics) */
-
-/* Change screen background color
+/**
+ * Change the screen background color.
  */
 void screen_color(struct color background);
 
 /**
- * Change screen size
+ * Change the screen size.
  */
 void screen_size(int width, int height);
 
 /**
- * Shake the "camera". Works well for explosions and blows.
+ * Shake the virtual camera (e.g. for explosions and hits).
  * The screen will keep shaking as long as you call shake_screen().
  * To return the screen to its normal state, you should complement
  * with calling relax_screen().
@@ -49,7 +48,9 @@ void shake_screen(float stopwatch);
  */
 void relax_screen(float stopwatch);
 
-/* Switch back to draw on the actual screen
+/**
+ * Switch back to draw on the actual screen following
+ * a call to ``draw_on_image()`` on an \ref image.
  */
 void draw_on_screen(void);
 

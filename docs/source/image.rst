@@ -35,6 +35,10 @@ set_image_alpha
 -------------
 .. doxygenfunction:: set_image_alpha
 
+set_blend_mode
+--------------
+.. doxygenfunction:: set_blend_mode
+
 load_image
 ----------
 .. doxygenfunction:: load_image
@@ -50,6 +54,10 @@ lock_image
 unlock_image
 -------------
 .. doxygenfunction:: unlock_image
+
+draw_on_image
+-------------
+.. doxygenfunction:: draw_on_image
 
 pixels_collide
 --------------

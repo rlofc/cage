@@ -40,7 +40,7 @@
  *     destroy_image(wizard->image);
  *     destroy_sprite(wizard);
  *
- * To animate a sprite, you need to create /ref animation instances,
+ * To animate a sprite, you need to create \ref animation instances,
  * indicating the frames to play. To actually play an animation,
  * use play_animation():
  *
@@ -49,7 +49,7 @@
  * Finally, to update the sprite animation, call animate_sprite():
  *
  *     void* data;
- *     data = animate_sprite(wizard, toolbox->stopwatch);
+ *     data = animate_sprite(wizard, elapsed_ms);
  *
  * Once a frame that has a user-data associated with it is played,
  * you will get the data pointer back.
