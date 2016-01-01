@@ -23,7 +23,7 @@
 #define TIMELINE_H_G613QT9P
 
 #include <stdint.h>
-#include <stdbool.h>
+#include "types.h"
 
 #define MAX_TIMELINE_EVENTS 100
 

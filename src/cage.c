@@ -20,17 +20,19 @@
  *    distribution.
  */
 #include "cage.h"
-#include "internals.h"
-#include "image.h"
-#include "sound.h"
-#include <SDL.h>
-#include <SDL_image.h>
-#include <SDL_mixer.h>
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdbool.h>
+
+#include "internals.h"
+#include "image.h"
+#include "sound.h"
+#include "types.h"
+
+#include <SDL.h>
+#include <SDL_image.h>
+#include <SDL_mixer.h>
 
 /* global toolbox so we can
  * cleanup using atexit()

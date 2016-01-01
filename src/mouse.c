@@ -23,17 +23,14 @@
 #include "internals.h"
 #include <SDL.h>
 
-struct mouse mouse_state(void)
+void update_mouse(struct mouse* mouse)
 {
-    struct mouse ret;
     int x, y, w, h;
     Uint32 ms = SDL_GetMouseState(&x, &y);
     SDL_GetWindowSize(screen->window, &w, &h);
-    ret.x = x / (w * 1.0);
-    ret.y = y / (h * 1.0);
-    ret.buttons = 0;
-    ret.buttons |= ms & SDL_BUTTON(SDL_BUTTON_LEFT) ? BUTTON_LEFT : 0;
-    ret.buttons |= ms & SDL_BUTTON(SDL_BUTTON_RIGHT) ? BUTTON_RIGHT : 0;
-    ret.buttons |= ms & SDL_BUTTON(SDL_BUTTON_MIDDLE) ? BUTTON_MIDDLE : 0;
-    return ret;
+    mouse->x_position = x / (w * 1.0);
+    mouse->y_position = y / (h * 1.0);
+    mouse->left_click = ms & SDL_BUTTON(SDL_BUTTON_LEFT);
+    mouse->right_click = ms & SDL_BUTTON(SDL_BUTTON_RIGHT);
+    mouse->middle_click = ms & SDL_BUTTON(SDL_BUTTON_MIDDLE);
 }
