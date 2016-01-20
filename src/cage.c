@@ -213,11 +213,10 @@ int game_setup_and_loop(struct settings* settings,
     game_state(create, update, destroy);
     start = SDL_GetTicks();
     while (!quit) {
-        SDL_PollEvent(&event);
-        switch (event.type) {
-            case SDL_QUIT:
-                quit = true;
-                break;
+        SDL_PumpEvents();
+        if (SDL_HasEvent(SDL_QUIT)) {
+            quit = true;
+            break;
         }
         SDL_RenderClear(screen->impl);
         /* limit framerate to ~60FPS */
