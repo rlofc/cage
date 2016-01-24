@@ -103,7 +103,7 @@ static void prepare_audio_device(void)
         printf("Unable to open audio!\n");
         exit(1);
     }
-    Mix_AllocateChannels(16);
+    Mix_AllocateChannels(CAGE_NUM_OF_MIX_CHANNELS);
 }
 
 static void teardown_audio_device(void)

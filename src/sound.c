@@ -53,8 +53,11 @@ int load_sound(struct sound* sound, const char* pathname)
 
 int play_sound(struct sound* sound, int loops)
 {
+    static int channel = 0;
     if (is_playing(sound)) stop_sound(sound);
-    sound->channel = Mix_PlayChannel(-1, sound->sound, loops);
+    sound->channel = Mix_PlayChannel(channel, sound->sound, loops);
+    channel++;
+    if (channel == CAGE_NUM_OF_MIX_CHANNELS) channel=0;
     return sound->channel;
 }
 
