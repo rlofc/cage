@@ -191,7 +191,7 @@ static void init_game(struct settings* settings)
     g_settings = settings;
 }
 
-int game_setup_and_loop(struct settings* settings,
+int game_setup_and_loop(setup_func_t setup,
                         create_func_t create,
                         update_func_t update,
                         destroy_func_t destroy)
@@ -201,7 +201,9 @@ int game_setup_and_loop(struct settings* settings,
     Uint32 now;
     SDL_Event event;
     prepare_sdl();
-    prepare_screen(settings);
+    struct settings settings;
+    setup(&settings);
+    prepare_screen(&settings);
     prepare_audio_device();
     toolbox = malloc(sizeof(struct toolbox));
     if (toolbox == NULL) {
@@ -233,11 +235,19 @@ int game_setup_and_loop(struct settings* settings,
     return 0;
 }
 
+static void default_setup_callback(struct settings* settings)
+{
+    settings->window_width = 1280;
+    settings->window_height = 720;
+    settings->logical_width = 192;
+    settings->logical_height = 108;
+    settings->fullscreen = false;
+    read_conf_file(settings);
+}
+
 int game_loop(create_func_t create,
               update_func_t update,
               destroy_func_t destroy)
 {
-    struct settings settings = { 1280, 720, 192, 108, false };
-    read_conf_file(&settings);
-    return game_setup_and_loop(&settings, create, update, destroy);
+    return game_setup_and_loop(default_setup_callback, create, update, destroy);
 }

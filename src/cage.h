@@ -96,6 +96,20 @@ typedef void (*update_func_t)(void* data, float elpased_ms);
 typedef void (*destroy_func_t)(void* data);
 
 /**
+ * This is the prototype of the setup function:
+ *
+ */
+struct settings {
+    int window_width;
+    int window_height;
+    int logical_width;
+    int logical_height;
+    bool fullscreen;
+};
+
+typedef void (*setup_func_t)(struct settings*);
+
+/**
  * Call this function to start your game.
  *
  *     int main(void)
@@ -107,15 +121,7 @@ int game_loop(create_func_t create,
               update_func_t update,
               destroy_func_t destroy);
 
-struct settings {
-    int window_width;
-    int window_height;
-    int logical_width;
-    int logical_height;
-    bool fullscreen;
-};
-
-int game_setup_and_loop(struct settings* settings,
+int game_setup_and_loop(setup_func_t setup,
                         create_func_t create,
                         update_func_t update,
                         destroy_func_t destroy);
