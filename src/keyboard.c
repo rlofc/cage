@@ -21,7 +21,7 @@
  */
 #include "internals.h"
 #include "keyboard.h"
-#include <SDL.h>
+#include "SDL.h"
 
 static struct keyboard global_keyboard;
 struct keyboard* keyboard = &global_keyboard;

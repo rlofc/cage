@@ -22,7 +22,7 @@
 #ifndef TEXTURE_H_QHWZWS5P
 #define TEXTURE_H_QHWZWS5P
 
-#include <SDL.h>
+#include "SDL.h"
 #include "utils.h"
 #include "color.h"
 

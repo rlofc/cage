@@ -23,9 +23,9 @@
 #include <memory.h>
 #include <stdlib.h>
 #include <string.h>
-#include <SDL.h>
-#include <SDL_image.h>
-#include <SDL_surface.h>
+#include "SDL.h"
+#include "SDL_image.h"
+#include "SDL_surface.h"
 
 /* -----------------------------------------------
  * Thanks to the Lazy Foo' Production tutorial at

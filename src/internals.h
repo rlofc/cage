@@ -1,7 +1,7 @@
 #ifndef INTERNALS_H_G9CYEQL6
 #define INTERNALS_H_G9CYEQL6
 
-#include <SDL.h>
+#include "SDL.h"
 
 /* The game drawing surface
  * A screen is you drawing surface for you to draw on

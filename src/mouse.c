@@ -21,7 +21,7 @@
  */
 #include "mouse.h"
 #include "internals.h"
-#include <SDL.h>
+#include "SDL.h"
 
 void update_mouse(struct mouse* mouse)
 {

@@ -21,7 +21,7 @@
  */
 #ifndef AUDIO_H_IJ4N19XA
 #define AUDIO_H_IJ4N19XA
-#include <SDL_mixer.h>
+#include "SDL_mixer.h"
 #define CAGE_NUM_OF_MIX_CHANNELS 16
 /**
  * Sound effect

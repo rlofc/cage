@@ -24,9 +24,9 @@
 #include "internals.h"
 #include <memory.h>
 #include <stdlib.h>
-#include <SDL.h>
-#include <SDL_image.h>
-#include <SDL_surface.h>
+#include "SDL.h"
+#include "SDL_image.h"
+#include "SDL_surface.h"
 
 int load_image(struct image* image, const char* filepath)
 {
