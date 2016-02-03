@@ -16,8 +16,8 @@ still reach in and hack anything you need.
 I initially wrote Cage to help me teach my kids game development using
 C. I wanted to have a native library by which I can introduce them
 to the nuts and bolts of software engineering.
-So far, that didn't work out as well as I hoped it would, but library
-did eventually prove to be useful in, well.. writing games.
+While still trying to do so, I am now also using the library
+to write actual games, the first being [Spy Game Over](https://forums.tigsource.com/index.php?topic=52287.0).
 
 ### Highlights
 
