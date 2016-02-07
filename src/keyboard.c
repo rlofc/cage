@@ -26,18 +26,19 @@
 static struct keyboard global_keyboard;
 struct keyboard* keyboard = &global_keyboard;
 
-uint8_t KB_SPACE = SDL_SCANCODE_SPACE;
-uint8_t KB_RIGHT = SDL_SCANCODE_RIGHT;
-uint8_t KB_LEFT = SDL_SCANCODE_LEFT;
-uint8_t KB_UP = SDL_SCANCODE_UP;
-uint8_t KB_DOWN = SDL_SCANCODE_DOWN;
-uint8_t KB_ESC = SDL_SCANCODE_ESCAPE;
-uint8_t KB_W = SDL_SCANCODE_W;
-uint8_t KB_S = SDL_SCANCODE_S;
-uint8_t KB_A = SDL_SCANCODE_A;
-uint8_t KB_D = SDL_SCANCODE_D;
+int KB_SPACE = SDL_SCANCODE_SPACE;
+int KB_RIGHT = SDL_SCANCODE_RIGHT;
+int KB_LEFT = SDL_SCANCODE_LEFT;
+int KB_UP = SDL_SCANCODE_UP;
+int KB_DOWN = SDL_SCANCODE_DOWN;
+int KB_ESC = SDL_SCANCODE_ESCAPE;
+int KB_W = SDL_SCANCODE_W;
+int KB_S = SDL_SCANCODE_S;
+int KB_A = SDL_SCANCODE_A;
+int KB_D = SDL_SCANCODE_D;
+int KB_BACK = SDL_SCANCODE_AC_BACK;
 
-int key_pressed(uint8_t key)
+int key_pressed(int key)
 {
     if (keyboard->keys[key]) {
         if (keyboard->states[key] == 0) {
@@ -50,7 +51,7 @@ int key_pressed(uint8_t key)
     return 0;
 }
 
-int key_down(uint8_t key)
+int key_down(int key)
 {
     return (keyboard->keys[key]);
 }

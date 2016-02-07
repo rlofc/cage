@@ -40,7 +40,7 @@
  *
  * @return 1 if the key was pressed or 0 otherwise
  */
-int key_pressed( uint8_t key );
+int key_pressed( int key );
 
 /** 
  * Check if a specific key is being held down.
@@ -57,19 +57,20 @@ int key_pressed( uint8_t key );
  *
  * @return 1 if the key is being held down or 0 otherwise
  */
-int key_down( uint8_t key );
+int key_down( int key );
 
 /* Key symbols
  */
-extern uint8_t KB_SPACE;
-extern uint8_t KB_RIGHT;
-extern uint8_t KB_LEFT;
-extern uint8_t KB_UP;
-extern uint8_t KB_DOWN;
-extern uint8_t KB_ESC;
-extern uint8_t KB_W;
-extern uint8_t KB_S;
-extern uint8_t KB_A;
-extern uint8_t KB_D;
+extern int KB_SPACE;
+extern int KB_RIGHT;
+extern int KB_LEFT;
+extern int KB_UP;
+extern int KB_DOWN;
+extern int KB_ESC;
+extern int KB_W;
+extern int KB_S;
+extern int KB_A;
+extern int KB_D;
+extern int KB_BACK;
 
 #endif /* end of include guard: KEYBOARD_H_UQ7XHW8V */
