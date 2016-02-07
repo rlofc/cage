@@ -114,12 +114,14 @@ void cleanup_sprite(struct sprite* sprite);
  * @param x x coordinates
  * @param y y coordinates
  *
+ * @return rendered sprite frame index
+ *
  * If no sprite \ref animation is active, the first frame will
  * be drawn.
  * If an \ref animation is active, the animation state
  * will determine the frame to draw.
  */
-void draw_sprite(struct sprite* sprite, int x, int y);
+int draw_sprite(struct sprite* sprite, int x, int y);
 
 /**
  * Draw the specified frame of the sprite.

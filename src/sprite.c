@@ -62,12 +62,13 @@ void draw_sprite_frame(struct sprite* sprite, int x, int y, int frame)
     draw_image(sprite->image, x, y, &r, 0.0);
 }
 
-void draw_sprite(struct sprite* sprite, int x, int y)
+int draw_sprite(struct sprite* sprite, int x, int y)
 {
     int frame;
     frame = sprite->active_animation == NULL ? 0
         : sprite->active_animation->frames[sprite->current_frame].frame;
     draw_sprite_frame(sprite, x, y, frame);
+    return frame;
 }
 
 struct sprite* create_sprite(struct image* image, int w, int h)
