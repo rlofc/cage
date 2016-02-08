@@ -82,10 +82,12 @@ static void prepare_sdl(void)
 {
     SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
     IMG_Init(IMG_INIT_PNG);
+    Mix_Init(MIX_INIT_OGG);
 }
 
 static void teardown_sdl(void)
 {
+    Mix_Quit();
     IMG_Quit();
     SDL_Quit();
 }
