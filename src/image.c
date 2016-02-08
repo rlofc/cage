@@ -91,8 +91,10 @@ exit:
 
 int cleanup_image(struct image* image)
 {
-    SDL_DestroyTexture(image->impl);
-    image->impl = NULL;
+    if (image->impl != NULL) {
+        SDL_DestroyTexture(image->impl);
+        image->impl = NULL;
+    }
     return 0;
 }
 
@@ -250,6 +252,7 @@ uint8_t get_image_alpha(struct image* image)
 
 void destroy_image(struct image* image)
 {
+    cleanup_image(image);
     free(image);
 }
 
