@@ -31,11 +31,6 @@
 void screen_color(struct color background);
 
 /**
- * Change the screen size.
- */
-void screen_size(int width, int height);
-
-/**
  * Shake the virtual camera (e.g. for explosions and hits).
  * The screen will keep shaking as long as you call shake_screen().
  * To return the screen to its normal state, you should complement
@@ -53,6 +48,27 @@ void relax_screen(float stopwatch);
  * a call to ``draw_on_image()`` on an \ref image.
  */
 void draw_on_screen(void);
+
+/**
+ * Change the screen size.
+ */
+void set_screen_size(int width, int height);
+
+/**
+ * Get the screen size.
+ */
+void get_screen_size(int* width, int* height);
+
+/**
+ * Change the real window size.
+ */
+void set_window_size(int width, int height);
+
+/**
+ * Get the real window size.
+ */
+void get_window_size(int* width, int* height);
+
 
 /* cldoc:end-category() */
 

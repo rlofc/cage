@@ -75,13 +75,29 @@ void screen_color(struct color bg)
     SDL_SetRenderDrawColor(screen->impl, bg.red, bg.green, bg.blue, bg.alpha);
 }
 
-void screen_size(int width, int height)
-{
-    SDL_SetWindowSize(screen->window, width, height);
-}
-
 void draw_on_screen(void)
 {
     int ret = SDL_SetRenderTarget(screen->impl, NULL);
     if (ret != 0) exit(1);
 }
+
+void set_screen_size(int width, int height)
+{
+    SDL_RenderSetLogicalSize(screen->impl, width, height);
+}
+
+void get_screen_size(int* width, int* height)
+{
+    SDL_RenderGetLogicalSize(screen->impl, width, height);
+}
+
+void set_window_size(int width, int height)
+{
+    SDL_SetWindowSize(screen->window, width, height);
+}
+
+void get_window_size(int* width, int* height)
+{
+    SDL_GetWindowSize(screen->window, width, height);
+}
+
