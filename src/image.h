@@ -118,7 +118,7 @@ void destroy_image(struct image* image);
  *
  * @return -1 on error
  */
-int load_image(struct image* image, const char* filepath);
+int init_image_from_file(struct image* image, const char* filepath);
 
 /**
  * Cleanup any initialized image resources

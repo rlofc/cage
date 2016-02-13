@@ -46,7 +46,7 @@ int load_font(struct font* font, const char* filepath, int ncols, int nrows)
     int rows;
     int i;
 
-    if (load_image(&font->image, filepath) == -1) return -1;
+    if (init_image_from_file(&font->image, filepath) == -1) return -1;
     if ((font->image.width / ncols) * (font->image.height / nrows) >
         MAX_FONT_CHARS)
         return -1;

@@ -28,7 +28,7 @@
 #include "SDL_image.h"
 #include "SDL_surface.h"
 
-int load_image(struct image* image, const char* filepath)
+int init_image_from_file(struct image* image, const char* filepath)
 {
     int ret = -1;
     SDL_Surface* s = NULL;
@@ -145,7 +145,7 @@ void draw_image(struct image* image,
 struct image* create_image(const char* filepath)
 {
     struct image* image = malloc(sizeof(struct image));
-    if (image != NULL && load_image(image, filepath) == -1) {
+    if (image != NULL && init_image_from_file(image, filepath) == -1) {
         free(image);
         image = NULL;
     }
