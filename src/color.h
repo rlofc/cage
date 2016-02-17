@@ -33,18 +33,17 @@ struct color {
     uint8_t alpha;
 };
 
-static struct color color_from_RGB(uint8_t red,
-                                   uint8_t green,
-                                   uint8_t blue)
-{
-    struct color c;
-    c.red = red;
-    c.green = green;
-    c.blue = blue;
-    c.alpha = 255;
-    return c;
-}
-
+/**
+ * Create a new color using Red Green Blue and Alpha
+ * values.
+ *
+ * @param red 0-255 intensity of red
+ * @param green 0-255 intensity of blue
+ * @param blue 0-255 intensity of green
+ * @param alpha 0-255 alpha value 
+ *
+ * @return new color struct by value
+ */
 static struct color color_from_RGBA(uint8_t red,
                                     uint8_t green,
                                     uint8_t blue,
@@ -56,6 +55,25 @@ static struct color color_from_RGBA(uint8_t red,
     c.blue = blue;
     c.alpha = alpha;
     return c;
+}
+
+/**
+ * Create a new color using Red Green and Blue
+ * values.
+ * The color will be opaque with a default alpha
+ * value of 255.
+ *
+ * @param red 0-255 intensity of red
+ * @param green 0-255 intensity of blue
+ * @param blue 0-255 intensity of green
+ *
+ * @return new color struct by value
+ */
+static struct color color_from_RGB(uint8_t red,
+                                   uint8_t green,
+                                   uint8_t blue)
+{
+    return color_from_RGBA(red, green, blue, UINT8_MAX);
 }
 
 #endif /* end of include guard: COLOR_H_5S0TOI9O */

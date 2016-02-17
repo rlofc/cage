@@ -86,6 +86,7 @@ Or, follow along with the docs and learn Cage step by step.
    keyboard
    mouse
    screen
+   color
    state_sample
    image_sample
    sprite_sample
