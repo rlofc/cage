@@ -43,7 +43,9 @@ struct gamestate {
     create_func_t create;
     update_func_t update;
     destroy_func_t destroy;
-} state = { NULL, NULL, NULL };
+};
+static struct gamestate current_state = { NULL, NULL, NULL };
+static struct gamestate next_state = { NULL, NULL, NULL };
 
 static int read_conf_file(struct settings* settings)
 {
@@ -169,14 +171,11 @@ static void cleanup(void)
     teardown_sdl();
 }
 
-void game_state(create_func_t create,
-                update_func_t update,
-                destroy_func_t destroy)
+static void set_game_state(void)
 {
     if (toolbox->state->destroy != NULL) toolbox->state->destroy(toolbox->data);
-    toolbox->state->create = create;
-    toolbox->state->update = update;
-    toolbox->state->destroy = destroy;
+    toolbox->state = toolbox->next_state;
+    toolbox->next_state = NULL;
     toolbox->stopwatch = 0;
     toolbox->data = toolbox->state->create();
     if (toolbox->data == NULL) {
@@ -184,6 +183,16 @@ void game_state(create_func_t create,
         message_box("Cage broke!", error_msgs_buffer);
         exit(1);
     }
+}
+
+void game_state(create_func_t create,
+                update_func_t update,
+                destroy_func_t destroy)
+{
+    toolbox->next_state = &next_state;
+    toolbox->next_state->create = create;
+    toolbox->next_state->update = update;
+    toolbox->next_state->destroy = destroy;
 }
 
 static struct settings* g_settings;
@@ -212,9 +221,11 @@ int game_setup_and_loop(setup_func_t setup,
         exit(1);
     }
     atexit(cleanup);
-    toolbox->state = &state;
+    toolbox->state = &current_state;
+    toolbox->next_state = NULL;
     toolbox->data = NULL;
     game_state(create, update, destroy);
+    set_game_state();
     start = SDL_GetTicks();
     while (!quit) {
         SDL_PumpEvents();
@@ -231,6 +242,7 @@ int game_setup_and_loop(setup_func_t setup,
         toolbox->stopwatch = now - start;
         keyboard->keys = SDL_GetKeyboardState(NULL);
         toolbox->state->update(toolbox->data, toolbox->stopwatch);
+        if (toolbox->next_state != NULL) set_game_state();
         start = now;
         SDL_RenderPresent(screen->impl);
     }

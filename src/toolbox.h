@@ -34,6 +34,7 @@ struct toolbox {
     float stopwatch;
     /* optionally set this to the next state ( in render-time only ) */
     struct gamestate* state;
+    struct gamestate* next_state;
 };
 
 #endif /* end of include guard: TOOLBOX_H_W7RODJL2 */
