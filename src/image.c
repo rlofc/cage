@@ -21,6 +21,7 @@
  */
 #include "image.h"
 #include "screen.h"
+#include "utils.h"
 #include "internals.h"
 #include <memory.h>
 #include <stdlib.h>

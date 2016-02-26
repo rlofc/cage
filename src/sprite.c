@@ -20,6 +20,7 @@
  *    distribution.
  */
 #include "sprite.h"
+#include "utils.h"
 
 int prepare_sprite(struct sprite* sprite,
                    struct image* image,

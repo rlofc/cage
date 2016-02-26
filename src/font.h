@@ -22,7 +22,7 @@
 #ifndef FONT_H_XYTHJIBT
 #define FONT_H_XYTHJIBT
 
-#include "utils.h"
+#include "geometry.h"
 #include "image.h"
 
 #define MAX_FONT_CHARS 256

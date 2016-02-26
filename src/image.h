@@ -23,7 +23,7 @@
 #define TEXTURE_H_QHWZWS5P
 
 #include "SDL.h"
-#include "utils.h"
+#include "geometry.h"
 #include "color.h"
 
 /**

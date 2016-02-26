@@ -25,30 +25,6 @@
 #include <math.h>
 
 /*
- * G E O M E T R Y
- */
-
-/**
- * Just a simple rectangle shape for image operations
- */
-struct rectangle {
-    int x;
-    int y;
-    int w;
-    int h;
-};
-
-/**
- * Point in sub-pixel space
- */
-struct coords {
-    int x;
-    int y;
-};
-
-#define xy(X, Y) X, Y
-
-/*
  * M A T H
  */
 

@@ -22,6 +22,8 @@
 #ifndef NGX_H_F8WRBKFT
 #define NGX_H_F8WRBKFT
 
+#include "utils.h"
+#include "vec.h"
 #include "geometry.h"
 #include "screen.h"
 #include "image.h"
