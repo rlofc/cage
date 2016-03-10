@@ -79,6 +79,7 @@ doc:
 	@awk -f literst.awk samples/timeline/src/timeline.c > docs/source/timeline_sample.rst
 	@awk -f literst.awk samples/callout/src/callout.c > docs/source/callout_sample.rst
 	@awk -f literst.awk samples/collisions/src/collisions.c > docs/source/collisions_sample.rst
+	@awk -f literst.awk samples/chipmunk/src/chipmunk.c > docs/source/chipmunk_sample.rst
 	@awk -f literst.awk samples/wizard/src/wizard.c > docs/source/wizard.rst
 	@doxygen cage
 	@cp -Rf build/doxygen docs/build

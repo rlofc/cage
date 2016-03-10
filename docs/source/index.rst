@@ -93,6 +93,7 @@ Or, follow along with the docs and learn Cage step by step.
    timeline_sample
    callout_sample
    collisions_sample
+   chipmunk_sample
    wizard
    android
    advanced
