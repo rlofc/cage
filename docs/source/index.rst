@@ -95,5 +95,6 @@ Or, follow along with the docs and learn Cage step by step.
    collisions_sample
    chipmunk_sample
    wizard
+   tiled
    android
    advanced

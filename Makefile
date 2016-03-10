@@ -81,6 +81,7 @@ doc:
 	@awk -f literst.awk samples/collisions/src/collisions.c > docs/source/collisions_sample.rst
 	@awk -f literst.awk samples/chipmunk/src/chipmunk.c > docs/source/chipmunk_sample.rst
 	@awk -f literst.awk samples/wizard/src/wizard.c > docs/source/wizard.rst
+	@awk -f literst.awk samples/tiled/src/tiled.c > docs/source/tiled.rst
 	@doxygen cage
 	@cp -Rf build/doxygen docs/build
 	@cd docs && make html

@@ -19,7 +19,7 @@
 #    3. This notice may not be removed or altered from any source
 #    distribution.
 CC = gcc
-CFLAGS = `sdl2-config --cflags` -I../../src/ -c
+CFLAGS += `sdl2-config --cflags` -I../../src/ -c
 CFLAGS += -O3
 # CFLAGS += -g3
 ifeq ($(UNAME_S),Linux)
@@ -32,8 +32,8 @@ WARNINGS = -Werror -Wall -Wextra -pedantic-errors -Wformat=2 -Wno-import \
 		   -Wwrite-strings -Wstrict-prototypes -Wold-style-definition -Wmissing-prototypes \
 		   -Wmissing-declarations -Wredundant-decls -Wnested-externs -Winline \
 		   -Wdisabled-optimization -Wunused-macros -Wno-unused
-LDFLAGS =
-LIBRARIES = `sdl2-config --static-libs` -L../../build/ -lSDL2_image -lSDL2_mixer -lcage
+LDFLAGS +=
+LIBRARIES += `sdl2-config --static-libs` -L../../build/ -lSDL2_image -lSDL2_mixer -lcage
 SOURCES = $(wildcard src/*.c)
 OBJECTS = $(addprefix obj/,$(patsubst src/%,%,$(SOURCES:.c=.o) ) )
 
