@@ -35,9 +35,7 @@ WARNINGS = -Werror -Wall -Wextra -pedantic-errors -Wformat=2 -Wno-import \
 LDFLAGS =
 LIBRARIES = 
 SOURCES = $(wildcard src/*.c)
-INIPARSER_SOURCES = $(wildcard src/iniparser/*.c)
 OBJECTS = $(addprefix obj/,$(patsubst src/%,%,$(SOURCES:.c=.o) ) )
-INIPARSER_OBJECTS = $(addprefix obj/,$(patsubst src/%,%,$(INIPARSER_SOURCES:.c=.o) ) )
 LIBRARY = build/libcage.a
 CLDOC = python2 ~/.local/bin/cldoc
 
@@ -49,10 +47,10 @@ INFO_COLOR=\x1b[35;01m
 
 all: $(LIBRARY) extra
 
-$(LIBRARY): $(OBJECTS) $(INIPARSER_OBJECTS)
+$(LIBRARY): $(OBJECTS)
 	@mkdir -p build
 	@echo -e "Archiving $(INFO_COLOR)$(LIBRARY)$(NO_COLOR)"
-	@ar rcs $(LIBRARY) $(OBJECTS) $(INIPARSER_OBJECTS)
+	@ar rcs $(LIBRARY) $(OBJECTS)
 	@echo "Done!"
 
 obj/%.o: src/%.c
@@ -68,7 +66,7 @@ clean:
 	@cd samples/callout && $(MAKE) clean
 	@cd samples/collisions && $(MAKE) clean
 	@cd samples/wizard && $(MAKE) clean
-	@rm -rf $(LIBRARY) $(OBJECTS) $(INIPARSER_OBJECTS)
+	@rm -rf $(LIBRARY) $(OBJECTS)
 	@rm -rf docs/build
 
 doc:
