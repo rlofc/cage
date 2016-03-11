@@ -63,3 +63,5 @@ resources:
 
 clean:
 	rm -rf $(BINARY) $(OBJECTS) build/res deps/**
+
+deps:
