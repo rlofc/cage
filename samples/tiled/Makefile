@@ -23,7 +23,6 @@ LDFLAGS += -L./deps/tmx/build/
 LIBRARIES += -ltmx -lz -lxml2 
 CFLAGS += -I./deps/tmx/src
 CFLAGS += -I./src
-include ../common.mk
 
 deps/tmx/build/libtmx.a:
 	
@@ -31,3 +30,5 @@ deps/tmx/build/libtmx.a:
 	cd deps/tmx && mkdir build && cd build && cmake .. &&  make
 
 deps: deps/tmx/build/libtmx.a
+
+include ../common.mk

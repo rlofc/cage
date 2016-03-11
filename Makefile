@@ -66,6 +66,8 @@ clean:
 	@cd samples/callout && $(MAKE) clean
 	@cd samples/collisions && $(MAKE) clean
 	@cd samples/wizard && $(MAKE) clean
+	@cd samples/chipmunk && $(MAKE) clean
+	@cd samples/tiled && $(MAKE) clean
 	@rm -rf $(LIBRARY) $(OBJECTS)
 	@rm -rf docs/build
 
@@ -77,8 +79,8 @@ doc:
 	@awk -f literst.awk samples/timeline/src/timeline.c > docs/source/timeline_sample.rst
 	@awk -f literst.awk samples/callout/src/callout.c > docs/source/callout_sample.rst
 	@awk -f literst.awk samples/collisions/src/collisions.c > docs/source/collisions_sample.rst
-	@awk -f literst.awk samples/chipmunk/src/chipmunk.c > docs/source/chipmunk_sample.rst
 	@awk -f literst.awk samples/wizard/src/wizard.c > docs/source/wizard.rst
+	@awk -f literst.awk samples/chipmunk/src/chipmunk.c > docs/source/chipmunk_sample.rst
 	@awk -f literst.awk samples/tiled/src/tiled.c > docs/source/tiled.rst
 	@doxygen cage
 	@cp -Rf build/doxygen docs/build
@@ -92,3 +94,5 @@ extra: $(LIBRARY)
 	cd samples/callout && $(MAKE)
 	cd samples/collisions && $(MAKE)
 	cd samples/wizard && $(MAKE)
+	cd samples/chipmunk && $(MAKE)
+	cd samples/tiled && $(MAKE)

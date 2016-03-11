@@ -23,7 +23,6 @@ LDFLAGS += -L./deps/Chipmunk2D/build/src
 LIBRARIES += -lchipmunk
 CFLAGS += -DTARGET_OS_MAC=0 -DTARGET_OS_IPHONE=0 -DCP_USE_CGTYPES=0
 CFLAGS += -I./deps/Chipmunk2D/include/chipmunk
-include ../common.mk
 
 deps/Chipmunk2D/src/libchipmunk.a:
 	git clone https://github.com/slembcke/Chipmunk2D.git deps/Chipmunk2D
@@ -31,3 +30,5 @@ deps/Chipmunk2D/src/libchipmunk.a:
 		-DINSTALL_DEMOS=OFF -DBUILD_SHARED=OFF -DINSTALL_STATIC=OFF .. &&  make
 
 deps: deps/Chipmunk2D/src/libchipmunk.a
+
+include ../common.mk
