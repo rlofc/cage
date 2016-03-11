@@ -47,7 +47,7 @@ all: $(BINARY) resources
 ../../build/libcage.a:
 	@cd ../../ && make build/libcage.a
 
-$(BINARY): $(OBJECTS) ../../build/libcage.a deps
+$(BINARY): deps $(OBJECTS) ../../build/libcage.a
 	@mkdir -p build
 	@echo -e "Building $(INFO_COLOR)$(BINARY)$(NO_COLOR)"
 	@$(CC) $(LDFLAGS) $(OBJECTS) -o $@ $(LIBRARIES)

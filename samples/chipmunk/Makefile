@@ -24,11 +24,13 @@ LIBRARIES += -lchipmunk
 CFLAGS += -DTARGET_OS_MAC=0 -DTARGET_OS_IPHONE=0 -DCP_USE_CGTYPES=0
 CFLAGS += -I./deps/Chipmunk2D/include/chipmunk
 
-deps/Chipmunk2D/src/libchipmunk.a:
+include ../common.mk
+
+deps/Chipmunk2D:
 	git clone https://github.com/slembcke/Chipmunk2D.git deps/Chipmunk2D
+
+deps/Chipmunk2D/build/src/libchipmunk.a: deps/Chipmunk2D
 	cd deps/Chipmunk2D && mkdir build && cd build && cmake -DBUILD_DEMOS=OFF \
 		-DINSTALL_DEMOS=OFF -DBUILD_SHARED=OFF -DINSTALL_STATIC=OFF .. &&  make
 
-deps: deps/Chipmunk2D/src/libchipmunk.a
-
-include ../common.mk
+deps: deps/Chipmunk2D/build/src/libchipmunk.a

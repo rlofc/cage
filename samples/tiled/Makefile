@@ -24,11 +24,12 @@ LIBRARIES += -ltmx -lz -lxml2
 CFLAGS += -I./deps/tmx/src
 CFLAGS += -I./src
 
-deps/tmx/build/libtmx.a:
-	
+include ../common.mk
+
+deps/tmx:
 	git clone https://github.com/baylej/tmx.git deps/tmx
+
+deps/tmx/build/libtmx.a: deps/tmx
 	cd deps/tmx && mkdir build && cd build && cmake .. &&  make
 
 deps: deps/tmx/build/libtmx.a
-
-include ../common.mk
