@@ -297,10 +297,10 @@ up have shadows and grass overlay effects.
 	
 	static int init_hero(struct hero* hero)
 	{
-	    CHECK(hero->sprite = create_sprite(create_image("res/mybase.png"),
+	    CHECK(hero->sprite = create_sprite(create_image("res/sprite.png"),
 	                                       TILE_SIZE,
 	                                       TILE_SIZE * 2), create_failed);
-	    CHECK(hero->mask = create_sprite(create_image("res/mybasemask.png"),
+	    CHECK(hero->mask = create_sprite(create_image("res/spritemask.png"),
 	                                     TILE_SIZE, TILE_SIZE * 2), create_failed);
 	    for (int i = 0; i < _NUM_OF_ACTOR_DIRS; i++) {
 	        CHECK(hero->mode_anims[ACTOR_MOVING][i] = create_animation(),
@@ -351,8 +351,8 @@ up have shadows and grass overlay effects.
 	    game->actor_effects = create_target_image(game->screen_width,
 	                                              game->screen_height,
 	                                              color_from_RGBA(0,0,0,0));
-	    CHECK(game->tiles = create_tileset("res/tstest.png"), create_failure);
-	    CHECK(game->grass = create_tileset("res/grass.png"), create_failure);
+	    CHECK(game->tiles = create_tileset("res/tileset.png"), create_failure);
+	    CHECK(game->grass = create_tileset("res/overlay.png"), create_failure);
 	    CHECK(game->shadows = create_tileset("res/shadowmap.png"), create_failure);
 	    if (init_hero(&game->hero) == -1) goto init_hero_error;
 	    build_tilemap(game);

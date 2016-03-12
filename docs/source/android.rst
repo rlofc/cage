@@ -187,7 +187,7 @@ And the needed libraries added to ``LOCAL_SHARED_LIBRARIES``:
 
 .. code-block:: bash
 
-    LOCAL_SHARED_LIBRARIES := SDL2 SDL2_image SDL2_mixer CAGE
+    LOCAL_SHARED_LIBRARIES := SDL2 SDL2_image SDL2_mixer cage
 
 
 Build and Run

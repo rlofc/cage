@@ -11,7 +11,7 @@ First, clone the repo:
 
     git clone https://github.com/rlofc/cage.git
 
-To use Cage you will need **SDL2**, **SDL2_Image** and **SDL2_Mixer**.
+To use CAGE you will need **SDL2**, **SDL2_Image** and **SDL2_Mixer**.
 
 For **Windows**, run ``getSDL2.bat`` inside the ``3rdparty`` folder.
 
@@ -30,10 +30,10 @@ In **Arch Linux**, use pacman:
 Build
 -----
 
-Once you have **SDL2**, **SDL2_Mixer** and **SDL2_Image**, you can build Cage and run the
+Once you have **SDL2**, **SDL2_Mixer** and **SDL2_Image**, you can build CAGE and run the
 samples.
 
-In **Windows**, open the Visual Studio 2013 project inside the ``vc`` folder of Cage
+In **Windows**, open the Visual Studio 2013 project inside the ``vc`` folder of CAGE
 and build the solution. You will find the samples executable inside ``vc\Debug`` or ``vc\Release``.
 
 In **Mac OS/X** or **Linux**, simply:
@@ -45,13 +45,13 @@ In **Mac OS/X** or **Linux**, simply:
 New Games
 ---------
 
-To start a new game project, clone **cage-bp** (Cage
+To start a new game project, clone **cage-bp** (CAGE
 Boilerplate):
 
 ::
 
     git clone https://github.com/rlofc/cage-bp.git my_game
 
-By default, the boilerplate project is configured to find cage
+By default, the boilerplate project is configured to find CAGE
 side-by-side relative to its location, but you can edit the Makefile to change
 this.

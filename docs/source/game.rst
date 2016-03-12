@@ -14,7 +14,7 @@ game_loop
 ---------
 .. doxygenfunction:: game_loop
 
-To run its game loop, Cage must have a game state. The
+To run its game loop, CAGE must have a game state. The
 game state is created, updated and destroyed using three pointers to three functions:
 
 create function

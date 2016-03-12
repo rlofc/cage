@@ -1,13 +1,13 @@
 .. image:: images/cage.png
     :align: right
 
-Welcome to Cage
+Welcome to CAGE
 ===============
 
-Cage is an elementary game development library.
+CAGE is an elementary game development library.
 It was initially designed and developed to help teach 2D game
 development using the C programming language.
-Cage prefers readability over flexibility and ease-of-use over
+CAGE prefers readability over flexibility and ease-of-use over
 a rich feature set, in the spirit of **less is more**.
 
 
@@ -25,8 +25,8 @@ a rich feature set, in the spirit of **less is more**.
     <hr/>
 
 
-As a library, Cage is just a thin layer on top of SDL2,
-the Simple Direct-media Library. Cage offers the essential
+As a library, CAGE is just a thin layer on top of SDL2,
+the Simple Direct-media Library. CAGE offers the essential
 constructs for developing 2D games. It lets you handle images,
 sprites, animations, fonts, sounds and other game-specific
 entities using a clear and straighforward API.
@@ -34,7 +34,7 @@ entities using a clear and straighforward API.
 The short version
 -----------------
 
-Here is one of the shortest and most boring game you can write using Cage:
+Here is one of the shortest and most boring game you can write using CAGE:
 
 .. highlight:: c
 
@@ -66,11 +66,11 @@ the best choice. There is no `but` here. LÖVE2D, HaxeFlixer and
 Cocos2D are fine examples.
 
 However, if you enjoy the beauty of C, if you want minimal cognitive burden
-and if you want to have long-living, portable code, then Cage could be
+and if you want to have long-living, portable code, then CAGE could be
 a viable option.
 
 For the full story all at once, jump over to :doc:`wizard`.
-Or, follow along with the docs and learn Cage step by step.
+Or, follow along with the docs and learn CAGE step by step.
 
 .. toctree::
    :hidden:

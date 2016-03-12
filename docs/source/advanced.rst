@@ -5,7 +5,7 @@
 Memory Management
 -----------------
 
-Cage lets you decide how to manage your game's memory.
+CAGE lets you decide how to manage your game's memory.
 Resources such as image, sprite and animation
 will usually have a set of **create** and **destroy**
 functions you can use, releasing you from explicitly allocating and freeing memory.
@@ -40,7 +40,7 @@ Or, if you want, you can do:
 
 Coding Style
 ------------
-Cage uses a slightly modified version of the Linux kernel
+CAGE uses a slightly modified version of the Linux kernel
 coding style. The main differences are:
 
 * Indentation size is 4 spaces.
