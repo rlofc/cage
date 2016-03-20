@@ -36,6 +36,7 @@
 #include "timeline.h"
 #include "toolbox.h"
 #include "easing.h"
+#include "file.h"
 
 /**
  * This is the prototype of the create function:

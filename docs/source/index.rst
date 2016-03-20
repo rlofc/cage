@@ -87,6 +87,7 @@ Or, follow along with the docs and learn CAGE step by step.
    mouse
    screen
    color
+   file
    state_sample
    image_sample
    sprite_sample
