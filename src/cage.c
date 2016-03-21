@@ -195,13 +195,6 @@ void game_state(create_func_t create,
     toolbox->next_state->destroy = destroy;
 }
 
-static struct settings* g_settings;
-
-static void init_game(struct settings* settings)
-{
-    g_settings = settings;
-}
-
 int game_setup_and_loop(setup_func_t setup,
                         create_func_t create,
                         update_func_t update,
@@ -210,7 +203,6 @@ int game_setup_and_loop(setup_func_t setup,
     bool quit = false;
     Uint32 start;
     Uint32 now;
-    SDL_Event event;
     prepare_sdl();
     struct settings settings;
     setup(&settings);

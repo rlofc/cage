@@ -25,13 +25,7 @@ CFLAGS += -O3
 ifeq ($(UNAME_S),Linux)
 	CFLAGS += -std=c89
 endif
-WARNINGS = -Werror -Wall -Wextra -pedantic-errors -Wformat=2 -Wno-import \
-		   -Wimplicit -Wmain -Wchar-subscripts -Wsequence-point -Wmissing-braces \
-		   -Wparentheses -Winit-self -Wswitch-enum -Wstrict-aliasing=2 -Wundef \
-		   -Wshadow -Wpointer-arith -Wbad-function-cast -Wcast-qual -Wcast-align \
-		   -Wwrite-strings -Wstrict-prototypes -Wold-style-definition -Wmissing-prototypes \
-		   -Wmissing-declarations -Wredundant-decls -Wnested-externs -Winline \
-		   -Wdisabled-optimization -Wunused-macros -Wno-unused
+WARNINGS = -Wall -Wno-unused-label
 LDFLAGS +=
 LIBRARIES += `sdl2-config --static-libs` -L../../build/ -lSDL2_image -lSDL2_mixer -lcage
 SOURCES = $(wildcard src/*.c)
