@@ -155,10 +155,8 @@ struct image* create_image(const char* filepath)
 
 static struct image* _create_image(int w, int h, int access)
 {
-    SDL_Rect r;
     struct image* image = malloc(sizeof(struct image));
     if (image != NULL) {
-        r.x = 0; r.y = 0; r.w = w; r.h = h;
         image->impl = SDL_CreateTexture(screen->impl,
                                         SDL_PIXELFORMAT_RGBA8888,
                                         access,
