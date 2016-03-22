@@ -20,19 +20,19 @@
 #    distribution.
 CC = gcc
 CFLAGS = `sdl2-config --cflags` -c
-CFLAGS += -O3
-# CFLAGS += -g3
+DEBUG ?= 0
+ifeq (DEBUG, 1)
+	CFLAGS += -g3
+else
+	CFLAGS += -O3
+endif
 ifeq ($(UNAME_S),Linux)
 	CFLAGS += -std=c89
 endif
 WARNINGS = -Wall -Wno-unused-label
-LDFLAGS =
-LIBRARIES = 
 SOURCES = $(wildcard src/*.c)
 OBJECTS = $(addprefix obj/,$(patsubst src/%,%,$(SOURCES:.c=.o) ) )
 LIBRARY = build/libcage.a
-CLDOC = python2 ~/.local/bin/cldoc
-
 
 NO_COLOR=\x1b[0m
 INFO_COLOR=\x1b[35;01m
@@ -81,12 +81,12 @@ doc:
 	@cd docs && make html
 
 extra: $(LIBRARY)
-	cd samples/state && $(MAKE)
-	cd samples/image && $(MAKE)
-	cd samples/sprite && $(MAKE)
-	cd samples/timeline && $(MAKE)
-	cd samples/callout && $(MAKE)
-	cd samples/collisions && $(MAKE)
-	cd samples/wizard && $(MAKE)
-	cd samples/chipmunk && $(MAKE)
-	cd samples/tiled && $(MAKE)
+	cd samples/state && $(MAKE) DEBUG=$(DEBUG)
+	cd samples/image && $(MAKE) DEBUG=$(DEBUG)
+	cd samples/sprite && $(MAKE) DEBUG=$(DEBUG)
+	cd samples/timeline && $(MAKE) DEBUG=$(DEBUG)
+	cd samples/callout && $(MAKE) DEBUG=$(DEBUG)
+	cd samples/collisions && $(MAKE) DEBUG=$(DEBUG)
+	cd samples/wizard && $(MAKE) DEBUG=$(DEBUG)
+	cd samples/chipmunk && $(MAKE) DEBUG=$(DEBUG)
+	cd samples/tiled && $(MAKE) DEBUG=$(DEBUG)

@@ -20,8 +20,12 @@
 #    distribution.
 CC = gcc
 CFLAGS += `sdl2-config --cflags` -I../../src/ -c
-CFLAGS += -O3
-# CFLAGS += -g3
+DEBUG ?= 0
+ifeq (DEBUG, 1)
+	CFLAGS += -g3
+else
+	CFLAGS += -O3
+endif
 ifeq ($(UNAME_S),Linux)
 	CFLAGS += -std=c89
 endif
