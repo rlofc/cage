@@ -22,7 +22,6 @@
 #ifndef SCREEN_H_PCFZWLG4
 #define SCREEN_H_PCFZWLG4
 
-#include "SDL.h"
 #include "color.h"
 
 #include "begin_prefix.h"
