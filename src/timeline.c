@@ -107,6 +107,7 @@ void* update_timeline(struct timeline* timeline, void* data, float elapsed_ms)
                 reg_next_event < timeline->n_events) {
                 float progress =
                 duration == 0 ? 1.0f : (float)elapsed / (float)duration;
+                timeline->curr_event = reg_next_event;
                 ret =
                 timeline->events[reg_next_event].callback(data,
                                                           elapsed_ms,

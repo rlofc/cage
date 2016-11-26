@@ -73,6 +73,7 @@ struct timeline {
     uint32_t acc_timer;
     /* Pending event */
     int next_event;
+    int curr_event;
     bool paused;
 };
 
