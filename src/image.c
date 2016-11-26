@@ -145,7 +145,7 @@ void draw_image(struct image* image,
 
 struct image* create_image(const char* filepath)
 {
-    struct image* image = malloc(sizeof(struct image));
+    struct image* image = (struct image*)malloc(sizeof(struct image));
     if (image != NULL && init_image_from_file(image, filepath) == -1) {
         free(image);
         image = NULL;
@@ -155,7 +155,7 @@ struct image* create_image(const char* filepath)
 
 static struct image* _create_image(int w, int h, int access)
 {
-    struct image* image = malloc(sizeof(struct image));
+    struct image* image = (struct image*)malloc(sizeof(struct image));
     if (image != NULL) {
         image->impl = SDL_CreateTexture(screen->impl,
                                         SDL_PIXELFORMAT_RGBA8888,

@@ -24,7 +24,7 @@
 
 struct animation* create_animation(void)
 {
-    struct animation* ret = calloc(1, sizeof(struct animation));
+    struct animation* ret = (struct animation*)calloc(1, sizeof(struct animation));
     if (ret != NULL) {
         ret->mode = LOOP_FRAMES;
         ret->loop_from = -1;

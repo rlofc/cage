@@ -208,7 +208,7 @@ int game_setup_and_loop(setup_func_t setup,
     setup(&settings);
     prepare_screen(&settings);
     prepare_audio_device();
-    toolbox = malloc(sizeof(struct toolbox));
+    toolbox = (struct toolbox*)malloc(sizeof(struct toolbox));
     if (toolbox == NULL) {
         exit(1);
     }

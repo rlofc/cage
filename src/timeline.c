@@ -25,7 +25,7 @@
 
 struct timeline* create_timeline(void)
 {
-    struct timeline* timeline = malloc(sizeof(struct timeline));
+    struct timeline* timeline = (struct timeline*)malloc(sizeof(struct timeline));
     if (timeline != NULL)
         init_timeline(timeline);
     else

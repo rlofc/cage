@@ -24,7 +24,7 @@
 
 struct sound* create_sound(const char* filepath)
 {
-    struct sound* sound = malloc(sizeof(struct sound));
+    struct sound* sound = (struct sound*)malloc(sizeof(struct sound));
     if (sound != NULL) {
         if (load_sound(sound, filepath) == -1) goto error;
         sound->channel = -1;

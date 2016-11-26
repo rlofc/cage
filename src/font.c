@@ -150,7 +150,7 @@ int load_font(struct font* font, const char* filepath, int ncols, int nrows)
 
 struct font* create_font(const char* filepath, int cols, int rows)
 {
-    struct font* f = malloc(sizeof(*f));
+    struct font* f = (struct font*)malloc(sizeof(*f));
     if (f != NULL && load_font(f, filepath, cols, rows) == -1) {
         free(f);
         return NULL;
