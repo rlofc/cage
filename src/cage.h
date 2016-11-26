@@ -147,4 +147,6 @@ void game_state(create_func_t create,
 
 void exit_with_error_msg(const char* msg);
 
+const char * get_error_msgs();
+
 #endif /* end of include guard: NGX_H_F8WRBKFT */

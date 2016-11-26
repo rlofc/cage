@@ -156,6 +156,8 @@ void exit_with_error_msg(const char* msg)
 #define ERROR_BUF_SIZE 1024 * 32
 static char error_msgs_buffer[ERROR_BUF_SIZE];
 
+const char * get_error_msgs()  { return error_msgs_buffer; }
+
 void error_msg(const char* msg)
 {
     strncat(error_msgs_buffer, "\n", ERROR_BUF_SIZE - 1);
