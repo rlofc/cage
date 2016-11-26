@@ -65,7 +65,7 @@ int init_image_from_file(struct image* image, const char* filepath)
 
     SDL_SetTextureBlendMode(image->impl, SDL_BLENDMODE_BLEND);
 
-    lock_image(image, (void*)&pixels, &pitch);
+    lock_image(image, (void**)&pixels, &pitch);
     memcpy((void*)pixels, fs->pixels, fs->pitch * fs->h);
 
     npixels = (pitch / 4) * fs->h;
