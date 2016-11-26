@@ -3,6 +3,7 @@
 
 #include "SDL.h"
 
+#include "begin_prefix.h"
 /* The game drawing surface
  * A screen is you drawing surface for you to draw on
  * your game images, sprites and text.
@@ -28,4 +29,5 @@ struct keyboard {
 };
 extern struct keyboard* keyboard;
 
+#include "end_prefix.h"
 #endif /* end of include guard: INTERNALS_H_G9CYEQL6 */

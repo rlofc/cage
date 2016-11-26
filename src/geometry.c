@@ -23,6 +23,7 @@
 #include "utils.h"
 #include <math.h>
 
+#include "begin_prefix.h"
 int point_in_bbox(point p, bbox b)
 {
     return ((p.x >= b.p1.x && p.x <= b.p2.x) &&
@@ -61,3 +62,4 @@ struct rectangle rect_from_sub_bbox(bbox outer, bbox inner)
     r.h = inner.p2.y - inner.p1.y;
     return r;
 }
+#include "end_prefix.h"

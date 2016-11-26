@@ -22,6 +22,7 @@
 #include "timeline.h"
 #include "utils.h"
 #include <stdlib.h>
+#include "begin_prefix.h"
 
 struct timeline* create_timeline(void)
 {
@@ -142,3 +143,4 @@ void cleanup_timeline(struct timeline* timeline)
 {
     init_timeline(timeline);
 }
+#include "end_prefix.h"

@@ -25,6 +25,7 @@
 #include "image.h"
 #include "animate.h"
 
+#include "begin_prefix.h"
 /**
  * Sprites use images sliced into frames to play short animations.
  * Sprites can be used for game characters, props, tiles and titles.
@@ -164,4 +165,5 @@ void play_animation(struct sprite* sprite, struct animation* animation);
  */
 void stop_animation(struct sprite* sprite);
 
+#include "end_prefix.h"
 #endif /* end of include guard: SPRITE_H_XF4APTCE */

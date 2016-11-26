@@ -26,6 +26,7 @@
 #include "geometry.h"
 #include "color.h"
 
+#include "begin_prefix.h"
 /**
  * Images are the visual building blocks of your game.  Use images to draw on
  * screen, or as sources for sprites and fonts. Images can be read from a file
@@ -218,4 +219,5 @@ int pixels_collide(struct image* img1,
                    struct image* img2,
                    struct rectangle* rect2);
 
+#include "end_prefix.h"
 #endif /* end of include guard: image */

@@ -3,6 +3,8 @@
 
 #include <stdint.h>
 
+
+#include "begin_prefix.h"
 struct gamestate;
 
 /* Game toolbox passed to state callbacks
@@ -37,4 +39,5 @@ struct toolbox {
     struct gamestate* next_state;
 };
 
+#include "end_prefix.h"
 #endif /* end of include guard: TOOLBOX_H_W7RODJL2 */

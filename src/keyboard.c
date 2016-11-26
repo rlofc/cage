@@ -22,6 +22,7 @@
 #include "internals.h"
 #include "keyboard.h"
 #include "SDL.h"
+#include "begin_prefix.h"
 
 static struct keyboard global_keyboard;
 struct keyboard* keyboard = &global_keyboard;
@@ -55,3 +56,4 @@ int key_down(int key)
 {
     return (keyboard->keys[key]);
 }
+#include "end_prefix.h"

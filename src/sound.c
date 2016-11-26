@@ -22,6 +22,7 @@
 #include "sound.h"
 #include <stdlib.h>
 
+#include "begin_prefix.h"
 struct sound* create_sound(const char* filepath)
 {
     struct sound* sound = (struct sound*)malloc(sizeof(struct sound));
@@ -81,3 +82,4 @@ int is_playing(struct sound* sound)
 {
     return (sound->channel != -1);
 }
+#include "end_prefix.h"

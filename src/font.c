@@ -27,6 +27,7 @@
 #include "SDL_image.h"
 #include "SDL_surface.h"
 
+#include "begin_prefix.h"
 /* -----------------------------------------------
  * Thanks to the Lazy Foo' Production tutorial at
  * http://lazyfoo.net/SDL_tutorials/lesson30/
@@ -217,3 +218,4 @@ void measure_text(struct font* font, const char* text, int* width, int* height)
     if (*width < w) *width = w;
     *height += font->line_height;
 }
+#include "end_prefix.h"

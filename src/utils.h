@@ -24,6 +24,7 @@
 
 #include <math.h>
 
+#include "begin_prefix.h"
 /*
  * M A T H
  */
@@ -82,4 +83,5 @@ void error_msg(const char* msg);
 
 #define UNUSED(x) (void)(x)
 
+#include "end_prefix.h"
 #endif /* end of include guard: UTILS_H_EZIL3YD2 */

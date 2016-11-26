@@ -22,6 +22,7 @@
 #ifndef FILE_H_KV23ASZC
 #define FILE_H_KV23ASZC
 #include "types.h"
+#include "begin_prefix.h"
 /**
  * You can use files to store your players score, progress and settings.
  * Various platforms have restrictions on where you can store your game
@@ -69,4 +70,5 @@ int write_file(struct file_spec file_spec,
  */
 bool is_file_exists(struct file_spec file_spec);
 
+#include "end_prefix.h"
 #endif /* end of include guard: FILE_H_KV23ASZC*/

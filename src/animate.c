@@ -21,6 +21,7 @@
  */
 #include "animate.h"
 #include <stdlib.h>
+#include "begin_prefix.h"
 
 struct animation* create_animation(void)
 {
@@ -69,3 +70,5 @@ void destroy_animation(struct animation* animation)
 {
     free(animation);
 }
+
+#include "end_prefix.h"

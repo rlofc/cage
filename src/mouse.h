@@ -24,6 +24,7 @@
 
 #include "types.h"
 
+#include "begin_prefix.h"
 struct mouse {
     /** Set to true if left click was detected */
     bool left_click;
@@ -44,4 +45,5 @@ struct mouse {
  */
 void update_mouse(struct mouse* mouse);
 
+#include "end_prefix.h"
 #endif /* end of include guard: MOUSE_H_UQ7XHW8V */

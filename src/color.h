@@ -24,6 +24,7 @@
 
 #include <stdint.h>
 
+#include "begin_prefix.h"
 /* Color using the RGBA representation
  */
 struct color {
@@ -65,4 +66,5 @@ struct color color_from_RGB(uint8_t red,
                             uint8_t green,
                             uint8_t blue);
 
+#include "end_prefix.h"
 #endif /* end of include guard: COLOR_H_5S0TOI9O */

@@ -37,6 +37,7 @@
 #include "toolbox.h"
 #include "easing.h"
 #include "file.h"
+#include "begin_prefix.h"
 
 /**
  * This is the prototype of the create function:
@@ -149,4 +150,5 @@ void exit_with_error_msg(const char* msg);
 
 const char * get_error_msgs();
 
+#include "end_prefix.h"
 #endif /* end of include guard: NGX_H_F8WRBKFT */

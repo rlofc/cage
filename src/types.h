@@ -21,5 +21,7 @@
  */
 #ifndef TYPES_H_ZAIL4YD9
 #define TYPES_H_ZAIL4YD9
+#include "begin_prefix.h"
 typedef enum { false, true } bool;
+#include "end_prefix.h"
 #endif /* TYPES_H_ZAIL4YD9 */

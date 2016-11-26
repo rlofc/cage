@@ -27,6 +27,7 @@
 
 #define MAX_TIMELINE_EVENTS 100
 
+#include "begin_prefix.h"
 /**
  * Timeline event holds a single registered
  * event in a timeline. Timeline events can have a gap
@@ -142,4 +143,5 @@ void init_timeline(struct timeline* timeline);
  */
 void cleanup_timeline(struct timeline* timeline);
 
+#include "end_prefix.h"
 #endif /* end of include guard: TIMELINE_H_G613QT9P */

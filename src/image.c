@@ -29,6 +29,7 @@
 #include "SDL_image.h"
 #include "SDL_surface.h"
 
+#include "begin_prefix.h"
 int init_image_from_file(struct image* image, const char* filepath)
 {
     int ret = -1;
@@ -298,3 +299,4 @@ done:
     unlock_image(img2);
     return collide;
 }
+#include "end_prefix.h"

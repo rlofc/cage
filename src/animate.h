@@ -21,6 +21,7 @@
  */
 #ifndef ANIMATE_H_QVL0GFIR
 #define ANIMATE_H_QVL0GFIR
+#include "begin_prefix.h"
 
 #define MAX_FRAMES_PER_ANIMATION 256
 
@@ -113,4 +114,5 @@ void add_frames(struct animation* animation,
                 int nframes,
                 struct frame frames[]);
 
+#include "end_prefix.h"
 #endif /* end of include guard: ANIMATE_H_QVL0GFIR */

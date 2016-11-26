@@ -25,6 +25,7 @@
 #include "geometry.h"
 #include "image.h"
 
+#include "begin_prefix.h"
 #define MAX_FONT_CHARS 256
 
 /**
@@ -100,4 +101,5 @@ void draw_text(struct font* font, const char* text, int x, int y);
  */
 void measure_text(struct font* font, const char* text, int* width, int* height);
 
+#include "end_prefix.h"
 #endif /* end of include guard: FONT_H_XYTHJIBT */

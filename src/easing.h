@@ -21,6 +21,7 @@
  */
 #ifndef EASING_H_FES178TS
 #define EASING_H_FES178TS
+#include "begin_prefix.h"
 
 /**
  * Interpolate two values using an easing function
@@ -471,4 +472,5 @@ float bounce_ease_out(float p);
  */
 float bounce_ease_in_out(float p);
 
+#include "end_prefix.h"
 #endif /* end of include guard: EASING_H_FES178TS */

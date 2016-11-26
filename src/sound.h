@@ -23,6 +23,7 @@
 #define AUDIO_H_IJ4N19XA
 #include "SDL_mixer.h"
 #define CAGE_NUM_OF_MIX_CHANNELS 16
+#include "begin_prefix.h"
 /**
  * Sound effect
  */
@@ -97,4 +98,5 @@ void set_volume(struct sound* sound, float volume);
  */
 int is_playing(struct sound* sound);
 
+#include "end_prefix.h"
 #endif /* end of include guard: AUDIO_H_IJ4N19XA */

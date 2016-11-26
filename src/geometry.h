@@ -22,6 +22,7 @@
 #ifndef GEOMETRY_H_NQUPRW4D
 #define GEOMETRY_H_NQUPRW4D
 #include "vec.h"
+#include "begin_prefix.h"
 /* point is a kind of a vec */
 typedef vec point;
 /**
@@ -67,4 +68,5 @@ bbox translate_bbox(bbox b, vec t);
 /* returns the rectangle of an inner bbox */
 struct rectangle rect_from_sub_bbox(bbox outer, bbox inner);
 
+#include "end_prefix.h"
 #endif /* end of include guard: GEOMETRY_H_NQUPRW4D */

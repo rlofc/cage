@@ -34,6 +34,8 @@
 #include "SDL_image.h"
 #include "SDL_mixer.h"
 
+#include "begin_prefix.h"
+
 /* global toolbox so we can
  * cleanup using atexit()
  */
@@ -259,3 +261,4 @@ int game_loop(create_func_t create,
 {
     return game_setup_and_loop(default_setup_callback, create, update, destroy);
 }
+#include "end_prefix.h"

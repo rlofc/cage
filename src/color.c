@@ -20,7 +20,7 @@
  *    distribution.
  */
 #include "color.h"
-
+#include "begin_prefix.h"
 struct color color_from_RGBA(uint8_t red,
                              uint8_t green,
                              uint8_t blue,
@@ -40,3 +40,4 @@ struct color color_from_RGB(uint8_t red,
 {
     return color_from_RGBA(red, green, blue, UINT8_MAX);
 }
+#include "end_prefix.h"

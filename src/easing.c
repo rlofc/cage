@@ -23,6 +23,7 @@
 #include "utils.h"
 #include "easing.h"
 
+#include "begin_prefix.h"
 float interpolate(float from, float to, float amount, float (*easing)(float))
 {
     return from + (to - from) * (easing(amount));
@@ -289,3 +290,4 @@ float bounce_ease_in_out(float p)
         return 0.5 * bounce_ease_out(p * 2 - 1) + 0.5;
     }
 }
+#include "end_prefix.h"

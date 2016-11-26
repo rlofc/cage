@@ -21,6 +21,7 @@
  */
 #ifndef VEC_H_NQUPRW4D
 #define VEC_H_NQUPRW4D
+#include "begin_prefix.h"
 
 /**
  * 2D vector type for geometric calculation
@@ -68,4 +69,5 @@ vec norm_vec(vec v);
 /* swap two vectors.. */
 void swap_vecs(vec* a, vec* b);
 
+#include "end_prefix.h"
 #endif /* end of include guard: VEC_H_NQUPRW4D */

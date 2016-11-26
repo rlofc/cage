@@ -24,6 +24,7 @@
 
 #include <stdint.h>
 
+#include "begin_prefix.h"
 /**
  * Checks if a specific key has been pressed.
  * @param key Key to test
@@ -73,4 +74,5 @@ extern int KB_A;
 extern int KB_D;
 extern int KB_BACK;
 
+#include "end_prefix.h"
 #endif /* end of include guard: KEYBOARD_H_UQ7XHW8V */

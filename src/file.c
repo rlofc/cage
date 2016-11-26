@@ -24,6 +24,7 @@
 
 #define MAX_PATH_LEN 1024
 
+#include "begin_prefix.h"
 static void make_game_path(char* full_path, struct file_spec file_spec)
 {
     char* perf_path = SDL_GetPrefPath(file_spec.company, file_spec.game);
@@ -86,3 +87,4 @@ int write_file(struct file_spec file_spec, const char* buf)
     } else
         return -1;
 }
+#include "end_prefix.h"

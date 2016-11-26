@@ -25,6 +25,7 @@
 #include "SDL.h"
 #include "color.h"
 
+#include "begin_prefix.h"
 /**
  * Change the screen background color.
  */
@@ -72,4 +73,5 @@ void get_window_size(int* width, int* height);
 
 /* cldoc:end-category() */
 
+#include "end_prefix.h"
 #endif /* end of include guard: SCREEN_H_PCFZWLG4 */

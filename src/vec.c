@@ -21,7 +21,7 @@
  */
 #include "vec.h"
 #include <math.h>
-
+#include "begin_prefix.h"
 vec xy_vec(float x, float y)
 {
     vec v;
@@ -117,3 +117,4 @@ void swap_vecs(vec* a, vec* b)
     b->x = tmp.x;
     b->y = tmp.y;
 }
+#include "end_prefix.h"

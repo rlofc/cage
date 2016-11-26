@@ -23,6 +23,7 @@
 #include "internals.h"
 #include "SDL.h"
 
+#include "begin_prefix.h"
 void update_mouse(struct mouse* mouse)
 {
     int x, y, w, h;
@@ -34,3 +35,4 @@ void update_mouse(struct mouse* mouse)
     mouse->right_click = ms & SDL_BUTTON(SDL_BUTTON_RIGHT);
     mouse->middle_click = ms & SDL_BUTTON(SDL_BUTTON_MIDDLE);
 }
+#include "end_prefix.h"

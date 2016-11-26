@@ -25,6 +25,7 @@
 #include "utils.h"
 #include <stdlib.h>
 
+#include "begin_prefix.h"
 static struct screen global_screen;
 struct screen* screen = &global_screen;
 
@@ -100,4 +101,4 @@ void get_window_size(int* width, int* height)
 {
     SDL_GetWindowSize(screen->window, width, height);
 }
-
+#include "end_prefix.h"

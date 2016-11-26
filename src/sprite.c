@@ -21,6 +21,7 @@
  */
 #include "sprite.h"
 #include "utils.h"
+#include "begin_prefix.h"
 
 int prepare_sprite(struct sprite* sprite,
                    struct image* image,
@@ -189,3 +190,4 @@ void stop_animation(struct sprite* sprite)
     sprite->current_frame = 0;
     sprite->elapsed_frame = 0;
 }
+#include "end_prefix.h"
