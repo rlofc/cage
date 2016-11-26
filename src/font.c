@@ -66,7 +66,7 @@ int load_font(struct font* font, const char* filepath, int ncols, int nrows)
     for (rows = 0; rows < nrows; ++rows) {
         int cols;
         for (cols = 0; cols < ncols; ++cols) {
-            int p_col, p_row;
+            volatile int p_col, p_row;
             font->chars_rects[curr_char].x = cell_w * cols;
             font->chars_rects[curr_char].y = cell_h * rows;
 
