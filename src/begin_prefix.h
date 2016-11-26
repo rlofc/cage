@@ -1,16 +1,10 @@
 #ifdef CAGE_PREFIX
-#define ADD cage_ADD
-#define BLEND cage_BLEND
-#define FREEZE_LAST_FRAME cage_FREEZE_LAST_FRAME
-#define LOOP_FRAMES cage_LOOP_FRAMES
-#define MULTIPLY cage_MULTIPLY
-#define NONE cage_NONE
-#define PINGPONG_FRAMES cage_PINGPONG_FRAMES
 #define add_frame cage_add_frame
 #define add_frames cage_add_frames
 #define add_vec cage_add_vec
 #define animate_sprite cage_animate_sprite
 #define animation cage_animation
+#define animation_mode cage_animation_mode
 #define append_event cage_append_event
 #define append_events cage_append_events
 #define back_ease_in cage_back_ease_in
@@ -18,6 +12,7 @@
 #define back_ease_out cage_back_ease_out
 #define bbox_in_bbox cage_bbox_in_bbox
 #define bbox_intersect cage_bbox_intersect
+#define blend_mode cage_blend_mode
 #define bounce_ease_in cage_bounce_ease_in
 #define bounce_ease_in_out cage_bounce_ease_in_out
 #define bounce_ease_out cage_bounce_ease_out
@@ -148,4 +143,11 @@
 #define write_file cage_write_file
 #define xy_vec cage_xy_vec
 #define zero_vec cage_zero_vec
+#define ADD CAGE_ADD
+#define BLEND CAGE_BLEND
+#define FREEZE_LAST_FRAME CAGE_FREEZE_LAST_FRAME
+#define LOOP_FRAMES CAGE_LOOP_FRAMES
+#define MULTIPLY CAGE_MULTIPLY
+#define NONE CAGE_NONE
+#define PINGPONG_FRAMES CAGE_PINGPONG_FRAMES
 #endif

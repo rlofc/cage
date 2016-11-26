@@ -11,6 +11,7 @@
 #undef add_vec
 #undef animate_sprite
 #undef animation
+#undef animation_mode
 #undef append_event
 #undef append_events
 #undef back_ease_in
@@ -18,6 +19,7 @@
 #undef back_ease_out
 #undef bbox_in_bbox
 #undef bbox_intersect
+#undef blend_mode
 #undef bounce_ease_in
 #undef bounce_ease_in_out
 #undef bounce_ease_out
