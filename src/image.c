@@ -204,7 +204,7 @@ void draw_on_image(struct image* image)
 
 void set_blend_mode(struct image* image, enum blend_mode blend_mode)
 {
-    int sdl_mode = SDL_BLENDMODE_NONE;
+    SDL_BlendMode sdl_mode = SDL_BLENDMODE_NONE;
     switch (blend_mode) {
         case NONE:
             sdl_mode = SDL_BLENDMODE_NONE;
