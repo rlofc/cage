@@ -71,7 +71,7 @@ In **Mac OS/X** or **Linux**, simply:
 
 The docs are still work-in-progress:
 
-[http://rlofc.github.io/cage/](http://rlofc.github.io/cage/)
+[http://rlofc.github.io/cage/docs](http://rlofc.github.io/cage/)
 
 All samples are written using using literate programming.
 
