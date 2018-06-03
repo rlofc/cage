@@ -71,12 +71,12 @@ In **Mac OS/X** or **Linux**, simply:
 
 The docs are still work-in-progress:
 
-[http://rlofc.github.io/cage/docs](http://rlofc.github.io/cage/)
+[http://rlofc.github.io/cage/docs](http://rlofc.github.io/cage/docs)
 
 All samples are written using using literate programming.
 
 For a not-so-basic example, check out the Wizard sample code:
-[http://rlofc.github.io/cage/wizard.html](http://rlofc.github.io/cage/wizard.html)
+[http://rlofc.github.io/cage/docs/wizard.html](http://rlofc.github.io/cage/docs/wizard.html)
 
 ### License
 
