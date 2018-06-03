@@ -6,7 +6,7 @@ worse is better). CAGE favors readability over flexibility and
 ease-of-use over a rich set of features (read: it's barely
 usable).
 
-![CAGE Screenshots](https://github.com/rlofc/rlofc.github.com/raw/master/cage/_images/cage-samples.png)
+![CAGE Screenshots](https://github.com/rlofc/rlofc.github.com/raw/master/cage/docs/_images/cage-samples.png)
 
 CAGE makes it easier to write 2D games using C by
 adding a very thin layer on top of SDL2.
