@@ -93,6 +93,7 @@
 #undef load_sound
 #undef lock_image
 #undef measure_text
+#undef message_box
 #undef mouse
 #undef mul_vec
 #undef norm_vec
@@ -120,6 +121,7 @@
 #undef screen_color
 #undef set_blend_mode
 #undef set_image_alpha
+#undef set_screen_blend_mode
 #undef set_screen_size
 #undef set_volume
 #undef set_window_size

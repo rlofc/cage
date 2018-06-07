@@ -86,6 +86,7 @@
 #define load_sound cage_load_sound
 #define lock_image cage_lock_image
 #define measure_text cage_measure_text
+#define message_box cage_message_box
 #define mouse cage_mouse
 #define mul_vec cage_mul_vec
 #define norm_vec cage_norm_vec
@@ -113,6 +114,7 @@
 #define screen_color cage_screen_color
 #define set_blend_mode cage_set_blend_mode
 #define set_image_alpha cage_set_image_alpha
+#define set_screen_blend_mode cage_set_screen_blend_mode
 #define set_screen_size cage_set_screen_size
 #define set_volume cage_set_volume
 #define set_window_size cage_set_window_size

@@ -56,10 +56,10 @@ bbox translate_bbox(bbox b, vec t)
 struct rectangle rect_from_sub_bbox(bbox outer, bbox inner)
 {
     struct rectangle r;
-    r.x = inner.p1.x - outer.p1.x;
-    r.y = inner.p1.y - outer.p1.y;
-    r.w = inner.p2.x - inner.p1.x;
-    r.h = inner.p2.y - inner.p1.y;
+    r.x = (int)inner.p1.x - (int)outer.p1.x;
+    r.y = (int)inner.p1.y - (int)outer.p1.y;
+    r.w = (int)inner.p2.x - (int)inner.p1.x;
+    r.h = (int)inner.p2.y - (int)inner.p1.y;
     return r;
 }
 #include "end_prefix.h"

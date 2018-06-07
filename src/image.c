@@ -222,6 +222,25 @@ void set_blend_mode(struct image* image, enum blend_mode blend_mode)
     SDL_SetTextureBlendMode(image->impl, sdl_mode);
 }
 
+void set_screen_blend_mode(enum blend_mode blend_mode)
+{
+    SDL_BlendMode sdl_mode = SDL_BLENDMODE_NONE;
+    switch (blend_mode) {
+        case NONE:
+            sdl_mode = SDL_BLENDMODE_NONE;
+            break;
+        case BLEND:
+            sdl_mode = SDL_BLENDMODE_BLEND;
+            break;
+        case ADD:
+            sdl_mode = SDL_BLENDMODE_ADD;
+            break;
+        case MULTIPLY:
+            sdl_mode = SDL_BLENDMODE_MOD;
+            break;
+    }
+    SDL_SetTextureBlendMode(SDL_GetRenderTarget(screen->impl), sdl_mode);
+}
 void clear_image(struct image* image, struct color color)
 {
     int ret;

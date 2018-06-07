@@ -114,10 +114,12 @@ static void progress_current_animation(struct sprite* sprite)
             break;
         case FREEZE_LAST_FRAME:
             sprite->current_frame =
-            sprite->current_frame + 1 == animation->n_frames
+            (sprite->current_frame + 1 == animation->n_frames)
             ? sprite->current_frame
             : sprite->current_frame + 1;
+            break;
         case PINGPONG_FRAMES:
+            break;
         default:
             sprite->current_frame = sprite->current_frame;
     }

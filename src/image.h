@@ -180,6 +180,7 @@ void draw_on_image(struct image* image);
  * @param blend_mode The blend method to apply
  */
 void set_blend_mode(struct image* image, enum blend_mode blend_mode);
+void set_screen_blend_mode(enum blend_mode blend_mode);
 
 /**
  * Fills the entire image with a color
