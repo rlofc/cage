@@ -31,7 +31,7 @@ ifeq ($(UNAME_S),Linux)
 endif
 WARNINGS = -Wall -Wno-unused-label
 LDFLAGS +=
-LIBRARIES += `sdl2-config --static-libs` -L../../build/ -lSDL2_image -lSDL2_mixer -lcage
+LIBRARIES += -L../../build/ -lSDL2_image -lSDL2_mixer -lcage `sdl2-config --static-libs` 
 SOURCES = $(wildcard src/*.c)
 OBJECTS = $(addprefix obj/,$(patsubst src/%,%,$(SOURCES:.c=.o) ) )
 
