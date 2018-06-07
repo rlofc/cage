@@ -7,14 +7,19 @@ cage_color color::rgb(int r, int g, int b) {
     return cage_color_from_RGB(r, g, b);
 }
 
+cage_color color::rgba(int r, int g, int b, int a) {
+    return cage_color_from_RGBA(r, g, b, a);
+}
+
 //----------------------------------------------------------------------------
 // Image wrapper implementation
 image::image(std::string filename) {
     _image = cage_create_image(filename.c_str());
-    if (_image == 0) throw std::runtime_error(cage_get_error_msgs());
+    if (_image == nullptr) throw std::runtime_error(cage_get_error_msgs());
 }
 image::image(int width, int height, cage_color color) {
     _image = cage_create_target_image(width, height, color);
+    if (_image == nullptr) throw std::runtime_error(cage_get_error_msgs());
 }
 image::~image() {
     cage_destroy_image(_image);
@@ -34,11 +39,31 @@ void image::draw_on() {
 void image::draw(int x, int y, cage_rectangle *clip, float angle) {
     cage_draw_image(_image, x, y, clip, angle);
 }
+void image::draw(int x, int y) {
+    cage_rectangle r = {0, 0, _image->width, _image->height};
+    cage_draw_image(_image, x, y, &r, 0);
+}
+void image::draw_off() {
+    screen::draw_on();
+}
+void image::blend() {
+    set_blend_mode(CAGE_BLEND);
+}
+void image::multiply() {
+    set_blend_mode(CAGE_MULTIPLY);
+}
+void image::add() {
+    set_blend_mode(CAGE_ADD);
+}
+void image::none() {
+    set_blend_mode(CAGE_NONE);
+}
 
 //----------------------------------------------------------------------------
 // Animation wrapper implementation
 animation::animation() {
     _animation = cage_create_animation();
+    if (_animation == nullptr) throw std::runtime_error(cage_get_error_msgs());
 }
 animation::~animation() {
     cage_destroy_animation(_animation);
@@ -58,6 +83,10 @@ animation &animation::mode(cage_animation_mode m) {
     _animation->mode = m;
     return *this;
 }
+animation &animation::freeze_last_frame() {
+    _animation->mode = CAGE_FREEZE_LAST_FRAME;
+    return *this;
+}
 animation::operator cage_animation *() const {
     return _animation;
 }
@@ -69,9 +98,13 @@ cage_animation *animation::impl() const {
 // Sprite wrapper implementation
 sprite::sprite(const image &image, int w, int h) {
     _sprite = cage_create_sprite(image, w, h);
+    if (_sprite== nullptr) throw std::runtime_error(cage_get_error_msgs());
 }
-void sprite::draw(int x, int y) {
-    cage_draw_sprite(_sprite, x, y);
+int sprite::draw(int x, int y) const {
+    return cage_draw_sprite(_sprite, x, y);
+}
+void sprite::draw_frame(int x, int y, int frame) const {
+    cage_draw_sprite_frame(_sprite, x, y, frame);
 }
 void *sprite::animate(uint32_t elapsed) {
     return cage_animate_sprite(_sprite, elapsed);
@@ -90,6 +123,7 @@ cage_sprite *sprite::impl() const {
 // Timeline wrapper implementation
 timeline::timeline() {
     _timeline = cage_create_timeline();
+    if (_timeline == nullptr) throw std::runtime_error(cage_get_error_msgs());
 }
 void *timeline::global_timeline_callback(void *data,
                                          float elapsed,
@@ -111,6 +145,12 @@ timeline &timeline::append_event(uint32_t wait,
 void timeline::update(float elapsed_ms) {
     cage_update_timeline(_timeline, this, elapsed_ms);
 }
+void timeline::reset() {
+    cage_reset_timeline(_timeline);
+}
+void timeline::pause() {
+    cage_pause_timeline(_timeline);
+}
 timeline::~timeline() {
     cage_destroy_timeline(_timeline);
 }
@@ -122,6 +162,7 @@ std::unordered_map<cage_timeline *,
 // Sound wrapper implementation
 sound::sound(std::string filename) {
     _sound = cage_create_sound(filename.c_str());
+    if (_sound == nullptr) throw std::runtime_error(cage_get_error_msgs());
 }
 sound::~sound() {
     cage_destroy_sound(_sound);
@@ -143,6 +184,7 @@ bool sound::is_playing() {
 // Font wrapper implementation
 font::font(std::string filename, int cols, int rows) {
     _font = cage_create_font(filename.c_str(), cols, rows);
+    if (_font == nullptr) throw std::runtime_error(cage_get_error_msgs());
 }
 font::~font() {
     cage_destroy_font(_font);
@@ -164,5 +206,11 @@ void screen::shake(float elapsed_ms) {
 }
 void screen::relax(float elapsed_ms) {
     cage_relax_screen(elapsed_ms);
+}
+void screen::get_size(int * w, int * h) {
+    cage_get_screen_size(w, h);
+}
+void screen::set_blend_mode(cage_blend_mode blend_mode) {
+    cage_set_screen_blend_mode(blend_mode);
 }
 }

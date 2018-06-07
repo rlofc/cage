@@ -147,6 +147,7 @@ void game_state(create_func_t create,
                 destroy_func_t destroy);
 
 void exit_with_error_msg(const char* msg);
+void message_box(const char* title, const char* message);
 
 const char * get_error_msgs();
 

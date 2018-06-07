@@ -144,7 +144,7 @@ static void teardown_screen(void)
     SDL_DestroyWindow(screen->window);
 }
 
-static void message_box(const char* title, const char* message)
+void message_box(const char* title, const char* message)
 {
     SDL_ShowSimpleMessageBox(0, title, message, screen->window);
 }
@@ -235,7 +235,7 @@ int game_setup_and_loop(setup_func_t setup,
         if (now - start < 16) SDL_Delay(16 - (now - start));
         now = SDL_GetTicks();
 
-        toolbox->stopwatch = now - start;
+        toolbox->stopwatch = (float)now - (float)start;
         keyboard->keys = SDL_GetKeyboardState(NULL);
         toolbox->state->update(toolbox->data, toolbox->stopwatch);
         if (toolbox->next_state != NULL) set_game_state();
