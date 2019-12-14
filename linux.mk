@@ -48,8 +48,8 @@ WARNINGS = -Werror -Wall -Wextra -pedantic-errors -Wformat=2 -Wno-import \
 		   -Wmissing-declarations -Wredundant-decls -Wnested-externs -Winline \
 		   -Wdisabled-optimization -Wunused-macros -Wno-unused
 LDFLAGS =
-LIBRARIES = `sdl2-config --static-libs` -L$(CURRENT_DIR)/build/ -lSDL2_image \
-			-lSDL2_mixer -lcage
+LIBRARIES = `sdl2-config --libs` -L$(CURRENT_DIR)/build/ -lSDL2_image \
+			-lSDL2_mixer -lcage -lm
 SOURCES = $(wildcard src/*.c)
 OBJECTS = $(addprefix obj/,$(patsubst src/%,%,$(SOURCES:.c=.o) ) )
 
